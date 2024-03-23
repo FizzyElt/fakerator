@@ -15,7 +15,10 @@ const createSelectionGenerator = (config) => {
 };
 
 const createObjectGenerator = (config) => {
-  const keyWithFns = config.props.map(([key, subConfig]) => [key, generateRandomFn(subConfig)]);
+  const keyWithFns = Object.entries(config.content).map(([key, subConfig]) => [
+    key,
+    generateRandomFn(subConfig),
+  ]);
 
   return () => {
     const result = {};
@@ -60,11 +63,11 @@ const createGeneratorByType = (config) => {
 
 const test = {
   type: 'obj',
-  props: [
-    ['subArr', { type: 'arr', item: { type: 'num', min: 100, max: 1000 }, len: 10 }],
-    ['n1', { type: 'num', min: 0, max: 50 }],
-    ['n2', { type: 'obj', props: [['f1', { type: 'num', max: 100 }]] }],
-  ],
+  content: {
+    subArr: { type: 'arr', item: { type: 'num', min: 100, max: 1000 }, len: 10 },
+    n1: { type: 'num', min: 0, max: 50 },
+    n2: { type: 'obj', props: [['f1', { type: 'num', max: 100 }]] },
+  },
 };
 
 const test2 = {
