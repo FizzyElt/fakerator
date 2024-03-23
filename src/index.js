@@ -1,20 +1,20 @@
 import { faker } from '@faker-js/faker';
 
-const generateCustomRandomFn = (config) => {
+const createValueGenerator = (config) => {
   return config.generateFn;
 };
 
-const generateRandomNumFn = (config) => {
+const createNumGenerator = (config) => {
   const { min = 0, max } = config;
   return () => faker.number.int({ min, max });
 };
 
-const generateRandomSelectFn = (config) => {
+const createSelectionGenerator = (config) => {
   const { items } = config;
   return () => items[faker.number.int(items.length - 1)];
 };
 
-const generateRandomObjFn = (config) => {
+const createObjectGenerator = (config) => {
   const keyWithFns = config.props.map(([key, subConfig]) => [key, generateRandomFn(subConfig)]);
 
   return () => {
@@ -26,12 +26,12 @@ const generateRandomObjFn = (config) => {
   };
 };
 
-const generateRandomArrayFn = (config) => {
+const createArrayGenerator = (config) => {
   const itemGeneratorFn = generateRandomFn(config.item);
   return () => Array.from({ length: config.len ?? 0 }, itemGeneratorFn);
 };
 
-const generateRandomTupleFn = (config) => {
+const createTupleGenerator = (config) => {
   const { configItems } = config;
 
   const itemsFns = configItems.map(generateRandomFn);
@@ -39,20 +39,20 @@ const generateRandomTupleFn = (config) => {
   return () => itemsFns.map((generateFn) => generateFn());
 };
 
-const generateRandomFn = (config) => {
+const createGeneratorByType = (config) => {
   switch (config.type) {
     case 'obj':
-      return generateRandomObjFn(config);
+      return createObjectGenerator(config);
     case 'arr':
-      return generateRandomArrayFn(config);
+      return createArrayGenerator(config);
     case 'num':
-      return generateRandomNumFn(config);
+      return createNumGenerator(config);
     case 'select':
-      return generateRandomSelect(config);
+      return createSelectionGenerator(config);
     case 'tuple':
-      return generateRandomTupleFn(config);
-    case 'custom':
-      return generateCustomRandomFn(config);
+      return createTupleGenerator(config);
+    case 'value':
+      return createValueGenerator(config);
     default:
       throw Error(`${config.type} is not supported type`);
   }
@@ -70,9 +70,9 @@ const test = {
 const test2 = {
   type: 'tuple',
   configItems: [
-    { type: 'custom', generateFn: () => faker.number.int({ min: 0, max: 10 }) },
-    { type: 'custom', generateFn: () => faker.number.int({ min: 11, max: 20 }) },
-    { type: 'custom', generateFn: () => faker.number.int({ min: 21, max: 30 }) },
+    { type: 'value', generateFn: () => faker.number.int({ min: 0, max: 10 }) },
+    { type: 'value', generateFn: () => faker.number.int({ min: 11, max: 20 }) },
+    { type: 'value', generateFn: () => faker.number.int({ min: 21, max: 30 }) },
   ],
 };
 
