@@ -1,5 +1,7 @@
-import { isNonEmptyArray } from 'effect/ReadonlyArray';
+import { isNonEmptyArray, makeBy } from 'effect/ReadonlyArray';
 import { isFunction } from 'effect/Function';
+import { faker } from '@faker-js/faker';
+
 import { isObject, isNumber } from 'effect/Predicate';
 
 // value
@@ -54,7 +56,7 @@ export const createArrayGenerator = (config, level = 0) => {
 };
 
 // tuple
-export const createTupleGenerator = (config) => {
+export const createTupleGenerator = (config, level = 0) => {
   if (isNonEmptyArray(config?.configItems)) {
     const itemsFns = config.configItems.map(createGeneratorByType);
 
@@ -64,19 +66,38 @@ export const createTupleGenerator = (config) => {
   throw new Error(`level ${level} tuple config is invalid \n${config}`);
 };
 
-// TODO
+// bounded series
 export const createBoundedSeriesGenerator = (config, level = 0) => {
-  if (!isNumber(config.upperLimit) || !isNumber(config.lowerLimit)) {
-    throw new Error('upperLimit and lowerLimit must be a number');
+  if (!isNumber(config?.upperLimit) || !isNumber(config?.lowerLimit)) {
+    throw new Error('bounded series, upperLimit and lowerLimit must be a number');
   }
 
   if (config.upperLimit <= config.lowerLimit) {
-    throw new Error('lowerLimit can not greater then upperLimit');
+    throw new Error('bounded series, lowerLimit can not greater then upperLimit');
   }
 
-  if (!isFunction(config.createBaseValue)) {
-    throw new Error('createBaseValue is not a function');
+  if (!isFunction(config?.createInitValue)) {
+    throw new Error('bounded series, createBaseValue is not a function');
   }
+
+  if (!isNumber(config?.count)) {
+    throw new Error('bounded series, count is not a number');
+  }
+
+  if (config.count < 0) {
+    throw new Error('bounded series, count can not be negative');
+  }
+
+  const { upperLimit, lowerLimit, createInitValue, count } = config;
+
+  return () => {
+    let value = createInitValue();
+
+    return makeBy(count, () => {
+      value = faker.number.float({ max: upperLimit, min: lowerLimit }) * value;
+      return value;
+    });
+  };
 };
 
 // all
@@ -92,6 +113,8 @@ export const createGeneratorByType = (config, level = 0) => {
       return createTupleGenerator(config, level);
     case 'value':
       return createValueGenerator(config, level);
+    case 'bounded_series':
+      return createBoundedSeriesGenerator(config, level);
     default:
       throw Error(`level ${level} config type "${config.type}" is not supported`);
   }

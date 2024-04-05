@@ -1,28 +1,12 @@
 import { faker } from '@faker-js/faker';
-import {
-  createGeneratorByType,
-  createObjectConfig,
-  createArrayConfig,
-  createValueConfig,
-} from './create_generator_fn.js';
+import { createBoundedSeriesGenerator } from './create_generator_fn.js';
 
-const test = createObjectConfig({
-  name: createValueConfig(() => faker.person.fullName()),
-  list: createArrayConfig(
-    createValueConfig(() => faker.number.int({ min: 50, max: 100 })),
-    10
-  ),
+const testFn = createBoundedSeriesGenerator({
+  type: 'bounded_series',
+  upperLimit: 1.1,
+  lowerLimit: 0.9,
+  createInitValue: () => 1000,
+  count: 20,
 });
 
-const test2 = {
-  type: 'tuple',
-  configItems: [
-    { type: 'value', generateFn: () => faker.number.int({ min: 0, max: 10 }) },
-    { type: 'value', generateFn: () => faker.number.int({ min: 11, max: 20 }) },
-    { type: 'value', generateFn: () => faker.number.int({ min: 21, max: 30 }) },
-  ],
-};
-
-const randomFn = createGeneratorByType(test);
-
-console.log(randomFn());
+console.log(testFn());
