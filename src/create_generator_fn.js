@@ -10,7 +10,7 @@ export const createValueGenerator = (config, level = 0) => {
     return config.generateFn;
   }
 
-  throw new Error(`level ${level} value config is invalid \n${config}`);
+  throw new Error(`level: ${level} value config is invalid\n${config}`);
 };
 
 // selection
@@ -21,7 +21,7 @@ export const createSelectionGenerator = (config, level = 0) => {
     return () => items[faker.number.int(items.length - 1)];
   }
 
-  throw new Error(`level ${level} selection config is invalid \n${config}`);
+  throw new Error(`level: ${level} selection config is invalid\n${config}`);
 };
 
 // object
@@ -40,7 +40,7 @@ export const createObjectGenerator = (config, level = 0) => {
     };
   }
 
-  throw new Error(`level ${level} object config is invalid \n${config}`);
+  throw new Error(`level: ${level} object config is invalid\n${config}`);
 };
 
 // array
@@ -51,7 +51,7 @@ export const createArrayGenerator = (config, level = 0) => {
     return () => Array.from({ length: config.len ?? 0 }, itemGeneratorFn);
   }
 
-  throw new Error(`level ${level} array config is invalid \n${config}`);
+  throw new Error(`level: ${level} array config is invalid\n${config}`);
 };
 
 // tuple
@@ -62,33 +62,45 @@ export const createTupleGenerator = (config, level = 0) => {
     return () => itemsFns.map((generateFn) => generateFn());
   }
 
-  throw new Error(`level ${level} tuple config is invalid \n${config}`);
+  throw new Error(`level: ${level} tuple config is invalid \n${config}`);
 };
 
 // bounded series
 export const createBoundedSeriesGenerator = (config, level = 0) => {
   if (!isNumber(config?.upperLimit) || !isNumber(config?.lowerLimit)) {
     throw new Error(
-      "bounded series, upperLimit and lowerLimit must be a number",
+      `level: ${level} bounded series, upperLimit and lowerLimit must be a number\n${config}`,
     );
   }
 
   if (config.upperLimit <= config.lowerLimit) {
     throw new Error(
-      "bounded series, lowerLimit can not greater then upperLimit",
+      `level: ${level} bounded series, lowerLimit can not greater then upperLimit\n${config}`,
     );
   }
 
   if (!isFunction(config?.createInitValue)) {
-    throw new Error("bounded series, createBaseValue is not a function");
+    throw new Error(
+      `level: ${level} bounded series, createInitValue is not a function\n${config}`,
+    );
+  }
+
+  if (!isNumber(config.createInitValue())) {
+    throw new Error(
+      `level: ${level} bounded series, createInitValue can only return a number\n${config}`,
+    );
   }
 
   if (!isNumber(config?.count)) {
-    throw new Error("bounded series, count is not a number");
+    throw new Error(
+      `level: ${level} bounded series, count is not a number\n${config}`,
+    );
   }
 
   if (config.count < 0) {
-    throw new Error("bounded series, count can not be negative");
+    throw new Error(
+      `level: ${level} bounded series, count can not be negative\n${config}`,
+    );
   }
 
   const { upperLimit, lowerLimit, createInitValue, count } = config;
