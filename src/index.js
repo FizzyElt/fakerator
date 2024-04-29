@@ -1,12 +1,24 @@
-import { faker } from '@faker-js/faker';
-import { createBoundedSeriesGenerator } from './create_generator_fn.js';
+import { faker } from "@faker-js/faker";
+import { createGeneratorByType } from "./create_generator_fn.js";
 
-const testFn = createBoundedSeriesGenerator({
-  type: 'bounded_series',
-  upperLimit: 1.1,
-  lowerLimit: 0.9,
-  createInitValue: () => 1000,
-  count: 20,
-});
+const test = {
+  type: "obj",
+  content: {
+    name: {
+      type: "value",
+      generateFn: () => "hello",
+    },
+    list: {
+      type: "arr",
+      item: {
+        type: "value",
+        generateFn: () => 10,
+      },
+      len: 5,
+    },
+  },
+};
 
-console.log(testFn());
+const generateFn = createGeneratorByType(test);
+
+console.log(generateFn());

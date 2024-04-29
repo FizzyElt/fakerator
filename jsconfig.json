@@ -8,7 +8,7 @@
                 "node_modules/*"
             ]
         },
-        "checkJs": true
+        "checkJs": true,
     },
     "include": [
         "./**/*"

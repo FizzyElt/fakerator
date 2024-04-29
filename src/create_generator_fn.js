@@ -1,8 +1,8 @@
-import { isNonEmptyArray, makeBy } from 'effect/ReadonlyArray';
-import { isFunction } from 'effect/Function';
-import { faker } from '@faker-js/faker';
+import { isNonEmptyArray, makeBy } from "effect/ReadonlyArray";
+import { isFunction } from "effect/Function";
+import { faker } from "@faker-js/faker";
 
-import { isObject, isNumber } from 'effect/Predicate';
+import { isObject, isNumber } from "effect/Predicate";
 
 // value
 export const createValueGenerator = (config, level = 0) => {
@@ -27,10 +27,9 @@ export const createSelectionGenerator = (config, level = 0) => {
 // object
 export const createObjectGenerator = (config, level = 0) => {
   if (isObject(config.content)) {
-    const keyWithFns = Object.entries(config.content).map(([key, subConfig]) => [
-      key,
-      createGeneratorByType(subConfig, level + 1),
-    ]);
+    const keyWithFns = Object.entries(config.content).map(
+      ([key, subConfig]) => [key, createGeneratorByType(subConfig, level + 1)],
+    );
 
     return () => {
       const result = {};
@@ -69,23 +68,27 @@ export const createTupleGenerator = (config, level = 0) => {
 // bounded series
 export const createBoundedSeriesGenerator = (config, level = 0) => {
   if (!isNumber(config?.upperLimit) || !isNumber(config?.lowerLimit)) {
-    throw new Error('bounded series, upperLimit and lowerLimit must be a number');
+    throw new Error(
+      "bounded series, upperLimit and lowerLimit must be a number",
+    );
   }
 
   if (config.upperLimit <= config.lowerLimit) {
-    throw new Error('bounded series, lowerLimit can not greater then upperLimit');
+    throw new Error(
+      "bounded series, lowerLimit can not greater then upperLimit",
+    );
   }
 
   if (!isFunction(config?.createInitValue)) {
-    throw new Error('bounded series, createBaseValue is not a function');
+    throw new Error("bounded series, createBaseValue is not a function");
   }
 
   if (!isNumber(config?.count)) {
-    throw new Error('bounded series, count is not a number');
+    throw new Error("bounded series, count is not a number");
   }
 
   if (config.count < 0) {
-    throw new Error('bounded series, count can not be negative');
+    throw new Error("bounded series, count can not be negative");
   }
 
   const { upperLimit, lowerLimit, createInitValue, count } = config;
@@ -103,19 +106,21 @@ export const createBoundedSeriesGenerator = (config, level = 0) => {
 // all
 export const createGeneratorByType = (config, level = 0) => {
   switch (config.type) {
-    case 'obj':
+    case "obj":
       return createObjectGenerator(config, level);
-    case 'arr':
+    case "arr":
       return createArrayGenerator(config, level);
-    case 'select':
+    case "select":
       return createSelectionGenerator(config, level);
-    case 'tuple':
+    case "tuple":
       return createTupleGenerator(config, level);
-    case 'value':
+    case "value":
       return createValueGenerator(config, level);
-    case 'bounded_series':
+    case "bounded_series":
       return createBoundedSeriesGenerator(config, level);
     default:
-      throw Error(`level ${level} config type "${config.type}" is not supported`);
+      throw Error(
+        `level ${level} config type "${config.type}" is not supported`,
+      );
   }
 };

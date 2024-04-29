@@ -1,25 +1,35 @@
-import { faker } from '@faker-js/faker';
+import { faker } from "@faker-js/faker";
 
 // value
-export const createValueConfig = (generateFn) => ({ type: 'value', generateFn });
+export const createValueConfig = (generateFn) => ({
+  type: "value",
+  generateFn,
+});
 
 // selection
-export const createSelectionConfig = (items) => ({ type: 'select', items });
+export const createSelectionConfig = (items) => ({ type: "select", items });
 
 // object
-export const createObjectConfig = (content) => ({ type: 'obj', content });
+export const createObjectConfig = (content) => ({ type: "obj", content });
 
 // array
-export const createArrayConfig = (item, len) => ({ type: 'arr', item, len });
+export const createArrayConfig = (item, len) => ({ type: "arr", item, len });
 
 // tuple
-export const createTupleConfig = (configItems) => ({ type: 'tuple', configItems });
+export const createTupleConfig = (configItems) => ({
+  type: "tuple",
+  configItems,
+});
 
 // bounded_series
-export const createBoundedSeriesConfig = (config) => ({ type: 'bounded_series', ...config });
+export const createBoundedSeriesConfig = (config) => ({
+  type: "bounded_series",
+  ...config,
+});
 
 // int value
-export const createIntValueConfig = (option) => createValueConfig(() => faker.number.int(option));
+export const createIntValueConfig = (option) =>
+  createValueConfig(() => faker.number.int(option));
 
 // float value
 export const createFloatValueConfig = (option) =>
