@@ -11,6 +11,9 @@ importers:
       effect:
         specifier: ^2.4.10
         version: 2.4.10
+      zod:
+        specifier: ^3.23.6
+        version: 3.23.6
     devDependencies:
       '@biomejs/biome':
         specifier: ^1.7.1
@@ -617,6 +620,9 @@ packages:
     resolution: {integrity: sha512-9bnSc/HEW2uRy67wc+T8UwauLuPJVn28jb+GtJY16iiKWyvmYJRXVT4UamsAEGQfPohgr2q4Tq0sQbQlxTfi1g==}
     engines: {node: '>=12.20'}
 
+  zod@3.23.6:
+    resolution: {integrity: sha512-RTHJlZhsRbuA8Hmp/iNL7jnfc4nZishjsanDAfEY1QpDQZCahUp3xDzl+zfweE9BklxMUcgBgS1b7Lvie/ZVwA==}
+
 snapshots:
 
   '@biomejs/biome@1.7.1':
@@ -1103,3 +1109,5 @@ snapshots:
       stackback: 0.0.2
 
   yocto-queue@1.0.0: {}
+
+  zod@3.23.6: {}

@@ -6,6 +6,7 @@ import {
   createArrayConfig,
   createTupleConfig,
   createObjectConfig,
+  createBoundedSeriesConfig,
 } from "./create_config";
 import { createGeneratorByType } from "./create_generator_fn";
 
@@ -21,7 +22,7 @@ test("createSelectionConfig", () => {
   const selectionConfig = createSelectionConfig([1, 2, 3, 4]);
 
   expect(selectionConfig.type).toBe("select");
-  expectTypeOf(selectionConfig.items).toBeArra;
+  expectTypeOf(selectionConfig.items).toBeArray();
 });
 
 test("createArrayConfig", () => {
