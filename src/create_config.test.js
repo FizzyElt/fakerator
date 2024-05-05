@@ -1,4 +1,4 @@
-import { expect, expectTypeOf, assert, test } from "vitest";
+import { expect, expectTypeOf, test } from "vitest";
 
 import {
   createValueConfig,
@@ -14,7 +14,7 @@ test("createValueConfig", () => {
   const valueConfig = createValueConfig(() => 44);
 
   expect(valueConfig.type).toBe("value");
-  expectTypeOf(valueConfig.generateFn).toBeFunction();
+  expect(valueConfig.generateFn).toBeTypeOf("function");
 });
 
 test("createSelectionConfig", () => {
@@ -22,7 +22,7 @@ test("createSelectionConfig", () => {
   const selectionConfig = createSelectionConfig([1, 2, 3, 4]);
 
   expect(selectionConfig.type).toBe("select");
-  expectTypeOf(selectionConfig.items).toBeArray();
+  expect(selectionConfig.items).toEqual(options);
 });
 
 test("createArrayConfig", () => {
@@ -55,4 +55,18 @@ test("createObjConfig", () => {
 
   expect(objConfig.type).toBe("obj");
   expect(objConfig.content).toEqual({ name: value2Config, age: value1Config });
+});
+
+test("createBoundedSeriesConfig", () => {
+  const boundedSeriesConfig = createBoundedSeriesConfig({
+    count: 1,
+    upperLimit: 1.2,
+    lowerLimit: 1.0,
+    createInitValue: () => 40,
+  });
+
+  expect(boundedSeriesConfig.type).toBe("bounded_series");
+  expect(boundedSeriesConfig.upperLimit).toBe(1.2);
+  expect(boundedSeriesConfig.lowerLimit).toBe(1.0);
+  expect(boundedSeriesConfig.createInitValue).toBeTypeOf("function");
 });

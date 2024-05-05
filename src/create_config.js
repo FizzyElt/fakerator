@@ -1,68 +1,74 @@
 import { faker } from "@faker-js/faker";
+import {
+  valueConfigScheme,
+  arrayConfigScheme,
+  selectionConfigScheme,
+  tupleConfigScheme,
+  objConfigScheme,
+  boundedSeriesScheme,
+} from "./config_scheme";
 
 // value
-export const createValueConfig = (generateFn) => ({
-  type: "value",
-  generateFn,
-});
+export const createValueConfig = (generateFn) => {
+  const config = {
+    type: "value",
+    generateFn,
+  };
+
+  valueConfigScheme.parse(config);
+
+  return config;
+};
 
 // selection
-export const createSelectionConfig = (items) => ({ type: "select", items });
+export const createSelectionConfig = (items) => {
+  const config = { type: "select", items };
+
+  selectionConfigScheme.parse(config);
+
+  return config;
+};
 
 // object
-export const createObjectConfig = (content) => ({ type: "obj", content });
+export const createObjectConfig = (content) => {
+  const config = { type: "obj", content };
+
+  objConfigScheme.parse(config);
+
+  return config;
+};
 
 // array
-export const createArrayConfig = (item, len) => ({ type: "arr", item, len });
+export const createArrayConfig = (item, len) => {
+  const config = { type: "arr", item, len };
+
+  arrayConfigScheme.parse(config);
+
+  return config;
+};
 
 // tuple
-export const createTupleConfig = (configItems) => ({
-  type: "tuple",
-  configItems,
-});
+export const createTupleConfig = (configItems) => {
+  const config = {
+    type: "tuple",
+    configItems,
+  };
+
+  tupleConfigScheme.parse(config);
+
+  return config;
+};
 
 // bounded_series
 export const createBoundedSeriesConfig = (config) => {
-  if (!isNumber(config?.upperLimit) || !isNumber(config?.lowerLimit)) {
-    throw new Error(
-      `bounded series, upperLimit and lowerLimit must be a number\n${config}`,
-    );
-  }
-
-  if (config.upperLimit <= config.lowerLimit) {
-    throw new Error(
-      `bounded series, lowerLimit can not greater then upperLimit\n${config}`,
-    );
-  }
-
-  if (!isFunction(config?.createInitValue)) {
-    throw new Error(
-      `bounded series, createInitValue is not a function\n${config}`,
-    );
-  }
-
-  if (!isNumber(config.createInitValue())) {
-    throw new Error(
-      `bounded series, createInitValue can only return a number\n${config}`,
-    );
-  }
-
-  if (!isNumber(config?.count)) {
-    throw new Error(
-      `bounded series, count is not a number\n${config}`,
-    );
-  }
-
-  if (config.count < 0) {
-    throw new Error(
-      `level: ${level} bounded series, count can not be negative\n${config}`,
-    );
-  }
-
-  return {
+  const newConfig = {
     type: "bounded_series",
     ...config,
   };
+
+  boundedSeriesScheme.parse(newConfig);
+
+  return newConfig;
 };
 
 // int value
