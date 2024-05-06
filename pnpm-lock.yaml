@@ -8,9 +8,6 @@ importers:
 
   .:
     dependencies:
-      effect:
-        specifier: ^2.4.10
-        version: 2.4.10
       zod:
         specifier: ^3.23.6
         version: 3.23.6
@@ -380,9 +377,6 @@ packages:
   diff-sequences@29.6.3:
     resolution: {integrity: sha512-EjePK1srD3P08o2j4f0ExnylqRs5B9tJjcp9t1krH2qRi8CCdsYfwe9JgSLurFBWwq4uOlipzfk5fHNvwFKr8Q==}
     engines: {node: ^14.15.0 || ^16.10.0 || >=18.0.0}
-
-  effect@2.4.10:
-    resolution: {integrity: sha512-gWymyTJRCB1tZvwDkMhB3maHEMSddwl84yiB9kZfY+VEK0qL7B9lAUAij5rmBgGfeoZWpdEc5ycnf9VWXOtQRw==}
 
   esbuild@0.20.2:
     resolution: {integrity: sha512-WdOOppmUNU+IbZ0PaDiTst80zjnrOkyJNHoKupIcVyU8Lvla3Ugx94VzkQ32Ijqd7UhHJy75gNWDMUekcrSJ6g==}
@@ -859,8 +853,6 @@ snapshots:
       type-detect: 4.0.8
 
   diff-sequences@29.6.3: {}
-
-  effect@2.4.10: {}
 
   esbuild@0.20.2:
     optionalDependencies:
