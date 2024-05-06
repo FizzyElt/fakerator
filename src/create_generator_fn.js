@@ -1,117 +1,83 @@
-import { isNonEmptyArray, makeBy } from "effect/ReadonlyArray";
-import { isFunction } from "effect/Function";
 import { faker } from "@faker-js/faker";
 
-import { isObject, isNumber } from "effect/Predicate";
+import {
+  valueConfigScheme,
+  selectionConfigScheme,
+  arrayConfigScheme,
+  objConfigScheme,
+  boundedSeriesScheme,
+  tupleConfigScheme,
+} from "./config_scheme";
 
 // value
 export const createValueGenerator = (config, level = 0) => {
-  if (isFunction(config?.generateFn)) {
-    return config.generateFn;
-  }
+  valueConfigScheme.parse(config);
 
-  throw new Error(`level: ${level} value config is invalid\n${config}`);
+  return config.generateFn;
 };
 
 // selection
 export const createSelectionGenerator = (config, level = 0) => {
-  if (isNonEmptyArray(config?.items)) {
-    const { items } = config;
+  selectionConfigScheme.parse(config);
 
-    return () => items[faker.number.int(items.length - 1)];
-  }
+  const { items } = config;
 
-  throw new Error(`level: ${level} selection config is invalid\n${config}`);
+  return () => items[faker.number.int(items.length - 1)];
 };
 
 // object
 export const createObjectGenerator = (config, level = 0) => {
-  if (isObject(config.content)) {
-    const keyWithFns = Object.entries(config.content).map(
-      ([key, subConfig]) => [key, createGeneratorByType(subConfig, level + 1)],
-    );
+  objConfigScheme.parse(config);
 
-    return () => {
-      const result = {};
-      for (const [key, generateFn] of keyWithFns) {
-        result[key] = generateFn();
-      }
-      return result;
-    };
-  }
+  const keyWithFns = Object.entries(config.content).map(([key, subConfig]) => [
+    key,
+    createGeneratorByType(subConfig, level + 1),
+  ]);
 
-  throw new Error(`level: ${level} object config is invalid\n${config}`);
+  return () => {
+    const result = {};
+    for (const [key, generateFn] of keyWithFns) {
+      result[key] = generateFn();
+    }
+    return result;
+  };
 };
 
 // array
 export const createArrayGenerator = (config, level = 0) => {
-  if (isObject(config?.item)) {
-    const itemGeneratorFn = createGeneratorByType(config.item, level + 1);
+  arrayConfigScheme.parse(config);
 
-    return () => Array.from({ length: config.len ?? 0 }, itemGeneratorFn);
-  }
+  const itemGeneratorFn = createGeneratorByType(config.item, level + 1);
 
-  throw new Error(`level: ${level} array config is invalid\n${config}`);
+  return () => Array.from({ length: config.len ?? 0 }, itemGeneratorFn);
 };
 
 // tuple
 export const createTupleGenerator = (config, level = 0) => {
-  if (isNonEmptyArray(config?.configItems)) {
-    const itemsFns = config.configItems.map(createGeneratorByType);
+  tupleConfigScheme.parse(config);
 
-    return () => itemsFns.map((generateFn) => generateFn());
-  }
+  const itemsFns = config.configItems.map(createGeneratorByType);
 
-  throw new Error(`level: ${level} tuple config is invalid \n${config}`);
+  return () => itemsFns.map((generateFn) => generateFn());
 };
 
 // bounded series
 export const createBoundedSeriesGenerator = (config, level = 0) => {
-  if (!isNumber(config?.upperLimit) || !isNumber(config?.lowerLimit)) {
-    throw new Error(
-      `level: ${level} bounded series, upperLimit and lowerLimit must be a number\n${config}`,
-    );
-  }
-
-  if (config.upperLimit <= config.lowerLimit) {
-    throw new Error(
-      `level: ${level} bounded series, lowerLimit can not greater then upperLimit\n${config}`,
-    );
-  }
-
-  if (!isFunction(config?.createInitValue)) {
-    throw new Error(
-      `level: ${level} bounded series, createInitValue is not a function\n${config}`,
-    );
-  }
-
-  if (!isNumber(config.createInitValue())) {
-    throw new Error(
-      `level: ${level} bounded series, createInitValue can only return a number\n${config}`,
-    );
-  }
-
-  if (!isNumber(config?.count)) {
-    throw new Error(
-      `level: ${level} bounded series, count is not a number\n${config}`,
-    );
-  }
-
-  if (config.count < 0) {
-    throw new Error(
-      `level: ${level} bounded series, count can not be negative\n${config}`,
-    );
-  }
+  boundedSeriesScheme.parse(config);
 
   const { upperLimit, lowerLimit, createInitValue, count } = config;
 
   return () => {
     let value = createInitValue();
 
-    return makeBy(count, () => {
+    const boundedSeries = [];
+
+    for (let i = 0; i < count; i++) {
       value = faker.number.float({ max: upperLimit, min: lowerLimit }) * value;
-      return value;
-    });
+      boundedSeries.push(value);
+    }
+
+    return boundedSeries;
   };
 };
 
