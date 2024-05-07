@@ -9,14 +9,24 @@ import {
   tupleConfigScheme,
 } from "./config_scheme";
 
-// value
+/**
+ * value
+ * @param {ValueConfig} config
+ * @param {number=} level
+ * @return {function}
+ */
 export const createValueGenerator = (config, level = 0) => {
   valueConfigScheme.parse(config);
 
   return config.generateFn;
 };
 
-// selection
+/**
+ * selection
+ * @param {SelectionConfig} config
+ * @param {number=} level
+ * @return {function} The configuration object with the type "select" and the provided items.
+ */
 export const createSelectionGenerator = (config, level = 0) => {
   selectionConfigScheme.parse(config);
 
@@ -25,7 +35,12 @@ export const createSelectionGenerator = (config, level = 0) => {
   return () => items[faker.number.int(items.length - 1)];
 };
 
-// object
+/**
+ * object
+ * @param {ObjectConfig} config
+ * @param {number=} level
+ * @return {() => object}
+ */
 export const createObjectGenerator = (config, level = 0) => {
   objConfigScheme.parse(config);
 
@@ -43,7 +58,12 @@ export const createObjectGenerator = (config, level = 0) => {
   };
 };
 
-// array
+/**
+ * array
+ * @param {ArrayConfig} config
+ * @param {number=} level
+ * @return {() => Array}
+ */
 export const createArrayGenerator = (config, level = 0) => {
   arrayConfigScheme.parse(config);
 
@@ -52,7 +72,12 @@ export const createArrayGenerator = (config, level = 0) => {
   return () => Array.from({ length: config.len ?? 0 }, itemGeneratorFn);
 };
 
-// tuple
+/**
+ * tuple
+ * @param {TupleConfig} config
+ * @param {number=} level
+ * @return {() => Array}
+ */
 export const createTupleGenerator = (config, level = 0) => {
   tupleConfigScheme.parse(config);
 
@@ -61,7 +86,12 @@ export const createTupleGenerator = (config, level = 0) => {
   return () => itemsFns.map((generateFn) => generateFn());
 };
 
-// bounded series
+/**
+ * bounded series
+ * @param {BoundedSeriesConfig} config
+ * @param {number} level
+ * @return {() => Array<number>}
+ */
 export const createBoundedSeriesGenerator = (config, level = 0) => {
   boundedSeriesScheme.parse(config);
 
@@ -81,7 +111,12 @@ export const createBoundedSeriesGenerator = (config, level = 0) => {
   };
 };
 
-// all
+/**
+ *
+ * @param {ValueConfig | SelectionConfig | ArrayConfig | ObjectConfig | TupleConfig | BoundedSeriesConfig} config
+ * @param {number=} level
+ * @return {function}
+ */
 export const createGeneratorByType = (config, level = 0) => {
   switch (config.type) {
     case "obj":
