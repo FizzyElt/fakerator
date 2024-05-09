@@ -1,5 +1,5 @@
 {
-  "name": "fakerator",
+  "name": "struct-fakerator",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
@@ -9,7 +9,7 @@
     "test": "vitest"
   },
   "keywords": [],
-  "author": "",
+  "author": "FizzyElt",
   "license": "ISC",
   "devDependencies": {
     "@biomejs/biome": "^1.7.1",
@@ -18,5 +18,8 @@
   },
   "dependencies": {
     "zod": "^3.23.6"
+  },
+  "publishConfig": {
+    "access": "public"
   }
 }
