@@ -7,15 +7,14 @@ import {
   objConfigScheme,
   boundedSeriesScheme,
   tupleConfigScheme,
-} from "./config_scheme";
+} from "./config_scheme.js";
 
 /**
  * value
  * @param {ValueConfig} config
- * @param {number=} level
  * @return {function}
  */
-export const createValueGenerator = (config, level = 0) => {
+export const createValueGenerator = (config) => {
   valueConfigScheme.parse(config);
 
   return config.generateFn;
@@ -24,10 +23,9 @@ export const createValueGenerator = (config, level = 0) => {
 /**
  * selection
  * @param {SelectionConfig} config
- * @param {number=} level
  * @return {function} The configuration object with the type "select" and the provided items.
  */
-export const createSelectionGenerator = (config, level = 0) => {
+export const createSelectionGenerator = (config) => {
   selectionConfigScheme.parse(config);
 
   const { items } = config;
@@ -38,15 +36,15 @@ export const createSelectionGenerator = (config, level = 0) => {
 /**
  * object
  * @param {ObjectConfig} config
- * @param {number=} level
+ * @param {(() => ValueConfig)=} customTypeMatch
  * @return {() => object}
  */
-export const createObjectGenerator = (config, level = 0) => {
+export const createObjectGenerator = (config, customTypeMatch) => {
   objConfigScheme.parse(config);
 
   const keyWithFns = Object.entries(config.content).map(([key, subConfig]) => [
     key,
-    createGeneratorByType(subConfig, level + 1),
+    createGeneratorByType(subConfig, customTypeMatch),
   ]);
 
   return () => {
@@ -61,13 +59,13 @@ export const createObjectGenerator = (config, level = 0) => {
 /**
  * array
  * @param {ArrayConfig} config
- * @param {number=} level
+ * @param {(() => ValueConfig)=} customTypeMatch
  * @return {() => Array}
  */
-export const createArrayGenerator = (config, level = 0) => {
+export const createArrayGenerator = (config, customTypeMatch) => {
   arrayConfigScheme.parse(config);
 
-  const itemGeneratorFn = createGeneratorByType(config.item, level + 1);
+  const itemGeneratorFn = createGeneratorByType(config.item, customTypeMatch);
 
   return () => Array.from({ length: config.len ?? 0 }, itemGeneratorFn);
 };
@@ -75,13 +73,15 @@ export const createArrayGenerator = (config, level = 0) => {
 /**
  * tuple
  * @param {TupleConfig} config
- * @param {number=} level
+ * @param {(() => ValueConfig)=} customTypeMatch
  * @return {() => Array}
  */
-export const createTupleGenerator = (config, level = 0) => {
+export const createTupleGenerator = (config, customTypeMatch) => {
   tupleConfigScheme.parse(config);
 
-  const itemsFns = config.configItems.map(createGeneratorByType);
+  const itemsFns = config.configItems.map((configItem) =>
+    createGeneratorByType(configItem, customTypeMatch),
+  );
 
   return () => itemsFns.map((generateFn) => generateFn());
 };
@@ -89,10 +89,9 @@ export const createTupleGenerator = (config, level = 0) => {
 /**
  * bounded series
  * @param {BoundedSeriesConfig} config
- * @param {number} level
  * @return {() => Array<number>}
  */
-export const createBoundedSeriesGenerator = (config, level = 0) => {
+export const createBoundedSeriesGenerator = (config) => {
   boundedSeriesScheme.parse(config);
 
   const { upperLimit, lowerLimit, createInitValue, count } = config;
@@ -114,26 +113,28 @@ export const createBoundedSeriesGenerator = (config, level = 0) => {
 /**
  *
  * @param {ValueConfig | SelectionConfig | ArrayConfig | ObjectConfig | TupleConfig | BoundedSeriesConfig} config
- * @param {number=} level
+ * @param {(() => ValueConfig)=} customTypeMatch
  * @return {function}
  */
-export const createGeneratorByType = (config, level = 0) => {
+export const createGeneratorByType = (config, customTypeMatch) => {
   switch (config.type) {
     case "obj":
-      return createObjectGenerator(config, level);
+      return createObjectGenerator(config, customTypeMatch);
     case "arr":
-      return createArrayGenerator(config, level);
+      return createArrayGenerator(config, customTypeMatch);
     case "select":
-      return createSelectionGenerator(config, level);
+      return createSelectionGenerator(config);
     case "tuple":
-      return createTupleGenerator(config, level);
+      return createTupleGenerator(config, customTypeMatch);
     case "value":
-      return createValueGenerator(config, level);
+      return createValueGenerator(config);
     case "bounded_series":
-      return createBoundedSeriesGenerator(config, level);
-    default:
-      throw Error(
-        `level ${level} config type "${config.type}" is not supported`,
-      );
+      return createBoundedSeriesGenerator(config);
+    default: {
+      if (customTypeMatch) {
+        return createValueGenerator(customTypeMatch(config));
+      }
+      throw Error(`config type "${config.type}" is not supported`);
+    }
   }
 };

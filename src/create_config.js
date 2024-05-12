@@ -6,7 +6,7 @@ import {
   tupleConfigScheme,
   objConfigScheme,
   boundedSeriesScheme,
-} from "./config_scheme";
+} from "./config_scheme.js";
 
 /**
  * value
@@ -95,15 +95,3 @@ export const createBoundedSeriesConfig = (config) => {
 
   return newConfig;
 };
-
-// int value
-export const createIntValueConfig = (option) =>
-  createValueConfig(() => faker.number.int(option));
-
-// float value
-export const createFloatValueConfig = (option) =>
-  createValueConfig(() => faker.number.float(option));
-
-// email value
-export const createEmailValueConfig = (option) =>
-  createValueConfig(() => faker.internet.email(option));

@@ -7,7 +7,9 @@ import {
   createTupleGenerator,
   createObjectGenerator,
   createBoundedSeriesGenerator,
+  createGeneratorByType,
 } from "./create_generator_fn";
+import { createValueConfig } from "./create_config";
 
 describe("createValueGenerator", () => {
   test("normal", () => {
@@ -128,5 +130,63 @@ describe("createBoundedSeriesGenerator", () => {
       expect(ratio).toBeLessThanOrEqual(upperLimit);
       expect(ratio).toBeGreaterThanOrEqual(lowerLimit);
     }
+  });
+});
+
+describe("createGeneratorByType", () => {
+  test("normal", () => {
+    const config = {
+      type: "obj",
+      content: {
+        name: { type: "value", generateFn: () => "John" },
+        age: { type: "value", generateFn: () => 50 },
+        locations: {
+          type: "arr",
+          item: { type: "value", generateFn: () => "Taiwan" },
+          len: 5,
+        },
+      },
+    };
+    const result = createGeneratorByType(config)();
+
+    expect(result).toEqual({
+      name: "John",
+      age: 50,
+      locations: ["Taiwan", "Taiwan", "Taiwan", "Taiwan", "Taiwan"],
+    });
+  });
+
+  test("with custom type match", () => {
+    const createIntValueConfig = (option) => createValueConfig(() => 50);
+    const createEmailValueConfig = (option) =>
+      createValueConfig(() => "xxx@example.com");
+
+    const customTypeMatch = (config) => {
+      if (config.type === "int") {
+        return createIntValueConfig(config.option);
+      }
+      if (config.type === "email") {
+        return createEmailValueConfig(config.option);
+      }
+
+      throw Error("error");
+    };
+
+    const config = {
+      type: "obj",
+      content: {
+        name: { type: "value", generateFn: () => "John" },
+        age: { type: "int" },
+        email: { type: "email" },
+      },
+    };
+
+    const result = createGeneratorByType(config, customTypeMatch)();
+
+    expect(result).toEqual({
+      name: "John",
+      age: 50,
+      email: "xxx@example.com",
+    });
   });
 });
