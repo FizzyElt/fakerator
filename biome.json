@@ -7,10 +7,16 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true
-		}
+		},
+		"include": [
+			"src/**/*"
+		]
 	},
 	"formatter": {
-		"indentStyle": "space"
+		"indentStyle": "space",
+		"include": [
+			"src/**/*"
+		]
 	},
 	"javascript": {
 		"formatter": {
