@@ -1,17 +1,23 @@
 {
   "name": "struct-fakerator",
-  "version": "1.2.2",
+  "version": "1.2.5",
   "description": "",
   "main": "cjs/index.js",
   "module": "esm/index.mjs",
+  "exports": {
+    ".": {
+      "require": "./cjs/index.js",
+      "import": "./esm/index.mjs"
+    }
+  },
   "type": "module",
   "scripts": {
     "start": "node src/index.js",
     "dev": "node",
-    "build:cjs": "babel src --out-dir cjs --presets=@babel/preset-env",
-    "build:esm": "babel src --out-dir esm --presets=@babel/preset-env --plugins=@babel/plugin-transform-modules-commonjs",
+    "build:cjs": "babel src --out-dir cjs --presets=@babel/preset-env --plugins=@babel/plugin-transform-modules-commonjs",
+    "build:esm": "cp -r src/* esm",
     "build": "pnpm build:cjs && pnpm build:esm",
-    "test": "vitest"
+    "test": "vitest src"
   },
   "keywords": [],
   "author": "FizzyElt",

@@ -6,7 +6,7 @@ import {
   tupleConfigScheme,
   objConfigScheme,
   boundedSeriesScheme,
-} from "./config_scheme.js";
+} from "./config_scheme.mjs";
 
 /**
  * value

@@ -7,8 +7,8 @@ import {
   createTupleConfig,
   createObjectConfig,
   createBoundedSeriesConfig,
-} from "./create_config";
-import { createGeneratorByType } from "./create_generator_fn";
+} from "./create_config.mjs";
+import { createGeneratorByType } from "./create_generator_fn.mjs";
 
 test("createValueConfig", () => {
   const valueConfig = createValueConfig(() => 44);

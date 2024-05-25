@@ -21,4 +21,3 @@
 /**
  * @typedef {{ type: 'bounded_series', upperLimit: number, lowerLimit: number, createInitValue: function, count: number }} BoundedSeriesConfig
  */
-"use strict";

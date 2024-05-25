@@ -8,8 +8,8 @@ import {
   createObjectGenerator,
   createBoundedSeriesGenerator,
   createGeneratorByType,
-} from "./create_generator_fn";
-import { createValueConfig } from "./create_config";
+} from "./create_generator_fn.mjs";
+import { createValueConfig } from "./create_config.mjs";
 
 describe("createValueGenerator", () => {
   test("normal", () => {
