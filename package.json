@@ -1,6 +1,6 @@
 {
   "name": "struct-fakerator",
-  "version": "1.2.5",
+  "version": "1.2.6",
   "description": "",
   "main": "cjs/index.js",
   "module": "esm/index.mjs",
@@ -21,6 +21,7 @@
   },
   "keywords": [],
   "author": "FizzyElt",
+  "homepage": "https://github.com/FizzyElt/struct-fakerator",
   "license": "ISC",
   "devDependencies": {
     "@babel/cli": "^7.24.7",
