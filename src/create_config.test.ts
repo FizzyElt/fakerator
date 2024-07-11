@@ -1,4 +1,4 @@
-import { expect, expectTypeOf, test } from "vitest";
+import { expect, test } from "vitest";
 
 import {
   createValueConfig,
@@ -7,8 +7,7 @@ import {
   createTupleConfig,
   createObjectConfig,
   createBoundedSeriesConfig,
-} from "./create_config.mjs";
-import { createGeneratorByType } from "./create_generator_fn.mjs";
+} from "./create_config";
 
 test("createValueConfig", () => {
   const valueConfig = createValueConfig(() => 44);

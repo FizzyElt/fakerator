@@ -1,5 +1,4 @@
 import { describe, test, expect } from "vitest";
-import { ZodError } from "zod";
 import {
   createValueGenerator,
   createSelectionGenerator,
@@ -8,8 +7,13 @@ import {
   createObjectGenerator,
   createBoundedSeriesGenerator,
   createGeneratorByType,
-} from "./create_generator_fn.mjs";
-import { createValueConfig } from "./create_config.mjs";
+} from "./create_generator_fn";
+import {
+  createValueConfig,
+  createTupleConfig,
+  createObjectConfig,
+  createArrayConfig,
+} from "./create_config";
 
 describe("createValueGenerator", () => {
   test("normal", () => {
@@ -67,13 +71,12 @@ describe("createArrayGenerator", () => {
 
 describe("createTupleGenerator", () => {
   test("normal", () => {
-    const tuple = createTupleGenerator({
-      type: "tuple",
-      configItems: [
-        { type: "value", generateFn: () => 225 },
-        { type: "value", generateFn: () => "hello world" },
-      ],
-    })();
+    const tuple = createTupleGenerator(
+      createTupleConfig([
+        createValueConfig(() => 225),
+        createValueConfig(() => "hello world"),
+      ]),
+    )();
 
     expect(tuple.length).toBe(2);
     const [num, str] = tuple;
@@ -135,18 +138,14 @@ describe("createBoundedSeriesGenerator", () => {
 
 describe("createGeneratorByType", () => {
   test("normal", () => {
-    const config = {
-      type: "obj",
-      content: {
-        name: { type: "value", generateFn: () => "John" },
-        age: { type: "value", generateFn: () => 50 },
-        locations: {
-          type: "arr",
-          item: { type: "value", generateFn: () => "Taiwan" },
-          len: 5,
-        },
-      },
-    };
+    const config = createObjectConfig({
+      name: createValueConfig(() => "John"),
+      age: createValueConfig(() => 50),
+      locations: createArrayConfig(
+        createValueConfig(() => "Taiwan"),
+        5,
+      ),
+    });
     const result = createGeneratorByType(config)();
 
     expect(result).toEqual({
@@ -172,14 +171,11 @@ describe("createGeneratorByType", () => {
       throw Error("error");
     };
 
-    const config = {
-      type: "obj",
-      content: {
-        name: { type: "value", generateFn: () => "John" },
-        age: { type: "int" },
-        email: { type: "email" },
-      },
-    };
+    const config = createObjectConfig({
+      name: { type: "value", generateFn: () => "John" },
+      age: { type: "int" },
+      email: { type: "email" },
+    });
 
     const result = createGeneratorByType(config, customTypeMatch)();
 
