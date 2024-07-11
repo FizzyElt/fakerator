@@ -30,27 +30,26 @@ type AllConfig =
   | TupleConfig<unknown, unknown, unknown, unknown, unknown>
   | BoundedSeriesConfig;
 
-export const createValueGenerator = <T>(
-  config: ValueConfig<T>,
-): (() => Result<T>) => {
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const createValueGenerator = <R = unknown>(config: any): (() => R) => {
   valueConfigScheme.parse(config);
 
-  return config.generateFn as () => Result<T>;
+  return config.generateFn as () => R;
 };
 
-export const createSelectionGenerator = <T>(
-  config: SelectionConfig<T>,
-): (() => Result<T>) => {
+export const createSelectionGenerator = <R = unknown>(
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  config: any,
+): (() => R) => {
   selectionConfigScheme.parse(config);
 
   const { items } = config;
 
-  return (() => items[faker.number.int(items.length - 1)]) as () => Result<T>;
+  return (() => items[faker.number.int(items.length - 1)]) as () => R;
 };
 
-export const createObjectGenerator = <T>(
-  config: ObjectConfig<T>,
-): (() => Result<ObjectConfig<T>>) => {
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const createObjectGenerator = <R = unknown>(config: any): (() => R) => {
   objConfigScheme.parse(config);
 
   const keyWithFns: [string, () => Result<AllConfig>][] = Object.entries(
@@ -61,56 +60,36 @@ export const createObjectGenerator = <T>(
   ]);
 
   return () => {
-    const result: Record<string, Result<AllConfig>> = {};
+    const result: Record<string, unknown> = {};
     for (const [key, generateFn] of keyWithFns) {
       result[key] = generateFn();
     }
-    return result as Result<ObjectConfig<T>>;
+    return result as R;
   };
 };
-
-export const createArrayGenerator = <T>(
-  config: ArrayConfig<T>,
-): (() => Result<ArrayConfig<T>>) => {
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const createArrayGenerator = <R = unknown>(config: any): (() => R) => {
   arrayConfigScheme.parse(config);
 
   const itemGeneratorFn = createGeneratorByType(config.item as AllConfig);
 
-  return (() =>
-    Array.from({ length: config.len ?? 0 }, itemGeneratorFn)) as () => Result<
-    ArrayConfig<T>
-  >;
+  return () => Array.from({ length: config.len ?? 0 }, itemGeneratorFn) as R;
 };
-
-export const createTupleGenerator = <
-  A,
-  B = undefined,
-  C = undefined,
-  D = undefined,
-  E = undefined,
->(
-  config: TupleConfig<A, B, C, D, E>,
-): (() => Result<TupleConfig<A, B, C, D, E>>) => {
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const createTupleGenerator = <R = unknown>(config: any): (() => R) => {
   tupleConfigScheme.parse(config);
 
-  const itemsFns = config.configItems.map((configItem) =>
-    createGeneratorByType(configItem as AllConfig),
+  const itemsFns = config.configItems.map((configItem: AllConfig) =>
+    createGeneratorByType(configItem),
   );
 
-  return () =>
-    itemsFns.map((generateFn) => generateFn()) as Result<
-      TupleConfig<A, B, C, D, E>
-    >;
+  return () => itemsFns.map((generateFn: () => unknown) => generateFn());
 };
 
-/**
- * bounded series
- * @param {BoundedSeriesConfig} config
- * @return {() => Array<number>}
- */
-export const createBoundedSeriesGenerator = (
-  config: BoundedSeriesConfig,
-): (() => Result<BoundedSeriesConfig>) => {
+export const createBoundedSeriesGenerator = <R = unknown>(
+  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
+  config: any,
+): (() => R) => {
   boundedSeriesScheme.parse(config);
 
   const { upperLimit, lowerLimit, createInitValue, count } = config;
@@ -125,32 +104,25 @@ export const createBoundedSeriesGenerator = (
       boundedSeries.push(value);
     }
 
-    return boundedSeries;
+    return boundedSeries as R;
   };
 };
 
-/**
- *
- * @param {ValueConfig | SelectionConfig | ArrayConfig | ObjectConfig | TupleConfig | BoundedSeriesConfig} config
- * @param {(() => ValueConfig)=} customTypeMatch
- * @return {function}
- */
-export const createGeneratorByType = (
-  config: AllConfig,
-): (() => Result<AllConfig>) => {
+// biome-ignore lint/suspicious/noExplicitAny: <explanation>
+export const createGeneratorByType = <R = unknown>(config: any): (() => R) => {
   switch (config.type) {
     case "obj":
-      return createObjectGenerator(config);
+      return createObjectGenerator<R>(config);
     case "arr":
-      return createArrayGenerator(config);
+      return createArrayGenerator<R>(config);
     case "select":
-      return createSelectionGenerator(config);
+      return createSelectionGenerator<R>(config);
     case "tuple":
-      return createTupleGenerator(config);
+      return createTupleGenerator<R>(config);
     case "value":
-      return createValueGenerator(config);
+      return createValueGenerator<R>(config);
     case "bounded_series":
-      return createBoundedSeriesGenerator(config);
+      return createBoundedSeriesGenerator<R>(config);
     default: {
       //   if (customTypeMatch) {
       //     return createValueGenerator(customTypeMatch(config));
@@ -159,5 +131,3 @@ export const createGeneratorByType = (
     }
   }
 };
-
-

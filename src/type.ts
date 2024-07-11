@@ -73,7 +73,15 @@ export type Result<T> = T extends ValueConfig<infer U>
       : T extends ArrayConfig<infer W>
         ? Array<Result<W>>
         : T extends ObjectConfig<infer O>
-          ? ObjectResult<O>
+          ? { [K in keyof O]: Result<O[K]> }
           : T extends TupleConfig<infer A, infer B, infer C, infer D, infer E>
-            ? TupleResult<A, B, C, D, E>
+            ? E extends undefined
+              ? D extends undefined
+                ? C extends undefined
+                  ? B extends undefined
+                    ? [Result<A>]
+                    : [Result<A>, Result<B>]
+                  : [Result<A>, Result<B>, Result<C>]
+                : [Result<A>, Result<B>, Result<C>, Result<D>]
+              : [Result<A>, Result<B>, Result<C>, Result<D>, Result<E>]
             : never;
