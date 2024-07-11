@@ -46,24 +46,6 @@ export type TupleConfig<
     : [A, B, C, D, E];
 };
 
-export type TupleResult<
-  A,
-  B = undefined,
-  C = undefined,
-  D = undefined,
-  E = undefined,
-> = E extends undefined
-  ? D extends undefined
-    ? C extends undefined
-      ? B extends undefined
-        ? [Result<A>]
-        : [Result<A>, Result<B>]
-      : [Result<A>, Result<B>, Result<C>]
-    : [Result<A>, Result<B>, Result<C>, Result<D>]
-  : [Result<A>, Result<B>, Result<C>, Result<D>, Result<E>];
-
-export type ObjectResult<T> = { [K in keyof T]: Result<T[K]> };
-
 export type Result<T> = T extends ValueConfig<infer U>
   ? U
   : T extends SelectionConfig<infer S>

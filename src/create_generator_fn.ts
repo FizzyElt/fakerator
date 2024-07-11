@@ -17,17 +17,18 @@ import type {
   Result,
   BoundedSeriesConfig,
 } from "./type";
+import { createObjectConfig, createValueConfig } from "./create_config";
 
-type AllConfig =
-  | ValueConfig<unknown>
-  | SelectionConfig<unknown>
-  | ArrayConfig<unknown>
-  | ObjectConfig<unknown>
-  | TupleConfig<unknown>
-  | TupleConfig<unknown, unknown>
-  | TupleConfig<unknown, unknown, unknown>
-  | TupleConfig<unknown, unknown, unknown, unknown>
-  | TupleConfig<unknown, unknown, unknown, unknown, unknown>
+type AllConfig<T> =
+  | ValueConfig<T>
+  | SelectionConfig<T>
+  | ArrayConfig<T>
+  | ObjectConfig<T>
+  | TupleConfig<T>
+  | TupleConfig<T, T>
+  | TupleConfig<T, T, T>
+  | TupleConfig<T, T, T, T>
+  | TupleConfig<T, T, T, T, T>
   | BoundedSeriesConfig;
 
 // biome-ignore lint/suspicious/noExplicitAny: <explanation>
@@ -37,59 +38,75 @@ export const createValueGenerator = <R = unknown>(config: any): (() => R) => {
   return config.generateFn as () => R;
 };
 
-export const createSelectionGenerator = <R = unknown>(
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  config: any,
-): (() => R) => {
+export const createSelectionGenerator = <T extends SelectionConfig<unknown>>(
+  config: T,
+): (() => Result<T>) => {
   selectionConfigScheme.parse(config);
 
   const { items } = config;
 
-  return (() => items[faker.number.int(items.length - 1)]) as () => R;
+  return (() => items[faker.number.int(items.length - 1)]) as () => Result<T>;
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const createObjectGenerator = <R = unknown>(config: any): (() => R) => {
+export const createObjectGenerator = <T extends ObjectConfig<unknown>>(
+  config: T,
+  customTypeMatch?: (config: unknown) => ValueConfig<unknown>,
+): (() => Result<T>) => {
   objConfigScheme.parse(config);
 
-  const keyWithFns: [string, () => Result<AllConfig>][] = Object.entries(
-    config.content as object,
-  ).map(([key, subConfig]) => [
-    key,
-    createGeneratorByType(subConfig as AllConfig),
-  ]);
+  const keyWithFns: [string, () => Result<AllConfig<unknown>>][] =
+    Object.entries(config.content as object).map(([key, subConfig]) => [
+      key,
+      createGeneratorByType(subConfig, customTypeMatch),
+    ]);
 
   return () => {
     const result: Record<string, unknown> = {};
     for (const [key, generateFn] of keyWithFns) {
       result[key] = generateFn();
     }
-    return result as R;
+    return result as Result<T>;
   };
 };
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const createArrayGenerator = <R = unknown>(config: any): (() => R) => {
+
+export const createArrayGenerator = <T extends ArrayConfig<unknown>>(
+  config: T,
+  customTypeMatch?: (config: unknown) => ValueConfig<unknown>,
+): (() => Result<T>) => {
   arrayConfigScheme.parse(config);
 
-  const itemGeneratorFn = createGeneratorByType(config.item as AllConfig);
-
-  return () => Array.from({ length: config.len ?? 0 }, itemGeneratorFn) as R;
-};
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const createTupleGenerator = <R = unknown>(config: any): (() => R) => {
-  tupleConfigScheme.parse(config);
-
-  const itemsFns = config.configItems.map((configItem: AllConfig) =>
-    createGeneratorByType(configItem),
+  const itemGeneratorFn = createGeneratorByType(
+    config.item as AllConfig<unknown>,
+    customTypeMatch,
   );
 
-  return () => itemsFns.map((generateFn: () => unknown) => generateFn());
+  return () =>
+    Array.from({ length: config.len ?? 0 }, itemGeneratorFn) as Result<T>;
 };
 
-export const createBoundedSeriesGenerator = <R = unknown>(
-  // biome-ignore lint/suspicious/noExplicitAny: <explanation>
-  config: any,
-): (() => R) => {
+export const createTupleGenerator = <
+  T extends
+    | TupleConfig<unknown, unknown, unknown, unknown, unknown>
+    | TupleConfig<unknown, unknown, unknown, unknown>
+    | TupleConfig<unknown, unknown, unknown>
+    | TupleConfig<unknown, unknown>
+    | TupleConfig<unknown>,
+>(
+  config: T,
+  customTypeMatch?: (config: unknown) => ValueConfig<unknown>,
+): (() => Result<T>) => {
+  tupleConfigScheme.parse(config);
+
+  const itemsFns = config.configItems.map((configItem) =>
+    createGeneratorByType(configItem as AllConfig<unknown>, customTypeMatch),
+  );
+
+  return () => itemsFns.map((generateFn) => generateFn()) as Result<T>;
+};
+
+export const createBoundedSeriesGenerator = <T extends BoundedSeriesConfig>(
+  config: T,
+): (() => Result<T>) => {
   boundedSeriesScheme.parse(config);
 
   const { upperLimit, lowerLimit, createInitValue, count } = config;
@@ -104,30 +121,40 @@ export const createBoundedSeriesGenerator = <R = unknown>(
       boundedSeries.push(value);
     }
 
-    return boundedSeries as R;
+    return boundedSeries as Result<T>;
   };
 };
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const createGeneratorByType = <R = unknown>(config: any): (() => R) => {
+export const createGeneratorByType = <T extends AllConfig<unknown>>(
+  config: T,
+  customTypeMatch?: (config: unknown) => ValueConfig<unknown>,
+): (() => Result<T>) => {
   switch (config.type) {
     case "obj":
-      return createObjectGenerator<R>(config);
+      return createObjectGenerator(config, customTypeMatch) as () => Result<T>;
     case "arr":
-      return createArrayGenerator<R>(config);
-    case "select":
-      return createSelectionGenerator<R>(config);
+      return createArrayGenerator(config, customTypeMatch) as () => Result<T>;
     case "tuple":
-      return createTupleGenerator<R>(config);
+      return createTupleGenerator(config, customTypeMatch) as () => Result<T>;
+    case "select":
+      return createSelectionGenerator(config) as () => Result<T>;
     case "value":
-      return createValueGenerator<R>(config);
+      return createValueGenerator(config);
     case "bounded_series":
-      return createBoundedSeriesGenerator<R>(config);
+      return createBoundedSeriesGenerator(config) as () => Result<T>;
     default: {
-      //   if (customTypeMatch) {
-      //     return createValueGenerator(customTypeMatch(config));
-      //   }
+      if (customTypeMatch) {
+        return createValueGenerator(customTypeMatch(config));
+      }
       throw Error(`config type "${config}" is not supported`);
     }
   }
 };
+
+const config = createObjectConfig({
+  a: createObjectConfig({
+    b: createValueConfig(() => 1),
+  }),
+});
+
+const fn = createGeneratorByType(config);

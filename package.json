@@ -1,34 +1,28 @@
 {
   "name": "struct-fakerator",
-  "version": "1.2.6",
+  "version": "2.0.1",
   "description": "",
-  "main": "cjs/index.js",
-  "module": "esm/index.mjs",
+  "main": "dist/index.js",
+  "module": "dist/index.mjs",
+  "types": "dist/index.d.ts",
   "exports": {
-    ".": {
-      "require": "./cjs/index.js",
-      "import": "./esm/index.mjs"
-    }
+    "module": "./dist/index.mjs",
+    "types": "./dist/index.d.ts",
+    "import": "./dist/index.mjs",
+    "require": "./dist/index.js"
   },
-  "type": "module",
   "scripts": {
-    "start": "node src/index.js",
-    "dev": "node",
-    "build:cjs": "babel src --out-dir cjs --presets=@babel/preset-env --plugins=@babel/plugin-transform-modules-commonjs",
-    "build:esm": "cp -r src/* esm",
-    "build": "pnpm build:cjs && pnpm build:esm",
+    "build": "tsup src/index.ts --format cjs,esm --dts",
     "test": "vitest src"
   },
   "keywords": [],
   "author": "FizzyElt",
-  "homepage": "https://github.com/FizzyElt/struct-fakerator",
+  "homepage": "https://github.com/FizzyElt/fakerator",
   "license": "ISC",
   "devDependencies": {
-    "@babel/cli": "^7.24.7",
-    "@babel/core": "^7.24.7",
-    "@babel/preset-env": "^7.24.7",
     "@biomejs/biome": "^1.8.3",
     "@faker-js/faker": "^8.4.1",
+    "tsup": "^8.1.0",
     "typescript": "^5.5.3",
     "vitest": "^1.6.0"
   },
