@@ -150,11 +150,3 @@ export const createGeneratorByType = <T extends AllConfig<unknown>>(
     }
   }
 };
-
-const config = createObjectConfig({
-  a: createObjectConfig({
-    b: createValueConfig(() => 1),
-  }),
-});
-
-const fn = createGeneratorByType(config);
