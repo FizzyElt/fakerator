@@ -14,6 +14,7 @@ import {
   createObjectConfig,
   createArrayConfig,
 } from "./create_config";
+import type { ObjectConfig } from "./type";
 
 describe("createValueGenerator", () => {
   test("normal", () => {
@@ -153,6 +154,20 @@ describe("createGeneratorByType", () => {
       age: 50,
       locations: ["Taiwan", "Taiwan", "Taiwan", "Taiwan", "Taiwan"],
     });
+  });
+
+  test("test error config", () => {
+    const config = {
+      type: "obj",
+      content: {
+        name: {
+          type: "123",
+          generateFn: "John",
+        },
+      },
+    } as ObjectConfig<unknown>;
+
+    expect(() => createGeneratorByType(config)).toThrowError();
   });
 
   test("with custom type match", () => {
