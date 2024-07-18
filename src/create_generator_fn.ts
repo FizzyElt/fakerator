@@ -17,7 +17,6 @@ import type {
   Result,
   BoundedSeriesConfig,
 } from "./type";
-import { createObjectConfig, createValueConfig } from "./create_config";
 
 type AllConfig<T> =
   | ValueConfig<T>
@@ -31,33 +30,60 @@ type AllConfig<T> =
   | TupleConfig<T, T, T, T, T>
   | BoundedSeriesConfig;
 
-// biome-ignore lint/suspicious/noExplicitAny: <explanation>
-export const createValueGenerator = <R = unknown>(config: any): (() => R) => {
-  valueConfigScheme.parse(config);
+const _createValueGenerator = <R = unknown>(
+  config: ValueConfig<unknown>,
+  path: string,
+): (() => R) => {
+  try {
+    valueConfigScheme.parse(config);
+  } catch (err) {
+    throw new Error(`config path: ${path}.value\n${err}`);
+  }
 
   return config.generateFn as () => R;
 };
+export const createValueGenerator = <R = unknown>(
+  config: ValueConfig<unknown>,
+): (() => R) => _createValueGenerator(config, "*");
 
-export const createSelectionGenerator = <T extends SelectionConfig<unknown>>(
+// =================== generator fn ====================
+
+const _createSelectionGenerator = <T extends SelectionConfig<unknown>>(
   config: T,
+  path: string,
 ): (() => Result<T>) => {
-  selectionConfigScheme.parse(config);
+  try {
+    selectionConfigScheme.parse(config);
+  } catch (err) {
+    throw new Error(`config path: ${path}.select\n${err}`);
+  }
 
   const { items } = config;
 
   return (() => items[faker.number.int(items.length - 1)]) as () => Result<T>;
 };
 
-export const createObjectGenerator = <T extends ObjectConfig<unknown>>(
+export const createSelectionGenerator = <T extends SelectionConfig<unknown>>(
   config: T,
-  customTypeMatch?: (config: unknown) => ValueConfig<unknown>,
+): (() => Result<T>) => _createSelectionGenerator(config, "*");
+
+// =================== generator fn ====================
+
+const _createObjectGenerator = <T extends ObjectConfig<unknown>>(
+  config: T,
+  path: string,
+  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => {
-  objConfigScheme.parse(config);
+  try {
+    objConfigScheme.parse(config);
+  } catch (err) {
+    throw new Error(`config path: ${path}.obj\n ${err}`);
+  }
 
   const keyWithFns: [string, () => Result<AllConfig<unknown>>][] =
     Object.entries(config.content as object).map(([key, subConfig]) => [
       key,
-      createGeneratorByType(subConfig, customTypeMatch),
+      _createGeneratorByType(subConfig, `${path}.obj[${key}]`, customTypeMatch),
     ]);
 
   return () => {
@@ -68,22 +94,68 @@ export const createObjectGenerator = <T extends ObjectConfig<unknown>>(
     return result as Result<T>;
   };
 };
-
-export const createArrayGenerator = <T extends ArrayConfig<unknown>>(
+export const createObjectGenerator = <T extends ObjectConfig<unknown>>(
   config: T,
-  customTypeMatch?: (config: unknown) => ValueConfig<unknown>,
-): (() => Result<T>) => {
-  arrayConfigScheme.parse(config);
+  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
+): (() => Result<T>) => _createObjectGenerator(config, "*", customTypeMatch);
 
-  const itemGeneratorFn = createGeneratorByType(
+// =================== generator fn ====================
+
+const _createArrayGenerator = <T extends ArrayConfig<unknown>>(
+  config: T,
+  path: string,
+  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
+): (() => Result<T>) => {
+  try {
+    arrayConfigScheme.parse(config);
+  } catch (err) {
+    throw new Error(`config path: ${path}.arr\n ${err}`);
+  }
+
+  const itemGeneratorFn = _createGeneratorByType(
     config.item as AllConfig<unknown>,
+    `${path}.arr`,
     customTypeMatch,
   );
 
   return () =>
     Array.from({ length: config.len ?? 0 }, itemGeneratorFn) as Result<T>;
 };
+export const createArrayGenerator = <T extends ArrayConfig<unknown>>(
+  config: T,
+  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
+): (() => Result<T>) => _createArrayGenerator(config, "*", customTypeMatch);
 
+// =================== generator fn ====================
+
+const _createTupleGenerator = <
+  T extends
+    | TupleConfig<unknown, unknown, unknown, unknown, unknown>
+    | TupleConfig<unknown, unknown, unknown, unknown>
+    | TupleConfig<unknown, unknown, unknown>
+    | TupleConfig<unknown, unknown>
+    | TupleConfig<unknown>,
+>(
+  config: T,
+  path: string,
+  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
+): (() => Result<T>) => {
+  try {
+    tupleConfigScheme.parse(config);
+  } catch (err) {
+    throw new Error(`config path: ${path}.tuple\n ${err}`);
+  }
+
+  const itemsFns = config.configItems.map((configItem, index) =>
+    _createGeneratorByType(
+      configItem as AllConfig<unknown>,
+      `${path}.tuple[${index}]`,
+      customTypeMatch,
+    ),
+  );
+
+  return () => itemsFns.map((generateFn) => generateFn()) as Result<T>;
+};
 export const createTupleGenerator = <
   T extends
     | TupleConfig<unknown, unknown, unknown, unknown, unknown>
@@ -93,21 +165,20 @@ export const createTupleGenerator = <
     | TupleConfig<unknown>,
 >(
   config: T,
-  customTypeMatch?: (config: unknown) => ValueConfig<unknown>,
-): (() => Result<T>) => {
-  tupleConfigScheme.parse(config);
+  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
+): (() => Result<T>) => _createTupleGenerator(config, "*", customTypeMatch);
 
-  const itemsFns = config.configItems.map((configItem) =>
-    createGeneratorByType(configItem as AllConfig<unknown>, customTypeMatch),
-  );
+// =================== generator fn ====================
 
-  return () => itemsFns.map((generateFn) => generateFn()) as Result<T>;
-};
-
-export const createBoundedSeriesGenerator = <T extends BoundedSeriesConfig>(
+const _createBoundedSeriesGenerator = <T extends BoundedSeriesConfig>(
   config: T,
+  path: string,
 ): (() => Result<T>) => {
-  boundedSeriesScheme.parse(config);
+  try {
+    boundedSeriesScheme.parse(config);
+  } catch (err) {
+    throw new Error(`config path: ${path}.boundedSeries\n ${err}`);
+  }
 
   const { upperLimit, lowerLimit, createInitValue, count } = config;
 
@@ -124,29 +195,52 @@ export const createBoundedSeriesGenerator = <T extends BoundedSeriesConfig>(
     return boundedSeries as Result<T>;
   };
 };
-
-export const createGeneratorByType = <T extends AllConfig<unknown>>(
+export const createBoundedSeriesGenerator = <T extends BoundedSeriesConfig>(
   config: T,
-  customTypeMatch?: (config: unknown) => ValueConfig<unknown>,
+): (() => Result<T>) => _createBoundedSeriesGenerator(config, "*");
+
+// =================== generator fn ====================
+
+const _createGeneratorByType = <T extends AllConfig<unknown>>(
+  config: T,
+  path: string,
+  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => {
   switch (config.type) {
     case "obj":
-      return createObjectGenerator(config, customTypeMatch) as () => Result<T>;
+      return _createObjectGenerator(
+        config,
+        path,
+        customTypeMatch,
+      ) as () => Result<T>;
     case "arr":
-      return createArrayGenerator(config, customTypeMatch) as () => Result<T>;
+      return _createArrayGenerator(
+        config,
+        path,
+        customTypeMatch,
+      ) as () => Result<T>;
     case "tuple":
-      return createTupleGenerator(config, customTypeMatch) as () => Result<T>;
+      return _createTupleGenerator(
+        config,
+        path,
+        customTypeMatch,
+      ) as () => Result<T>;
     case "select":
-      return createSelectionGenerator(config) as () => Result<T>;
+      return _createSelectionGenerator(config, path) as () => Result<T>;
     case "value":
-      return createValueGenerator(config);
+      return _createValueGenerator(config, path);
     case "bounded_series":
-      return createBoundedSeriesGenerator(config) as () => Result<T>;
+      return _createBoundedSeriesGenerator(config, path) as () => Result<T>;
     default: {
       if (customTypeMatch) {
-        return createValueGenerator(customTypeMatch(config));
+        return createValueGenerator(customTypeMatch(config, path));
       }
-      throw Error(`config type "${config}" is not supported`);
+      throw new Error(`path: ${path}\nconfig type is not supported`);
     }
   }
 };
+
+export const createGeneratorByType = <T extends AllConfig<unknown>>(
+  config: T,
+  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
+): (() => Result<T>) => _createGeneratorByType(config, "*", customTypeMatch);
