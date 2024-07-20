@@ -13,6 +13,7 @@
   },
   "scripts": {
     "build": "tsup src/index.ts --format cjs,esm --dts",
+    "publish": "pnpm build && pnpm publish --access public",
     "test": "vitest src"
   },
   "keywords": [],
