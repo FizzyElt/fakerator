@@ -72,7 +72,7 @@ export const createSelectionGenerator = <T extends SelectionConfig<unknown>>(
 const _createObjectGenerator = <T extends ObjectConfig<unknown>>(
   config: T,
   path: string,
-  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
+  customTypeMatch?: (config: unknown, path: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => {
   try {
     objConfigScheme.parse(config);
@@ -104,7 +104,7 @@ export const createObjectGenerator = <T extends ObjectConfig<unknown>>(
 const _createArrayGenerator = <T extends ArrayConfig<unknown>>(
   config: T,
   path: string,
-  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
+  customTypeMatch?: (config: unknown, path: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => {
   try {
     arrayConfigScheme.parse(config);
@@ -165,7 +165,7 @@ export const createTupleGenerator = <
     | TupleConfig<unknown>,
 >(
   config: T,
-  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
+  customTypeMatch?: (config: unknown, path: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => _createTupleGenerator(config, "*", customTypeMatch);
 
 // =================== generator fn ====================
@@ -204,7 +204,7 @@ export const createBoundedSeriesGenerator = <T extends BoundedSeriesConfig>(
 const _createGeneratorByType = <T extends AllConfig<unknown>>(
   config: T,
   path: string,
-  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
+  customTypeMatch?: (config: unknown, path: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => {
   switch (config.type) {
     case "obj":
@@ -242,5 +242,5 @@ const _createGeneratorByType = <T extends AllConfig<unknown>>(
 
 export const createGeneratorByType = <T extends AllConfig<unknown>>(
   config: T,
-  customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
+  customTypeMatch?: (config: unknown, path: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => _createGeneratorByType(config, "*", customTypeMatch);
