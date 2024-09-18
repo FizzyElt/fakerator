@@ -3,3 +3,6 @@ export * as Datatype from "./datatype";
 export * as Number from "./number";
 export * as String from "./string";
 export * as Lorem from "./lorem";
+export * as Finance from "./finance";
+export * as Phone from "./phone";
+export * as DateTime from "./datetime";
