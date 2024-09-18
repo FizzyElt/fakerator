@@ -1,5 +1,8 @@
 # 假資料結構產生器
+
+
 - [假資料結構產生器](#假資料結構產生器)
+  - [port to fakerjs](#port-to-fakerjs)
   - [用途](#用途)
     - [createValueGenerator](#createvaluegenerator)
     - [createSelectionGenerator](#createselectiongenerator)
@@ -8,6 +11,33 @@
     - [createTupleGenerator](#createtuplegenerator)
     - [createBoundedSeriesGenerator](#createboundedseriesgenerator)
   - [擴充](#擴充)
+
+## port to fakerjs
+
+- [X] Airline
+- [X] Animal
+- [X] Color
+- [X] Commerce
+- [X] Company
+- [X] Database
+- [X] Datatype
+- [X] Date(Datetime)
+- [X] Finance
+- [ ] Food
+- [ ] Git
+- [ ] Hacker
+- [ ] Image
+- [ ] Internet
+- [ ] Location
+- [X] Lorem
+- [ ] Music
+- [X] Number
+- [X] Person
+- [X] Phone
+- [ ] Science
+- [X] String
+- [ ] System
+- [ ] Vehicle
 
 ## 用途
 
