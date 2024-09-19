@@ -1,8 +1,7 @@
 # 假資料結構產生器
 
-
 - [假資料結構產生器](#假資料結構產生器)
-  - [port to fakerjs](#port-to-fakerjs)
+  - [Wrapping fakerjs Functions](#wrapping-fakerjs-functions)
   - [用途](#用途)
     - [createValueGenerator](#createvaluegenerator)
     - [createSelectionGenerator](#createselectiongenerator)
@@ -12,7 +11,7 @@
     - [createBoundedSeriesGenerator](#createboundedseriesgenerator)
   - [擴充](#擴充)
 
-## port to fakerjs
+## Wrapping fakerjs Functions
 
 - [X] Airline
 - [X] Animal
