@@ -1,6 +1,6 @@
 {
   "name": "struct-fakerator",
-  "version": "2.4.4",
+  "version": "2.4.5",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -22,6 +22,24 @@
       "module": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.mjs"
+      }
+    },
+    "./utils": {
+      "default": {
+        "types": "./dist/utils/index.d.ts",
+        "default": "./dist/utils/index.mjs"
+      },
+      "require": {
+        "types": "./dist/utils/index.d.ts",
+        "default": "./dist/utils/index.js"
+      },
+      "import": {
+        "types": "./dist/utils/index.d.ts",
+        "default": "./dist/utils/index.mjs"
+      },
+      "module": {
+        "types": "./dist/utils/index.d.ts",
+        "default": "./dist/utils/index.mjs"
       }
     },
     "./utils/*": {
