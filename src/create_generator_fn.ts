@@ -1,21 +1,21 @@
 import { faker } from "@faker-js/faker";
 
 import {
-  valueConfigScheme,
-  selectionConfigScheme,
   arrayConfigScheme,
-  objConfigScheme,
   boundedSeriesScheme,
+  objConfigScheme,
+  selectionConfigScheme,
   tupleConfigScheme,
+  valueConfigScheme,
 } from "./config_scheme";
 import type {
-  ValueConfig,
-  SelectionConfig,
-  ObjectConfig,
-  TupleConfig,
   ArrayConfig,
-  Result,
   BoundedSeriesConfig,
+  ObjectConfig,
+  Result,
+  SelectionConfig,
+  TupleConfig,
+  ValueConfig,
 } from "./type";
 
 type AllConfig<T> =

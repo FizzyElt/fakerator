@@ -22,21 +22,21 @@
 - [X] Datatype
 - [X] Date(Datetime)
 - [X] Finance
-- [ ] Food
-- [ ] Git
-- [ ] Hacker
-- [ ] Image
-- [ ] Internet
-- [ ] Location
+- [X] Food
+- [X] Git
+- [X] Hacker
+- [X] Image
+- [X] Internet
+- [X] Location
 - [X] Lorem
-- [ ] Music
+- [X] Music
 - [X] Number
 - [X] Person
 - [X] Phone
-- [ ] Science
+- [X] Science
 - [X] String
-- [ ] System
-- [ ] Vehicle
+- [X] System
+- [X] Vehicle
 
 ## 用途
 

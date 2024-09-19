@@ -1,12 +1,12 @@
 import { expect, test } from "vitest";
 
 import {
-  createValueConfig,
-  createSelectionConfig,
   createArrayConfig,
-  createTupleConfig,
-  createObjectConfig,
   createBoundedSeriesConfig,
+  createObjectConfig,
+  createSelectionConfig,
+  createTupleConfig,
+  createValueConfig,
 } from "./create_config";
 
 test("createValueConfig", () => {

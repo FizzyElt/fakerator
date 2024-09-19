@@ -6,13 +6,45 @@
   "module": "dist/index.mjs",
   "types": "dist/index.d.ts",
   "exports": {
-    "module": "./dist/index.mjs",
-    "types": "./dist/index.d.ts",
-    "import": "./dist/index.mjs",
-    "require": "./dist/index.js"
+    ".": {
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "require": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "import": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      },
+      "module": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
+      }
+    },
+    "./utils/*": {
+      "default": {
+        "types": "./dist/utils/*.d.ts",
+        "default": "./dist/utils/*.mjs"
+      },
+      "require": {
+        "types": "./dist/utils/*.d.ts",
+        "default": "./dist/utils/*.js"
+      },
+      "import": {
+        "types": "./dist/utils/*.d.ts",
+        "default": "./dist/utils/*.mjs"
+      },
+      "module": {
+        "types": "./dist/utils/*.d.ts",
+        "default": "./dist/utils/*.mjs"
+      }
+    }
   },
   "scripts": {
-    "build": "tsup src/index.ts --format cjs,esm --dts",
+    "build": "tsup",
     "publish": "pnpm build && pnpm publish --access public",
     "test": "vitest src"
   },

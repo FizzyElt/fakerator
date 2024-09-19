@@ -1,18 +1,18 @@
 import {
-  valueConfigScheme,
   arrayConfigScheme,
+  boundedSeriesScheme,
+  objConfigScheme,
   selectionConfigScheme,
   tupleConfigScheme,
-  objConfigScheme,
-  boundedSeriesScheme,
+  valueConfigScheme,
 } from "./config_scheme";
 import type {
-  ValueConfig,
-  SelectionConfig,
-  ObjectConfig,
   ArrayConfig,
-  TupleConfig,
   BoundedSeriesConfig,
+  ObjectConfig,
+  SelectionConfig,
+  TupleConfig,
+  ValueConfig,
 } from "./type";
 
 /**

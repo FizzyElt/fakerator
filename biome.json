@@ -15,7 +15,8 @@
 	"formatter": {
 		"indentStyle": "space",
 		"include": [
-			"src/**/*"
+			"src/**/*",
+			"tsup.config.ts"
 		]
 	},
 	"javascript": {
