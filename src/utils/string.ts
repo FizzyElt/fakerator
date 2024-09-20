@@ -1,45 +1,32 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** String [alpha](https://fakerjs.dev/api/string.html#alpha) */
-export const alpha = (...options: Parameters<typeof faker.string.alpha>) =>
-  createValueConfig(() => faker.string.alpha(...options));
+export const alpha = makeValueConfigFn(faker.string.alpha);
 
 /** String [alphanumeric](https://fakerjs.dev/api/string.html#alphanumeric) */
-export const alphanumeric = (
-  ...options: Parameters<typeof faker.string.alphanumeric>
-) => createValueConfig(() => faker.string.alphanumeric(...options));
+export const alphanumeric = makeValueConfigFn(faker.string.alphanumeric);
 
 /** String [binary](https://fakerjs.dev/api/string.html#binary) */
-export const binary = (...options: Parameters<typeof faker.string.binary>) =>
-  createValueConfig(() => faker.string.binary(...options));
+export const binary = makeValueConfigFn(faker.string.binary);
 
 /** String [fromCharacters](https://fakerjs.dev/api/string.html#fromCharacters) */
-export const fromCharacters = (
-  ...options: Parameters<typeof faker.string.fromCharacters>
-) => createValueConfig(() => faker.string.fromCharacters(...options));
+export const fromCharacters = makeValueConfigFn(faker.string.fromCharacters);
 
 /** String [hexadecimal](https://fakerjs.dev/api/string.html#hexadecimal) */
-export const hexadecimal = (
-  ...options: Parameters<typeof faker.string.hexadecimal>
-) => createValueConfig(() => faker.string.hexadecimal(...options));
+export const hexadecimal = makeValueConfigFn(faker.string.hexadecimal);
 
 /** String [nanoid](https://fakerjs.dev/api/string.html#nanoid) */
-export const nanoid = (...options: Parameters<typeof faker.string.nanoid>) =>
-  createValueConfig(() => faker.string.nanoid(...options));
+export const nanoid = makeValueConfigFn(faker.string.nanoid);
 
 /** String [octal](https://fakerjs.dev/api/string.html#octal) */
-export const octal = (...options: Parameters<typeof faker.string.octal>) =>
-  createValueConfig(() => faker.string.octal(...options));
+export const octal = makeValueConfigFn(faker.string.octal);
 
 /** String [sample](https://fakerjs.dev/api/string.html#sample) */
-export const sample = (...options: Parameters<typeof faker.string.sample>) =>
-  createValueConfig(() => faker.string.sample(...options));
+export const sample = makeValueConfigFn(faker.string.sample);
 
 /** String [symbol](https://fakerjs.dev/api/string.html#symbol) */
-export const symbol = (...options: Parameters<typeof faker.string.symbol>) =>
-  createValueConfig(() => faker.string.symbol(...options));
+export const symbol = makeValueConfigFn(faker.string.symbol);
 
 /** String [uuid](https://fakerjs.dev/api/string.html#uuid) */
-export const uuid = (...options: Parameters<typeof faker.string.uuid>) =>
-  createValueConfig(() => faker.string.uuid(...options));
+export const uuid = makeValueConfigFn(faker.string.uuid);

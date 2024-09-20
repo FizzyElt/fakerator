@@ -1,41 +1,29 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** Lorem [lines](https://fakerjs.dev/api/lorem.html#lines) */
-export const lines = (...options: Parameters<typeof faker.lorem.lines>) =>
-  createValueConfig(() => faker.lorem.lines(...options));
+export const lines = makeValueConfigFn(faker.lorem.lines);
 
 /** Lorem [paragraph](https://fakerjs.dev/api/lorem.html#paragraph) */
-export const paragraph = (
-  ...options: Parameters<typeof faker.lorem.paragraph>
-) => createValueConfig(() => faker.lorem.paragraph(...options));
+export const paragraph = makeValueConfigFn(faker.lorem.paragraph);
 
 /** Lorem [paragraphs](https://fakerjs.dev/api/lorem.html#paragraphs) */
-export const paragraphs = (
-  ...options: Parameters<typeof faker.lorem.paragraphs>
-) => createValueConfig(() => faker.lorem.paragraphs(...options));
+export const paragraphs = makeValueConfigFn(faker.lorem.paragraphs);
 
 /** Lorem [sentence](https://fakerjs.dev/api/lorem.html#sentence) */
-export const sentence = (...options: Parameters<typeof faker.lorem.sentence>) =>
-  createValueConfig(() => faker.lorem.sentence(...options));
+export const sentence = makeValueConfigFn(faker.lorem.sentence);
 
 /** Lorem [sentences](https://fakerjs.dev/api/lorem.html#sentences) */
-export const sentences = (
-  ...options: Parameters<typeof faker.lorem.sentences>
-) => createValueConfig(() => faker.lorem.sentences(...options));
+export const sentences = makeValueConfigFn(faker.lorem.sentences);
 
 /** Lorem [slug](https://fakerjs.dev/api/lorem.html#slug) */
-export const slug = (...options: Parameters<typeof faker.lorem.slug>) =>
-  createValueConfig(() => faker.lorem.slug(...options));
+export const slug = makeValueConfigFn(faker.lorem.slug);
 
 /** Lorem [text](https://fakerjs.dev/api/lorem.html#text) */
-export const text = (...options: Parameters<typeof faker.lorem.text>) =>
-  createValueConfig(() => faker.lorem.text(...options));
+export const text = makeValueConfigFn(faker.lorem.text);
 
 /** Lorem [word](https://fakerjs.dev/api/lorem.html#word) */
-export const word = (...options: Parameters<typeof faker.lorem.word>) =>
-  createValueConfig(() => faker.lorem.word(...options));
+export const word = makeValueConfigFn(faker.lorem.word);
 
 /** Lorem [words](https://fakerjs.dev/api/lorem.html#words) */
-export const words = (...options: Parameters<typeof faker.lorem.words>) =>
-  createValueConfig(() => faker.lorem.words(...options));
+export const words = makeValueConfigFn(faker.lorem.words);

@@ -1,28 +1,20 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** Hacker [abbreviation](https://fakerjs.dev/api/hacker.html#abbreviation) */
-export const abbreviation = (
-  ...options: Parameters<typeof faker.hacker.abbreviation>
-) => createValueConfig(() => faker.hacker.abbreviation(...options));
+export const abbreviation = makeValueConfigFn(faker.hacker.abbreviation);
 
 /** Hacker [adjective](https://fakerjs.dev/api/hacker.html#adjective) */
-export const adjective = (
-  ...options: Parameters<typeof faker.hacker.adjective>
-) => createValueConfig(() => faker.hacker.adjective(...options));
+export const adjective = makeValueConfigFn(faker.hacker.adjective);
 
 /** Hacker [ingverb](https://fakerjs.dev/api/hacker.html#ingverb) */
-export const ingverb = (...options: Parameters<typeof faker.hacker.ingverb>) =>
-  createValueConfig(() => faker.hacker.ingverb(...options));
+export const ingverb = makeValueConfigFn(faker.hacker.ingverb);
 
 /** Hacker [noun](https://fakerjs.dev/api/hacker.html#noun) */
-export const noun = (...options: Parameters<typeof faker.hacker.noun>) =>
-  createValueConfig(() => faker.hacker.noun(...options));
+export const noun = makeValueConfigFn(faker.hacker.noun);
 
 /** Hacker [phrase](https://fakerjs.dev/api/hacker.html#phrase) */
-export const phrase = (...options: Parameters<typeof faker.hacker.phrase>) =>
-  createValueConfig(() => faker.hacker.phrase(...options));
+export const phrase = makeValueConfigFn(faker.hacker.phrase);
 
 /** Hacker [verb](https://fakerjs.dev/api/hacker.html#verb) */
-export const verb = (...options: Parameters<typeof faker.hacker.verb>) =>
-  createValueConfig(() => faker.hacker.verb(...options));
+export const verb = makeValueConfigFn(faker.hacker.verb);

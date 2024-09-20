@@ -1,43 +1,29 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** Food [adjective](https://fakerjs.dev/api/food.html#adjective) */
-export const adjective = (
-  ...options: Parameters<typeof faker.food.adjective>
-) => createValueConfig(() => faker.food.adjective(...options));
+export const adjective = makeValueConfigFn(faker.food.adjective);
 
 /** Food [description](https://fakerjs.dev/api/food.html#description) */
-export const description = (
-  ...options: Parameters<typeof faker.food.description>
-) => createValueConfig(() => faker.food.description(...options));
+export const description = makeValueConfigFn(faker.food.description);
 
 /** Food [dish](https://fakerjs.dev/api/food.html#dish) */
-export const dish = (...options: Parameters<typeof faker.food.dish>) =>
-  createValueConfig(() => faker.food.dish(...options));
+export const dish = makeValueConfigFn(faker.food.dish);
 
 /** Food [ethnicCategory](https://fakerjs.dev/api/food.html#ethnicCategory) */
-export const ethnicCategory = (
-  ...options: Parameters<typeof faker.food.ethnicCategory>
-) => createValueConfig(() => faker.food.ethnicCategory(...options));
+export const ethnicCategory = makeValueConfigFn(faker.food.ethnicCategory);
 
 /** Food [fruit](https://fakerjs.dev/api/food.html#fruit) */
-export const fruit = (...options: Parameters<typeof faker.food.fruit>) =>
-  createValueConfig(() => faker.food.fruit(...options));
+export const fruit = makeValueConfigFn(faker.food.fruit);
 
 /** Food [ingredient](https://fakerjs.dev/api/food.html#ingredient) */
-export const ingredient = (
-  ...options: Parameters<typeof faker.food.ingredient>
-) => createValueConfig(() => faker.food.ingredient(...options));
+export const ingredient = makeValueConfigFn(faker.food.ingredient);
 
 /** Food [meat](https://fakerjs.dev/api/food.html#meat) */
-export const meat = (...options: Parameters<typeof faker.food.meat>) =>
-  createValueConfig(() => faker.food.meat(...options));
+export const meat = makeValueConfigFn(faker.food.meat);
 
 /** Food [spice](https://fakerjs.dev/api/food.html#spice) */
-export const spice = (...options: Parameters<typeof faker.food.spice>) =>
-  createValueConfig(() => faker.food.spice(...options));
+export const spice = makeValueConfigFn(faker.food.spice);
 
 /** Food [vegetable](https://fakerjs.dev/api/food.html#vegetable) */
-export const vegetable = (
-  ...options: Parameters<typeof faker.food.vegetable>
-) => createValueConfig(() => faker.food.vegetable(...options));
+export const vegetable = makeValueConfigFn(faker.food.vegetable);

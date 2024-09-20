@@ -1,42 +1,29 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** Word [adjective](https://fakerjs.dev/word.html#adjective) */
-export const adjective = (
-  ...options: Parameters<typeof faker.word.adjective>
-) => createValueConfig(() => faker.word.adjective(...options));
+export const adjective = makeValueConfigFn(faker.word.adjective);
 
 /** Word [adverb](https://fakerjs.dev/word.html#adverb) */
-export const adverb = (...options: Parameters<typeof faker.word.adverb>) =>
-  createValueConfig(() => faker.word.adverb(...options));
+export const adverb = makeValueConfigFn(faker.word.adverb);
 
 /** Word [conjunction](https://fakerjs.dev/word.html#conjunction) */
-export const conjunction = (
-  ...options: Parameters<typeof faker.word.conjunction>
-) => createValueConfig(() => faker.word.conjunction(...options));
+export const conjunction = makeValueConfigFn(faker.word.conjunction);
 
 /** Word [interjection](https://fakerjs.dev/word.html#interjection) */
-export const interjection = (
-  ...options: Parameters<typeof faker.word.interjection>
-) => createValueConfig(() => faker.word.interjection(...options));
+export const interjection = makeValueConfigFn(faker.word.interjection);
 
 /** Word [noun](https://fakerjs.dev/word.html#noun) */
-export const noun = (...options: Parameters<typeof faker.word.noun>) =>
-  createValueConfig(() => faker.word.noun(...options));
+export const noun = makeValueConfigFn(faker.word.noun);
 
 /** Word [preposition](https://fakerjs.dev/word.html#preposition) */
-export const preposition = (
-  ...options: Parameters<typeof faker.word.preposition>
-) => createValueConfig(() => faker.word.preposition(...options));
+export const preposition = makeValueConfigFn(faker.word.preposition);
 
 /** Word [sample](https://fakerjs.dev/word.html#sample) */
-export const sample = (...options: Parameters<typeof faker.word.sample>) =>
-  createValueConfig(() => faker.word.sample(...options));
+export const sample = makeValueConfigFn(faker.word.sample);
 
 /** Word [verb](https://fakerjs.dev/word.html#verb) */
-export const verb = (...options: Parameters<typeof faker.word.verb>) =>
-  createValueConfig(() => faker.word.verb(...options));
+export const verb = makeValueConfigFn(faker.word.verb);
 
 /** Word [words](https://fakerjs.dev/word.html#words) */
-export const words = (...options: Parameters<typeof faker.word.words>) =>
-  createValueConfig(() => faker.word.words(...options));
+export const words = makeValueConfigFn(faker.word.words);

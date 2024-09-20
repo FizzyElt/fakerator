@@ -1,16 +1,11 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** Airline [aircraftType](https://fakerjs.dev/api/airline.html#aircraftType) */
-export const aircraftType = (
-  ...options: Parameters<typeof faker.airline.aircraftType>
-) => createValueConfig(() => faker.airline.aircraftType(...options));
+export const aircraftType = makeValueConfigFn(faker.airline.aircraftType);
 
 /** Airline [flightNumber](https://fakerjs.dev/api/airline.html#flightNumber) */
-export const flightNumber = (
-  ...options: Parameters<typeof faker.airline.flightNumber>
-) => createValueConfig(() => faker.airline.flightNumber(...options));
+export const flightNumber = makeValueConfigFn(faker.airline.flightNumber);
 
 /** Airline [seat](https://fakerjs.dev/api/airline.html#seat) */
-export const seat = (...options: Parameters<typeof faker.airline.seat>) =>
-  createValueConfig(() => faker.airline.seat(...options));
+export const seat = makeValueConfigFn(faker.airline.seat);

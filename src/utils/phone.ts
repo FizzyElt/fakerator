@@ -1,10 +1,8 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** Phone [imei](https://fakerjs.dev/api/phone.html#imei) */
-export const imei = (...options: Parameters<typeof faker.phone.imei>) =>
-  createValueConfig(() => faker.phone.imei(...options));
+export const imei = makeValueConfigFn(faker.phone.imei);
 
 /** Phone [number](https://fakerjs.dev/api/phone.html#number) */
-export const number = (...options: Parameters<typeof faker.phone.number>) =>
-  createValueConfig(() => faker.phone.number(...options));
+export const number = makeValueConfigFn(faker.phone.number);

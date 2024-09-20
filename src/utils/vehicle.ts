@@ -1,39 +1,29 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** Vehicle [bicycle](https://fakerjs.dev/api/vehicle.html#bicycle) */
-export const bicycle = (...options: Parameters<typeof faker.vehicle.bicycle>) =>
-  createValueConfig(() => faker.vehicle.bicycle(...options));
+export const bicycle = makeValueConfigFn(faker.vehicle.bicycle);
 
 /** Vehicle [color](https://fakerjs.dev/api/vehicle.html#color) */
-export const color = (...options: Parameters<typeof faker.vehicle.color>) =>
-  createValueConfig(() => faker.vehicle.color(...options));
+export const color = makeValueConfigFn(faker.vehicle.color);
 
 /** Vehicle [fuel](https://fakerjs.dev/api/vehicle.html#fuel) */
-export const fuel = (...options: Parameters<typeof faker.vehicle.fuel>) =>
-  createValueConfig(() => faker.vehicle.fuel(...options));
+export const fuel = makeValueConfigFn(faker.vehicle.fuel);
 
 /** Vehicle [manufacturer](https://fakerjs.dev/api/vehicle.html#manufacturer) */
-export const manufacturer = (
-  ...options: Parameters<typeof faker.vehicle.manufacturer>
-) => createValueConfig(() => faker.vehicle.manufacturer(...options));
+export const manufacturer = makeValueConfigFn(faker.vehicle.manufacturer);
 
 /** Vehicle [model](https://fakerjs.dev/api/vehicle.html#model) */
-export const model = (...options: Parameters<typeof faker.vehicle.model>) =>
-  createValueConfig(() => faker.vehicle.model(...options));
+export const model = makeValueConfigFn(faker.vehicle.model);
 
 /** Vehicle [type](https://fakerjs.dev/api/vehicle.html#type) */
-export const type = (...options: Parameters<typeof faker.vehicle.type>) =>
-  createValueConfig(() => faker.vehicle.type(...options));
+export const type = makeValueConfigFn(faker.vehicle.type);
 
 /** Vehicle [vehicle](https://fakerjs.dev/api/vehicle.html#vehicle) */
-export const vehicle = (...options: Parameters<typeof faker.vehicle.vehicle>) =>
-  createValueConfig(() => faker.vehicle.vehicle(...options));
+export const vehicle = makeValueConfigFn(faker.vehicle.vehicle);
 
 /** Vehicle [vin](https://fakerjs.dev/api/vehicle.html#vin) */
-export const vin = (...options: Parameters<typeof faker.vehicle.vin>) =>
-  createValueConfig(() => faker.vehicle.vin(...options));
+export const vin = makeValueConfigFn(faker.vehicle.vin);
 
 /** Vehicle [vrm](https://fakerjs.dev/api/vehicle.html#vrm) */
-export const vrm = (...options: Parameters<typeof faker.vehicle.vrm>) =>
-  createValueConfig(() => faker.vehicle.vrm(...options));
+export const vrm = makeValueConfigFn(faker.vehicle.vrm);

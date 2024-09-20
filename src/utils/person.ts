@@ -1,69 +1,47 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** Person [bio](https://fakerjs.dev/api/person.html#bio) */
-export const bio = (...options: Parameters<typeof faker.person.bio>) =>
-  createValueConfig(() => faker.person.bio(...options));
+export const bio = makeValueConfigFn(faker.person.bio);
 
 /** Person [firstName](https://fakerjs.dev/api/person.html#firstName) */
-export const firstName = (
-  ...options: Parameters<typeof faker.person.firstName>
-) => createValueConfig(() => faker.person.firstName(...options));
+export const firstName = makeValueConfigFn(faker.person.firstName);
 
 /** Person [fullName](https://fakerjs.dev/api/person.html#fullName) */
-export const fullName = (
-  ...options: Parameters<typeof faker.person.fullName>
-) => createValueConfig(() => faker.person.fullName(...options));
+export const fullName = makeValueConfigFn(faker.person.fullName);
 
 /** Person [gender](https://fakerjs.dev/api/person.html#gender) */
-export const gender = (...options: Parameters<typeof faker.person.gender>) =>
-  createValueConfig(() => faker.person.gender(...options));
+export const gender = makeValueConfigFn(faker.person.gender);
 
 /** Person [jobArea](https://fakerjs.dev/api/person.html#jobArea) */
-export const jobArea = (...options: Parameters<typeof faker.person.jobArea>) =>
-  createValueConfig(() => faker.person.jobArea(...options));
+export const jobArea = makeValueConfigFn(faker.person.jobArea);
 
 /** Person [jobDescriptor](https://fakerjs.dev/api/person.html#jobDescriptor) */
-export const jobDescriptor = (
-  ...options: Parameters<typeof faker.person.jobDescriptor>
-) => createValueConfig(() => faker.person.bio(...options));
+export const jobDescriptor = makeValueConfigFn(faker.person.jobDescriptor);
 
 /** Person [jobTitle](https://fakerjs.dev/api/person.html#jobTitle) */
-export const jobTitle = (
-  ...options: Parameters<typeof faker.person.jobTitle>
-) => createValueConfig(() => faker.person.jobTitle(...options));
+export const jobTitle = makeValueConfigFn(faker.person.jobTitle);
 
 /** Person [jobType](https://fakerjs.dev/api/person.html#jobType) */
-export const jobType = (...options: Parameters<typeof faker.person.jobType>) =>
-  createValueConfig(() => faker.person.jobType(...options));
+export const jobType = makeValueConfigFn(faker.person.jobType);
 
 /** Person [lastName](https://fakerjs.dev/api/person.html#lastName) */
-export const lastName = (
-  ...options: Parameters<typeof faker.person.lastName>
-) => createValueConfig(() => faker.person.lastName(...options));
+export const lastName = makeValueConfigFn(faker.person.lastName);
 
 /** Person [middleName](https://fakerjs.dev/api/person.html#middleName) */
-export const middleName = (
-  ...options: Parameters<typeof faker.person.middleName>
-) => createValueConfig(() => faker.person.middleName(...options));
+export const middleName = makeValueConfigFn(faker.person.middleName);
 
 /** Person [prefix](https://fakerjs.dev/api/person.html#prefix) */
-export const prefix = (...options: Parameters<typeof faker.person.prefix>) =>
-  createValueConfig(() => faker.person.prefix(...options));
+export const prefix = makeValueConfigFn(faker.person.prefix);
 
 /** Person [sex](https://fakerjs.dev/api/person.html#sex) */
-export const sex = (...options: Parameters<typeof faker.person.sex>) =>
-  createValueConfig(() => faker.person.sex(...options));
+export const sex = makeValueConfigFn(faker.person.sex);
 
 /** Person [sexType](https://fakerjs.dev/api/person.html#sexType) */
-export const sexType = (...options: Parameters<typeof faker.person.sexType>) =>
-  createValueConfig(() => faker.person.sexType(...options));
+export const sexType = makeValueConfigFn(faker.person.sexType);
 
 /** Person [suffix](https://fakerjs.dev/api/person.html#suffix) */
-export const suffix = (...options: Parameters<typeof faker.person.suffix>) =>
-  createValueConfig(() => faker.person.suffix(...options));
+export const suffix = makeValueConfigFn(faker.person.suffix);
 
 /** Person [zodiacSign](https://fakerjs.dev/api/person.html#zodiacSign) */
-export const zodiacSign = (
-  ...options: Parameters<typeof faker.person.zodiacSign>
-) => createValueConfig(() => faker.person.zodiacSign(...options));
+export const zodiacSign = makeValueConfigFn(faker.person.zodiacSign);

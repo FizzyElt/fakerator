@@ -1,18 +1,14 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** Music [album](https://fakerjs.dev/api/music.html#album) */
-export const album = (...options: Parameters<typeof faker.music.album>) =>
-  createValueConfig(() => faker.music.album(...options));
+export const album = makeValueConfigFn(faker.music.album);
 
 /** Music [artist](https://fakerjs.dev/api/music.html#artist) */
-export const artist = (...options: Parameters<typeof faker.music.artist>) =>
-  createValueConfig(() => faker.music.artist(...options));
+export const artist = makeValueConfigFn(faker.music.artist);
 
 /** Music [genre](https://fakerjs.dev/api/music.html#genre) */
-export const genre = (...options: Parameters<typeof faker.music.genre>) =>
-  createValueConfig(() => faker.music.genre(...options));
+export const genre = makeValueConfigFn(faker.music.genre);
 
 /** Music [songName](https://fakerjs.dev/api/music.html#songName) */
-export const songName = (...options: Parameters<typeof faker.music.songName>) =>
-  createValueConfig(() => faker.music.songName(...options));
+export const songName = makeValueConfigFn(faker.music.songName);

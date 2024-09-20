@@ -1,47 +1,35 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** Datetime [anytime](https://fakerjs.dev/api/date.html#anytime) */
-export const anytime = (...options: Parameters<typeof faker.date.anytime>) =>
-  createValueConfig(() => faker.date.anytime(...options));
+export const anytime = makeValueConfigFn(faker.date.anytime);
 
 /** Datetime [between](https://fakerjs.dev/api/date.html#between) */
-export const between = (...options: Parameters<typeof faker.date.between>) =>
-  createValueConfig(() => faker.date.between(...options));
+export const between = makeValueConfigFn(faker.date.between);
 
 /** Datetime [betweens](https://fakerjs.dev/api/date.html#betweens) */
-export const betweens = (...options: Parameters<typeof faker.date.betweens>) =>
-  createValueConfig(() => faker.date.betweens(...options));
+export const betweens = makeValueConfigFn(faker.date.betweens);
 
 /** Datetime [birthdate](https://fakerjs.dev/api/date.html#birthdate) */
-export const birthdate = (
-  ...options: Parameters<typeof faker.date.birthdate>
-) => createValueConfig(() => faker.date.birthdate(...options));
+export const birthdate = makeValueConfigFn(faker.date.birthdate);
 
 /** Datetime [future](https://fakerjs.dev/api/date.html#future) */
-export const future = (...options: Parameters<typeof faker.date.future>) =>
-  createValueConfig(() => faker.date.future(...options));
+export const future = makeValueConfigFn(faker.date.future);
 
 /** Datetime [month](https://fakerjs.dev/api/date.html#month) */
-export const month = (...options: Parameters<typeof faker.date.month>) =>
-  createValueConfig(() => faker.date.month(...options));
+export const month = makeValueConfigFn(faker.date.month);
 
 /** Datetime [past](https://fakerjs.dev/api/date.html#past) */
-export const past = (...options: Parameters<typeof faker.date.past>) =>
-  createValueConfig(() => faker.date.past(...options));
+export const past = makeValueConfigFn(faker.date.past);
 
 /** Datetime [recent](https://fakerjs.dev/api/date.html#recent) */
-export const recent = (...options: Parameters<typeof faker.date.recent>) =>
-  createValueConfig(() => faker.date.recent(...options));
+export const recent = makeValueConfigFn(faker.date.recent);
 
 /** Datetime [soon](https://fakerjs.dev/api/date.html#soon) */
-export const soon = (...options: Parameters<typeof faker.date.soon>) =>
-  createValueConfig(() => faker.date.soon(...options));
+export const soon = makeValueConfigFn(faker.date.soon);
 
 /** Datetime [timeZone](https://fakerjs.dev/api/date.html#timeZone) */
-export const timeZone = (...options: Parameters<typeof faker.date.timeZone>) =>
-  createValueConfig(() => faker.date.timeZone(...options));
+export const timeZone = makeValueConfigFn(faker.date.timeZone);
 
 /** Datetime [weekday](https://fakerjs.dev/api/date.html#weekday) */
-export const weekday = (...options: Parameters<typeof faker.date.weekday>) =>
-  createValueConfig(() => faker.date.weekday(...options));
+export const weekday = makeValueConfigFn(faker.date.weekday);

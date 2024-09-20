@@ -1,40 +1,32 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** Commerce [department](https://fakerjs.dev/api/commerce.html#department) */
-export const department = (
-  ...options: Parameters<typeof faker.commerce.department>
-) => createValueConfig(() => faker.commerce.department(...options));
+export const department = makeValueConfigFn(faker.commerce.department);
 
 /** Commerce [isbn](https://fakerjs.dev/api/commerce.html#isbn) */
-export const isbn = (...options: Parameters<typeof faker.commerce.isbn>) =>
-  createValueConfig(() => faker.commerce.isbn(...options));
+export const isbn = makeValueConfigFn(faker.commerce.isbn);
 
 /** Commerce [price](https://fakerjs.dev/api/commerce.html#price) */
-export const price = (...options: Parameters<typeof faker.commerce.price>) =>
-  createValueConfig(() => faker.commerce.price(...options));
+export const price = makeValueConfigFn(faker.commerce.price);
 
 /** Commerce [product](https://fakerjs.dev/api/commerce.html#product) */
-export const product = (
-  ...options: Parameters<typeof faker.commerce.product>
-) => createValueConfig(() => faker.commerce.product(...options));
+export const product = makeValueConfigFn(faker.commerce.product);
 
 /** Commerce [productAdjective](https://fakerjs.dev/api/commerce.html#productAdjective) */
-export const productAdjective = (
-  ...options: Parameters<typeof faker.commerce.productAdjective>
-) => createValueConfig(() => faker.commerce.productAdjective(...options));
+export const productAdjective = makeValueConfigFn(
+  faker.commerce.productAdjective,
+);
 
 /** Commerce [productDescription](https://fakerjs.dev/api/commerce.html#productDescription) */
-export const productDescription = (
-  ...options: Parameters<typeof faker.commerce.productDescription>
-) => createValueConfig(() => faker.commerce.productDescription(...options));
+export const productDescription = makeValueConfigFn(
+  faker.commerce.productDescription,
+);
 
 /** Commerce [productMaterial](https://fakerjs.dev/api/commerce.html#productMaterial) */
-export const productMaterial = (
-  ...options: Parameters<typeof faker.commerce.productMaterial>
-) => createValueConfig(() => faker.commerce.productMaterial(...options));
+export const productMaterial = makeValueConfigFn(
+  faker.commerce.productMaterial,
+);
 
 /** Commerce [productName](https://fakerjs.dev/api/commerce.html#productName) */
-export const productName = (
-  ...options: Parameters<typeof faker.commerce.productName>
-) => createValueConfig(() => faker.commerce.productName(...options));
+export const productName = makeValueConfigFn(faker.commerce.productName);

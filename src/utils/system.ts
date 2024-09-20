@@ -1,59 +1,40 @@
 import { faker } from "@faker-js/faker";
-import { createValueConfig } from "../create_config";
+import { makeValueConfigFn } from "./utils";
 
 /** System [commonFileExt](https://fakerjs.dev/api/system.html#commonFileExt) */
-export const commonFileExt = (
-  ...options: Parameters<typeof faker.system.commonFileExt>
-) => createValueConfig(() => faker.system.commonFileExt(...options));
+export const commonFileExt = makeValueConfigFn(faker.system.commonFileExt);
 
 /** System [commonFileName](https://fakerjs.dev/api/system.html#commonFileName) */
-export const commonFileName = (
-  ...options: Parameters<typeof faker.system.commonFileName>
-) => createValueConfig(() => faker.system.commonFileName(...options));
+export const commonFileName = makeValueConfigFn(faker.system.commonFileName);
 
 /** System [commonFileType](https://fakerjs.dev/api/system.html#commonFileType) */
-export const commonFileType = (
-  ...options: Parameters<typeof faker.system.commonFileType>
-) => createValueConfig(() => faker.system.commonFileType(...options));
+export const commonFileType = makeValueConfigFn(faker.system.commonFileType);
 
 /** System [cron](https://fakerjs.dev/api/system.html#cron) */
-export const cron = (...options: Parameters<typeof faker.system.cron>) =>
-  createValueConfig(() => faker.system.cron(...options));
+export const cron = makeValueConfigFn(faker.system.cron);
 
 /** System [directoryPath](https://fakerjs.dev/api/system.html#directoryPath) */
-export const directoryPath = (
-  ...options: Parameters<typeof faker.system.directoryPath>
-) => createValueConfig(() => faker.system.directoryPath(...options));
+export const directoryPath = makeValueConfigFn(faker.system.directoryPath);
 
 /** System [fileExt](https://fakerjs.dev/api/system.html#fileExt) */
-export const fileExt = (...options: Parameters<typeof faker.system.fileExt>) =>
-  createValueConfig(() => faker.system.fileExt(...options));
+export const fileExt = makeValueConfigFn(faker.system.fileExt);
 
 /** System [fileName](https://fakerjs.dev/api/system.html#fileName) */
-export const fileName = (
-  ...options: Parameters<typeof faker.system.fileName>
-) => createValueConfig(() => faker.system.fileName(...options));
+export const fileName = makeValueConfigFn(faker.system.fileName);
 
 /** System [filePath](https://fakerjs.dev/api/system.html#filePath) */
-export const filePath = (
-  ...options: Parameters<typeof faker.system.filePath>
-) => createValueConfig(() => faker.system.filePath(...options));
+export const filePath = makeValueConfigFn(faker.system.filePath);
 
 /** System [fileType](https://fakerjs.dev/api/system.html#fileType) */
-export const fileType = (
-  ...options: Parameters<typeof faker.system.fileType>
-) => createValueConfig(() => faker.system.fileType(...options));
+export const fileType = makeValueConfigFn(faker.system.fileType);
 
 /** System [mimeType](https://fakerjs.dev/api/system.html#mimeType) */
-export const mimeType = (
-  ...options: Parameters<typeof faker.system.mimeType>
-) => createValueConfig(() => faker.system.mimeType(...options));
+export const mimeType = makeValueConfigFn(faker.system.mimeType);
 
 /** System [networkInterface](https://fakerjs.dev/api/system.html#networkInterface) */
-export const networkInterface = (
-  ...options: Parameters<typeof faker.system.networkInterface>
-) => createValueConfig(() => faker.system.networkInterface(...options));
+export const networkInterface = makeValueConfigFn(
+  faker.system.networkInterface,
+);
 
 /** System [semver](https://fakerjs.dev/api/system.html#semver) */
-export const semver = (...options: Parameters<typeof faker.system.semver>) =>
-  createValueConfig(() => faker.system.semver(...options));
+export const semver = makeValueConfigFn(faker.system.semver);
