@@ -7,10 +7,6 @@
   "types": "dist/index.d.ts",
   "exports": {
     ".": {
-      "default": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      },
       "require": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
@@ -22,13 +18,13 @@
       "module": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.mjs"
+      },
+      "default": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.mjs"
       }
     },
     "./utils": {
-      "default": {
-        "types": "./dist/utils/index.d.ts",
-        "default": "./dist/utils/index.mjs"
-      },
       "require": {
         "types": "./dist/utils/index.d.ts",
         "default": "./dist/utils/index.js"
@@ -40,13 +36,13 @@
       "module": {
         "types": "./dist/utils/index.d.ts",
         "default": "./dist/utils/index.mjs"
+      },
+      "default": {
+        "types": "./dist/utils/index.d.ts",
+        "default": "./dist/utils/index.mjs"
       }
     },
     "./utils/*": {
-      "default": {
-        "types": "./dist/utils/*.d.ts",
-        "default": "./dist/utils/*.mjs"
-      },
       "require": {
         "types": "./dist/utils/*.d.ts",
         "default": "./dist/utils/*.js"
@@ -56,6 +52,10 @@
         "default": "./dist/utils/*.mjs"
       },
       "module": {
+        "types": "./dist/utils/*.d.ts",
+        "default": "./dist/utils/*.mjs"
+      },
+      "default": {
         "types": "./dist/utils/*.d.ts",
         "default": "./dist/utils/*.mjs"
       }
