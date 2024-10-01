@@ -8,9 +8,10 @@
     ],
     "declaration": true,
     "outDir": "./dist/lib/es6",
-    "moduleResolution": "node"
+    "moduleResolution": "node",
+    "skipLibCheck": true
   },
   "include": [
     "src/**/*"
-  ]
+  ],
 }
