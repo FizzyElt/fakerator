@@ -12,6 +12,7 @@ import type {
   ObjectConfig,
   SelectionConfig,
   TupleConfig,
+  TupleItems,
   ValueConfig,
 } from "./type";
 
@@ -79,6 +80,21 @@ export const createArrayConfig = <T>(item: T, len: number): ArrayConfig<T> => {
  * @return {TupleConfig}
  */
 interface CreateTupleConfig {
+  <A, B, C, D, E, F, G, H, I, J>(
+    configItems: [A, B, C, D, E, F, G, H, I, J],
+  ): TupleConfig<A, B, C, D, E, F, G, H, I, J>;
+  <A, B, C, D, E, F, G, H, I>(
+    configItems: [A, B, C, D, E, F, G, H, I],
+  ): TupleConfig<A, B, C, D, E, F, G, H, I>;
+  <A, B, C, D, E, F, G, H>(
+    configItems: [A, B, C, D, E, F, G, H],
+  ): TupleConfig<A, B, C, D, E, F, G, H>;
+  <A, B, C, D, E, F, G>(
+    configItems: [A, B, C, D, E, F, G],
+  ): TupleConfig<A, B, C, D, E, F, G>;
+  <A, B, C, D, E, F>(
+    configItems: [A, B, C, D, E, F],
+  ): TupleConfig<A, B, C, D, E, F>;
   <A, B, C, D, E>(configItems: [A, B, C, D, E]): TupleConfig<A, B, C, D, E>;
   <A, B, C, D>(configItems: [A, B, C, D]): TupleConfig<A, B, C, D>;
   <A, B, C>(configItems: [A, B, C]): TupleConfig<A, B, C>;
@@ -87,22 +103,19 @@ interface CreateTupleConfig {
 }
 export const createTupleConfig: CreateTupleConfig = <
   A,
-  B = undefined,
-  C = undefined,
-  D = undefined,
-  E = undefined,
+  B,
+  C,
+  D,
+  E,
+  F,
+  G,
+  H,
+  I,
+  J,
 >(
-  configItems: E extends undefined
-    ? D extends undefined
-      ? C extends undefined
-        ? B extends undefined
-          ? [A]
-          : [A, B]
-        : [A, B, C]
-      : [A, B, C, D]
-    : [A, B, C, D, E],
+  configItems: TupleItems<A, B, C, D, E, F, G, H, I, J>,
 ) => {
-  const config: TupleConfig<A, B, C, D, E> = {
+  const config: TupleConfig<A, B, C, D, E, F, G, H, I, J> = {
     type: "tuple",
     configItems,
   };

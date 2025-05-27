@@ -28,6 +28,11 @@ type AllConfig<T> =
   | TupleConfig<T, T, T>
   | TupleConfig<T, T, T, T>
   | TupleConfig<T, T, T, T, T>
+  | TupleConfig<T, T, T, T, T, T>
+  | TupleConfig<T, T, T, T, T, T, T>
+  | TupleConfig<T, T, T, T, T, T, T, T>
+  | TupleConfig<T, T, T, T, T, T, T, T, T>
+  | TupleConfig<T, T, T, T, T, T, T, T, T, T>
   | BoundedSeriesConfig;
 
 const _createValueGenerator = <R = unknown>(
@@ -130,6 +135,40 @@ export const createArrayGenerator = <T extends ArrayConfig<unknown>>(
 
 const _createTupleGenerator = <
   T extends
+    | TupleConfig<
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown
+      >
+    | TupleConfig<
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown
+      >
+    | TupleConfig<
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown
+      >
+    | TupleConfig<unknown, unknown, unknown, unknown, unknown, unknown>
     | TupleConfig<unknown, unknown, unknown, unknown, unknown>
     | TupleConfig<unknown, unknown, unknown, unknown>
     | TupleConfig<unknown, unknown, unknown>
