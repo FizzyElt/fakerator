@@ -99,6 +99,21 @@ describe("createObjectGenerator", () => {
 
     expect(obj).toEqual({ name: "John", age: 50, location: "Taiwan" });
   });
+
+  test("transformer function", () => {
+    const obj = createObjectGenerator(
+      createObjectConfig(
+        {
+          name: createValueConfig(() => "John"),
+          age: createValueConfig(() => 50),
+          location: createValueConfig(() => "Taiwan"),
+        },
+        ({ age }) => age + 50,
+      ),
+    )();
+
+    expect(obj).toEqual(100);
+  });
 });
 
 describe("createBoundedSeriesGenerator", () => {

@@ -12,6 +12,7 @@ import type {
   ArrayConfig,
   BoundedSeriesConfig,
   ObjectConfig,
+  ObjectConfigWithFn,
   Result,
   SelectionConfig,
   TupleConfig,
@@ -23,6 +24,7 @@ type AllConfig<T> =
   | SelectionConfig<T>
   | ArrayConfig<T>
   | ObjectConfig<T>
+  | ObjectConfigWithFn<T, unknown>
   | TupleConfig<T>
   | TupleConfig<T, T>
   | TupleConfig<T, T, T>
@@ -74,7 +76,9 @@ export const createSelectionGenerator = <T extends SelectionConfig<unknown>>(
 
 // =================== generator fn ====================
 
-const _createObjectGenerator = <T extends ObjectConfig<unknown>>(
+const _createObjectGenerator = <
+  T extends ObjectConfig<unknown> | ObjectConfigWithFn<unknown, unknown>,
+>(
   config: T,
   path: string,
   customTypeMatch?: (config: unknown, path: string) => ValueConfig<unknown>,
@@ -95,6 +99,10 @@ const _createObjectGenerator = <T extends ObjectConfig<unknown>>(
     const result: Record<string, unknown> = {};
     for (const [key, generateFn] of keyWithFns) {
       result[key] = generateFn();
+    }
+
+    if ("transformer" in config && typeof config.transformer === "function") {
+      return config.transformer(result) as Result<T>;
     }
     return result as Result<T>;
   };
@@ -122,6 +130,21 @@ const _createArrayGenerator = <T extends ArrayConfig<unknown>>(
     `${path}.arr`,
     customTypeMatch,
   );
+
+  if (config.next) {
+    const next: (v: Result<T>) => Result<T> = config.next;
+    return () => {
+      let prev = itemGeneratorFn() as Result<T>;
+      const result = [];
+      for (let i = 0; i < config.len; i++) {
+        const nextValue = next(prev);
+        result.push(nextValue);
+        prev = nextValue;
+      }
+
+      return result as Result<T>;
+    };
+  }
 
   return () =>
     Array.from({ length: config.len ?? 0 }, itemGeneratorFn) as Result<T>;

@@ -1,8 +1,8 @@
-import { z } from "zod";
+import { z } from "zod/v4";
 
 export const valueConfigScheme = z.object({
   type: z.string().regex(/^value$/, { message: "invalid type string" }),
-  generateFn: z.function(),
+  generateFn: z.any(),
 });
 
 export const selectionConfigScheme = z.object({
@@ -33,13 +33,9 @@ export const boundedSeriesScheme = z
       .regex(/^bounded_series$/, { message: "invalid type string" }),
     upperLimit: z.number().nonnegative(),
     lowerLimit: z.number().nonnegative(),
-    createInitValue: z.function().args().returns(z.number()),
+    createInitValue: z.any(),
     count: z.number().nonnegative(),
   })
   .refine(({ upperLimit, lowerLimit }) => upperLimit >= lowerLimit, {
     message: "lowerLimit can not greater then upperLimit",
-  })
-  .refine(({ createInitValue }) => typeof createInitValue() === "number", {
-    message: "createInitValue is not return number",
-    path: ["createInitValue"],
   });

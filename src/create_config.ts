@@ -10,6 +10,8 @@ import type {
   ArrayConfig,
   BoundedSeriesConfig,
   ObjectConfig,
+  ObjectConfigWithFn,
+  Result,
   SelectionConfig,
   TupleConfig,
   TupleItems,
@@ -50,15 +52,33 @@ export const createSelectionConfig = <T>(items: T[]): SelectionConfig<T> => {
  * @param {object} content
  * @return {ObjectConfig}
  */
-export const createObjectConfig = <T extends object>(
+export function createObjectConfig<T extends object>(
   content: T,
-): ObjectConfig<T> => {
+): ObjectConfig<T>;
+export function createObjectConfig<T extends object, R>(
+  content: T,
+  transformer: (v: { [K in keyof T]: Result<T[K]> }) => R,
+): ObjectConfigWithFn<T, R>;
+export function createObjectConfig<T extends object, R>(
+  content: T,
+  transformer?: (v: { [K in keyof T]: Result<T[K]> }) => R,
+) {
+  if (transformer) {
+    const config: ObjectConfigWithFn<T, R> = {
+      type: "obj",
+      content,
+      transformer,
+    };
+    objConfigScheme.parse(config);
+    return config;
+  }
+
   const config: ObjectConfig<T> = { type: "obj", content };
 
   objConfigScheme.parse(config);
 
   return config;
-};
+}
 
 /**
  * array
