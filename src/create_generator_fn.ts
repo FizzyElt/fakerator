@@ -220,6 +220,40 @@ const _createTupleGenerator = <
 };
 export const createTupleGenerator = <
   T extends
+    | TupleConfig<
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown
+      >
+    | TupleConfig<
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown
+      >
+    | TupleConfig<
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown,
+        unknown
+      >
+    | TupleConfig<unknown, unknown, unknown, unknown, unknown, unknown>
     | TupleConfig<unknown, unknown, unknown, unknown, unknown>
     | TupleConfig<unknown, unknown, unknown, unknown>
     | TupleConfig<unknown, unknown, unknown>
