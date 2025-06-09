@@ -50,6 +50,7 @@ export const createSelectionConfig = <T>(items: T[]): SelectionConfig<T> => {
 /**
  * object
  * @param {object} content
+ * @param {function} transformer
  * @return {ObjectConfig}
  */
 export function createObjectConfig<T extends object>(
@@ -84,10 +85,15 @@ export function createObjectConfig<T extends object, R>(
  * array
  * @param {object} item
  * @param {number} len
+ * @param {function} next
  * @return {ArrayConfig}
  */
-export const createArrayConfig = <T>(item: T, len: number): ArrayConfig<T> => {
-  const config: ArrayConfig<T> = { type: "arr", item, len };
+export const createArrayConfig = <T>(
+  item: T,
+  len: number,
+  next?: (v: Result<T>) => Result<T>,
+): ArrayConfig<T> => {
+  const config: ArrayConfig<T> = { type: "arr", item, len, next };
 
   arrayConfigScheme.parse(config);
 
