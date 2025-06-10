@@ -91,7 +91,7 @@ export function createObjectConfig<T extends object, R>(
 export const createArrayConfig = <T>(
   item: T,
   len: number,
-  next?: (v: Result<T>) => Result<T>,
+  next?: (prev: Result<T>, current: Result<T>) => Result<T>,
 ): ArrayConfig<T> => {
   const config: ArrayConfig<T> = { type: "arr", item, len, next };
 

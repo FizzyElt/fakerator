@@ -1,6 +1,6 @@
 {
   "name": "struct-fakerator",
-  "version": "2.6.9",
+  "version": "2.7.9",
   "description": "",
   "main": "dist/index.js",
   "module": "dist/index.mjs",
@@ -14,14 +14,6 @@
       "import": {
         "types": "./dist/index.d.ts",
         "default": "./dist/index.mjs"
-      },
-      "module": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      },
-      "default": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
       }
     },
     "./utils": {
@@ -32,14 +24,6 @@
       "import": {
         "types": "./dist/utils/index.d.ts",
         "default": "./dist/utils/index.mjs"
-      },
-      "module": {
-        "types": "./dist/utils/index.d.ts",
-        "default": "./dist/utils/index.mjs"
-      },
-      "default": {
-        "types": "./dist/utils/index.d.ts",
-        "default": "./dist/utils/index.mjs"
       }
     },
     "./utils/*": {
@@ -48,14 +32,6 @@
         "default": "./dist/utils/*.js"
       },
       "import": {
-        "types": "./dist/utils/*.d.ts",
-        "default": "./dist/utils/*.mjs"
-      },
-      "module": {
-        "types": "./dist/utils/*.d.ts",
-        "default": "./dist/utils/*.mjs"
-      },
-      "default": {
         "types": "./dist/utils/*.d.ts",
         "default": "./dist/utils/*.mjs"
       }
@@ -73,12 +49,12 @@
   "license": "ISC",
   "devDependencies": {
     "@biomejs/biome": "^1.9.4",
-    "@faker-js/faker": "^9.8.0",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",
     "vitest": "^3.2.2"
   },
   "dependencies": {
+    "@faker-js/faker": "^9.8.0",
     "zod": "^3.25.56"
   },
   "publishConfig": {

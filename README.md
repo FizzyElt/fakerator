@@ -3,12 +3,12 @@
 - [假資料結構產生器](#假資料結構產生器)
   - [Wrapping fakerjs Functions](#wrapping-fakerjs-functions)
   - [用途](#用途)
-    - [createValueGenerator](#createvaluegenerator)
-    - [createSelectionGenerator](#createselectiongenerator)
-    - [createObjectGenerator](#createobjectgenerator)
+    - [Value](#value)
+    - [Selection](#selection)
+    - [Object](#object)
     - [createArrayGenerator](#createarraygenerator)
     - [createTupleGenerator](#createtuplegenerator)
-    - [createBoundedSeriesGenerator](#createboundedseriesgenerator)
+    - [BoundedSeries](#boundedseries)
   - [擴充](#擴充)
 
 ## Wrapping fakerjs Functions
@@ -42,146 +42,201 @@
 
 使用 faker js 時是單一純值不能產生結構，需要自己手動組合結構，此專案利用撰寫設定檔的方式來產生一個特定的假資料函數，減少手動組合結構的麻煩。
 
-```javascript
-const test = {
+```typescript
+import { StructConfig } from 'struct-fakerator'
+
+const scheme = StructConfig.object({
+  name: StructConfig.value(() => 'hello'),
+  enum: StructConfig.selection([1, 2, 3]),
+  list: StructConfig.array(StructConfig.value(() => 10), 5),
+  tuple: StructConfig.tuple([StructConfig.value(() => 'tuple1'), StructConfig.value(() => '100')])
+})
+
+// or
+import {
+  createObjectConfig,
+  createArrayConfig,
+  createValueConfig,
+  createTupleConfig,
+  createSelectionConfig
+} from 'struct-fakerator';
+
+
+const scheme = createObjectConfig({
+  name: createValueConfig(() => 'hello'),
+  enum: createSelectionConfig([1, 2, 3]),
+  list: createArrayConfig(
+    createValueConfig(() => 10),
+    5
+  ),
+  tuple: createTupleConfig([
+    createValueConfig(() => 'tuple1'),
+    createValueConfig(() => 100),
+    createValueConfig(() => false),
+  ])
+});
+
+// or
+const scheme = {
   type: 'obj',
   content: {
     name: {
       type: 'value',
       generateFn: () => 'hello',
     },
+    enum: {
+      type: 'select',
+      items: [1, 2, 3],
+    },
     list: {
       type: 'arr',
-      len: 5,
       item: {
         type: 'value',
         generateFn: () => 10,
       },
+      len: 5,
+    },
+    tuple: {
+      type: 'tuple',
+      configItems: [
+        {
+          type: 'value',
+          generateFn: () => 'tuple1',
+        },
+        {
+          type: 'value',
+          generateFn: () => 100,
+        },
+        {
+          type: 'value',
+          generateFn: () => false,
+        },
+      ],
     },
   },
 };
+```
 
-const generateFn = createGeneratorByType(test);
+```typescript
+import { StructGenerator } from 'struct-fakerator';
 
-console.log(generateFn());
+const result = StructGenerator.genFn(scheme)()
 
-/*
-{
-  name: "hello"
-  list: [10, 10, 10, 10, 10,]
-}
-*/
+console.log(result);
+// {
+//   name: 'hello',
+//   enum: 1, // or 2 or 3
+//   list: [10, 10, 10, 10, 10],
+//   tuple: ['tuple1', 100, false]
+// }
+
 ```
 
 
+### Value
 
-### createValueGenerator
-
-```javascript
-const generateFn = createValueGenerator({
-  type: 'value',
-  generateFn: () => 10,
-})
+```typescript
+const generateFn = StructGenerator.genFn(StructConfig.value(() => 10));
 
 console.log(generateFn());
-
 // 10
 ```
 
-### createSelectionGenerator
+### Selection
 
 ```javascript
-const generateFn = createSelectionGenerator({
- type: 'select',
- items: [1, 2, 3, 4, 5],
-})
+const generateFn = StructGenerator.genFn(StructConfig.select([1, 2, 3, 4, 5]))
 
 console.log(generateFn());
-
 // 1 or 2 or 3 or 4 or 5
 ```
 
-### createObjectGenerator
+### Object
 
-```javascript
-const generateFn = createObjectGenerator({
- type: 'obj',
- content: {
-   name: {
-     type: 'value',
-     generateFn: () => 'hello',
-   },
-   list: {
-     type: 'arr',
-     len: 5,
-     item: {
-       type: 'value',
-       generateFn: () => 10,
-     }
-   }
- }
-})
+```typescript
+const generateFn = StructGenerator.genFn(StructConfig.object({
+  name: StructConfig.value(() => 'hello'),
+  list: StructConfig.array(StructConfig.value(() => 10), 5),
+}));
 
 console.log(generateFn());
-
 // {
 //   name: 'hello',
 //   list: [10, 10, 10, 10, 10]
 // }
-```
-### createArrayGenerator
 
-
-```javascript
-const generateFn = createArrayGenerator({
- type: 'arr',
- len: 5,
- item: {
-   type: 'value',
-   generateFn: () => 10,
- }
-})
+// with transformer function
+const generateFn = StructGenerator.genFn(
+  StructConfig.object(
+    {
+      name: StructConfig.value(() => 'hello'),
+      list: StructConfig.array(
+        StructConfig.value(() => 10),
+        5
+      ),
+    },
+    ({ name, list }) => list.map((item) => `${name} ${item}`)
+  )
+);
 
 console.log(generateFn());
+// ["hello 10", "hello 10", "hello 10", "hello 10", "hello 10"]
+```
 
+### createArrayGenerator
+
+```typescript
+const generateFn = StructGenerator.genFn(
+  StructConfig.array(
+    StructConfig.value(() => 10),
+    5
+  )
+);
+
+console.log(generateFn());
 // [10, 10, 10, 10, 10]
+
+// with next function
+const generateFn = StructGenerator.genFn(
+  StructConfig.array(
+    StructConfig.value(() => 10),
+    5,
+    (prev, current) => prev + 1 + current
+  )
+);
+
+console.log(generateFn());
+// [21, 32, 43, 54, 65]
 ```
 
 ### createTupleGenerator
 
-```javascript
-const generateFn = createTupleGenerator({
- type: 'tuple',
- configItems: [
-   {
-     type: 'value',
-     generateFn: () => 10,
-   },
-   {
-     type: 'value',
-     generateFn: () => 'hello',
-   },
- ]
-})
+```typescript
+const generateFn = StructGenerator.genFn(
+  StructConfig.tuple([
+    StructConfig.value(() => 'tuple1'),
+    StructConfig.value(() => 100),
+    StructConfig.value(() => false),
+  ])
+);
 
 console.log(generateFn());
-
-// [10, 'hello']
+// ['tuple1', 100, false]
 ```
 
-### createBoundedSeriesGenerator
+### BoundedSeries
 
 ```javascript
-const generateFn = createBoundedSeriesGenerator({
- type: 'bounded_series',
- upperLimit: 1.1,
- lowerLimit: 0.9,
- createInitValue: () => 100,
- count: 20
-})
+const generateFn = StructGenerator.genFn(
+  StructConfig.boundedSeries({
+    upperLimit: 1.1,
+    lowerLimit: 0.9,
+    createInitValue: () => 100,
+    count: 20,
+  })
+);
 
 console.log(generateFn());
-
 // [100 * 0.9 <= num <= 100 * 1.1, 
 //  prev * 0.9 <= num <= prev * 1.1,
 //  prev * 0.9 <= num <= prev * 1.1,

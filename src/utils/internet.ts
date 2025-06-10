@@ -59,4 +59,4 @@ export const url = makeValueConfigFn(faker.internet.url);
 export const userAgent = makeValueConfigFn(faker.internet.userAgent);
 
 /** Internet [userName](https://fakerjs.dev/api/internet.html#userName) */
-export const userName = makeValueConfigFn(faker.internet.userName);
+export const username = makeValueConfigFn(faker.internet.username);

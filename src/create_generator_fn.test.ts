@@ -68,6 +68,17 @@ describe("createArrayGenerator", () => {
       { age: 42 },
     ]);
   });
+  test("with next function", () => {
+    const list = createArrayGenerator(
+      createArrayConfig(
+        createValueConfig(() => 100),
+        5,
+        (prev) => prev + 1,
+      ),
+    )();
+
+    expect(list).toEqual([101, 102, 103, 104, 105]);
+  });
 });
 
 describe("createTupleGenerator", () => {

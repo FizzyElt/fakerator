@@ -20,7 +20,7 @@ export type ArrayConfig<T> = {
   type: "arr";
   item: T;
   len: number;
-  next?: (v: Result<T>) => Result<T>;
+  next?: (prev: Result<T>, current: Result<T>) => Result<T>;
 };
 
 export type ObjectConfig<T> = {

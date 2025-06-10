@@ -129,15 +129,16 @@ const _createArrayGenerator = <T extends ArrayConfig<unknown>>(
     config.item as AllConfig<unknown>,
     `${path}.arr`,
     customTypeMatch,
-  );
+  ) as () => Result<T>;
 
   if (config.next) {
-    const next: (v: Result<T>) => Result<T> = config.next;
+    const next: (prev: Result<T>, current: Result<T>) => Result<T> =
+      config.next;
     return () => {
-      let prev = itemGeneratorFn() as Result<T>;
+      let prev = itemGeneratorFn();
       const result = [];
       for (let i = 0; i < config.len; i++) {
-        const nextValue = next(prev);
+        const nextValue = next(prev, itemGeneratorFn());
         result.push(nextValue);
         prev = nextValue;
       }
