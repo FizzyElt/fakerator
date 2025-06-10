@@ -47,7 +47,7 @@ import { StructConfig } from 'struct-fakerator'
 
 const scheme = StructConfig.object({
   name: StructConfig.value(() => 'hello'),
-  enum: StructConfig.selection([1, 2, 3]),
+  enum: StructConfig.select([1, 2, 3]),
   list: StructConfig.array(StructConfig.value(() => 10), 5),
   tuple: StructConfig.tuple([StructConfig.value(() => 'tuple1'), StructConfig.value(() => '100')])
 })
