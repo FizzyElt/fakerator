@@ -1,7 +1,7 @@
 export {
-  createGeneratorByType as genFn,
   createArrayGenerator as genArrayFn,
   createBoundedSeriesGenerator as genBoundedSeriesFn,
+  createGeneratorByType as genFn,
   createObjectGenerator as genObjectFn,
   createSelectionGenerator as genSelectFn,
   createTupleGenerator as genTupleFn,

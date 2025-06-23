@@ -1,8 +1,8 @@
 export {
-  createValueConfig as value,
   createArrayConfig as array,
-  createObjectConfig as object,
-  createTupleConfig as tuple,
-  createSelectionConfig as select,
   createBoundedSeriesConfig as boundedSeries,
+  createObjectConfig as object,
+  createSelectionConfig as select,
+  createTupleConfig as tuple,
+  createValueConfig as value,
 } from "./create_config";

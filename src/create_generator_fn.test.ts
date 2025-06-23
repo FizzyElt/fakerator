@@ -197,8 +197,8 @@ describe("createGeneratorByType", () => {
   });
 
   test("with custom type match", () => {
-    const createIntValueConfig = (option) => createValueConfig(() => 50);
-    const createEmailValueConfig = (option) =>
+    const createIntValueConfig = (_option) => createValueConfig(() => 50);
+    const createEmailValueConfig = (_option) =>
       createValueConfig(() => "xxx@example.com");
 
     const customTypeMatch = (config) => {
