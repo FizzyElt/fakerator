@@ -39,23 +39,26 @@
   },
   "scripts": {
     "type_check": "tsc --noEmit",
-    "build": "pnpm type_check && tsup src",
+    "build": "pnpm type_check && rslib build src",
     "publish": "pnpm build && pnpm publish --access public",
     "test": "vitest src"
   },
-  "keywords": [],
+  "keywords": [
+    "fake data",
+    "generator"
+  ],
   "author": "FizzyElt",
   "homepage": "https://github.com/FizzyElt/fakerator",
   "license": "ISC",
   "devDependencies": {
     "@biomejs/biome": "^2.0.5",
-    "tsup": "^8.5.0",
+    "@rslib/core": "^0.11.0",
     "typescript": "^5.8.3",
     "vitest": "^3.2.2"
   },
   "dependencies": {
     "@faker-js/faker": "^9.8.0",
-    "zod": "^3.25.56"
+    "zod": "^4.0.14"
   },
   "publishConfig": {
     "access": "public"

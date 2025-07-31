@@ -1,4 +1,4 @@
-import { z } from "zod/v4";
+import { z } from "zod";
 
 export const valueConfigScheme = z.object({
   type: z.string().regex(/^value$/, { message: "invalid type string" }),

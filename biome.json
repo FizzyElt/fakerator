@@ -11,7 +11,7 @@
     "indentStyle": "space",
     "indentWidth": 2,
     "lineEnding": "lf",
-    "includes": ["src/**/*", "tsup.config.ts"]
+    "includes": ["src/**/*", "tsup.config.ts", "rslib.config.ts"]
   },
   "javascript": {
     "formatter": {
@@ -26,6 +26,6 @@
     }
   },
   "files": {
-    "includes": ["src/**/*"]
+    "includes": ["src/**/*", "tsup.config.ts", "rslib.config.ts"]
   }
 }

@@ -9,7 +9,8 @@
     "declaration": true,
     "outDir": "./dist/lib/es6",
     "moduleResolution": "node",
-    "skipLibCheck": true
+    "skipLibCheck": true,
+    "isolatedModules": true
   },
   "include": [
     "src/**/*"
