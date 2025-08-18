@@ -1,40 +1,29 @@
 {
   "name": "struct-fakerator",
-  "version": "2.8.9",
+  "version": "2.9.9",
   "description": "",
-  "main": "dist/index.js",
-  "module": "dist/index.mjs",
+  "main": "dist/index.cjs",
+  "module": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
+  "files": [
+    "dist"
+  ],
   "exports": {
     ".": {
-      "require": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.js"
-      },
-      "import": {
-        "types": "./dist/index.d.ts",
-        "default": "./dist/index.mjs"
-      }
+      "types": "./dist/index.d.ts",
+      "require": "./dist/index.cjs",
+      "import": "./dist/index.js"
     },
     "./utils": {
-      "require": {
-        "types": "./dist/utils/index.d.ts",
-        "default": "./dist/utils/index.js"
-      },
-      "import": {
-        "types": "./dist/utils/index.d.ts",
-        "default": "./dist/utils/index.mjs"
-      }
+      "types": "./dist/utils/index.d.ts",
+      "require": "./dist/utils/index.cjs",
+      "import": "./dist/utils/index.js"
     },
     "./utils/*": {
-      "require": {
-        "types": "./dist/utils/*.d.ts",
-        "default": "./dist/utils/*.js"
-      },
-      "import": {
-        "types": "./dist/utils/*.d.ts",
-        "default": "./dist/utils/*.mjs"
-      }
+      "types": "./dist/utils/*.d.ts",
+      "require": "./dist/utils/*.cjs",
+      "import": "./dist/utils/*.js"
     }
   },
   "scripts": {
@@ -51,14 +40,14 @@
   "homepage": "https://github.com/FizzyElt/fakerator",
   "license": "ISC",
   "devDependencies": {
-    "@biomejs/biome": "^2.0.5",
-    "@rslib/core": "^0.11.0",
-    "typescript": "^5.8.3",
-    "vitest": "^3.2.2"
+    "@biomejs/biome": "^2.2.0",
+    "@rslib/core": "^0.12.1",
+    "typescript": "^5.9.2",
+    "vitest": "^3.2.4"
   },
   "dependencies": {
-    "@faker-js/faker": "^9.8.0",
-    "zod": "^4.0.14"
+    "@faker-js/faker": "^9.9.0",
+    "zod": "^4.0.17"
   },
   "publishConfig": {
     "access": "public"
