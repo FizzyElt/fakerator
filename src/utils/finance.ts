@@ -21,12 +21,12 @@ export const creditCardCVV = makeValueConfigFn(faker.finance.creditCardCVV);
 
 /** Finance [creditCardIssuer](https://fakerjs.dev/api/finance.html#creditCardIssuer) */
 export const creditCardIssuer = makeValueConfigFn(
-  faker.finance.creditCardIssuer,
+    faker.finance.creditCardIssuer,
 );
 
 /** Finance [creditCardNumber](https://fakerjs.dev/api/finance.html#creditCardNumber) */
 export const creditCardNumber = makeValueConfigFn(
-  faker.finance.creditCardNumber,
+    faker.finance.creditCardNumber,
 );
 
 /** Finance [currency](https://fakerjs.dev/api/finance.html#currency) */
@@ -58,7 +58,7 @@ export const routingNumber = makeValueConfigFn(faker.finance.routingNumber);
 
 /** Finance [transactionDescription](https://fakerjs.dev/api/finance.html#transactionDescription) */
 export const transactionDescription = makeValueConfigFn(
-  faker.finance.transactionDescription,
+    faker.finance.transactionDescription,
 );
 
 /** Finance [transactionType](https://fakerjs.dev/api/finance.html#transactionType) */

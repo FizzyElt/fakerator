@@ -6,7 +6,7 @@ export const buildingNumber = makeValueConfigFn(faker.location.buildingNumber);
 
 /** Location [cardinalDirection](https://fakerjs.dev/api/location.html#cardinalDirection) */
 export const cardinalDirection = makeValueConfigFn(
-  faker.location.cardinalDirection,
+    faker.location.cardinalDirection,
 );
 
 /** Location [city](https://fakerjs.dev/api/location.html#city) */
@@ -32,17 +32,17 @@ export const longitude = makeValueConfigFn(faker.location.longitude);
 
 /** Location [nearbyGPSCoordinate](https://fakerjs.dev/api/location.html#nearbyGPSCoordinate) */
 export const nearbyGPSCoordinate = makeValueConfigFn(
-  faker.location.nearbyGPSCoordinate,
+    faker.location.nearbyGPSCoordinate,
 );
 
 /** Location [ordinalDirection](https://fakerjs.dev/api/location.html#ordinalDirection) */
 export const ordinalDirection = makeValueConfigFn(
-  faker.location.ordinalDirection,
+    faker.location.ordinalDirection,
 );
 
 /** Location [secondaryAddress](https://fakerjs.dev/api/location.html#secondaryAddress) */
 export const secondaryAddress = makeValueConfigFn(
-  faker.location.secondaryAddress,
+    faker.location.secondaryAddress,
 );
 
 /** Location [state](https://fakerjs.dev/api/location.html#state) */

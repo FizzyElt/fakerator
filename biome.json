@@ -1,31 +1,36 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.0.5/schema.json",
-  "linter": {
-    "enabled": true,
-    "rules": {
-      "recommended": true
+    "$schema": "https://biomejs.dev/schemas/2.2.2/schema.json",
+    "linter": {
+        "enabled": true,
+        "rules": {
+            "recommended": true
+        },
+        "includes": ["src/**/*"]
     },
-    "includes": ["src/**/*"]
-  },
-  "formatter": {
-    "indentStyle": "space",
-    "indentWidth": 2,
-    "lineEnding": "lf",
-    "includes": ["src/**/*", "tsup.config.ts", "rslib.config.ts"]
-  },
-  "javascript": {
     "formatter": {
-      "quoteStyle": "double"
+        "indentStyle": "space",
+        "indentWidth": 4,
+        "lineEnding": "lf",
+        "includes": ["src/**/*", "tsup.config.ts", "rslib.config.ts"]
+    },
+    "javascript": {
+        "formatter": {
+            "quoteStyle": "double"
+        }
+    },
+    "assist": {
+        "actions": {
+            "source": {
+                "organizeImports": {
+                    "level": "on",
+                    "options": {
+                        "groups": [":NODE:", ":PACKAGE:", ":ALIAS:", ":PATH:"]
+                    }
+                }
+            }
+        }
+    },
+    "files": {
+        "includes": ["src/**/*", "tsup.config.ts", "rslib.config.ts"]
     }
-  },
-  "assist": {
-    "actions": {
-      "source": {
-        "organizeImports": "on"
-      }
-    }
-  },
-  "files": {
-    "includes": ["src/**/*", "tsup.config.ts", "rslib.config.ts"]
-  }
 }

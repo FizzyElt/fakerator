@@ -6,17 +6,17 @@ export const cmyk = makeValueConfigFn(faker.color.cmyk);
 
 /** Color [colorByCSSColorSpace](https://fakerjs.dev/api/color.html#colorByCSSColorSpace) */
 export const colorByCSSColorSpace = makeValueConfigFn(
-  faker.color.colorByCSSColorSpace,
+    faker.color.colorByCSSColorSpace,
 );
 
 /** Color [cssSupportedFunction](https://fakerjs.dev/api/color.html#cssSupportedFunction) */
 export const cssSupportedFunction = makeValueConfigFn(
-  faker.color.cssSupportedFunction,
+    faker.color.cssSupportedFunction,
 );
 
 /** Color [cssSupportedSpace](https://fakerjs.dev/api/color.html#cssSupportedSpace) */
 export const cssSupportedSpace = makeValueConfigFn(
-  faker.color.cssSupportedSpace,
+    faker.color.cssSupportedSpace,
 );
 
 /** Color [hsl](https://fakerjs.dev/api/color.html#hsl) */

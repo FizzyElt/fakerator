@@ -15,17 +15,17 @@ export const product = makeValueConfigFn(faker.commerce.product);
 
 /** Commerce [productAdjective](https://fakerjs.dev/api/commerce.html#productAdjective) */
 export const productAdjective = makeValueConfigFn(
-  faker.commerce.productAdjective,
+    faker.commerce.productAdjective,
 );
 
 /** Commerce [productDescription](https://fakerjs.dev/api/commerce.html#productDescription) */
 export const productDescription = makeValueConfigFn(
-  faker.commerce.productDescription,
+    faker.commerce.productDescription,
 );
 
 /** Commerce [productMaterial](https://fakerjs.dev/api/commerce.html#productMaterial) */
 export const productMaterial = makeValueConfigFn(
-  faker.commerce.productMaterial,
+    faker.commerce.productMaterial,
 );
 
 /** Commerce [productName](https://fakerjs.dev/api/commerce.html#productName) */

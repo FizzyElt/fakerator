@@ -18,12 +18,12 @@ export const catchPhrase = makeValueConfigFn(faker.company.catchPhrase);
 
 /** Company [catchPhraseAdjective](https://fakerjs.dev/api/company.html#catchPhraseAdjective) */
 export const catchPhraseAdjective = makeValueConfigFn(
-  faker.company.catchPhraseAdjective,
+    faker.company.catchPhraseAdjective,
 );
 
 /** Company [catchPhraseDescriptor](https://fakerjs.dev/api/company.html#catchPhraseDescriptor) */
 export const catchPhraseDescriptor = makeValueConfigFn(
-  faker.company.catchPhraseDescriptor,
+    faker.company.catchPhraseDescriptor,
 );
 
 /** Company [catchPhraseNoun](https://fakerjs.dev/api/company.html#catchPhraseNoun) */

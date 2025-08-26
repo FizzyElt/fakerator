@@ -1,21 +1,21 @@
 import {
-  arrayConfigScheme,
-  boundedSeriesScheme,
-  objConfigScheme,
-  selectionConfigScheme,
-  tupleConfigScheme,
-  valueConfigScheme,
+    arrayConfigScheme,
+    boundedSeriesScheme,
+    objConfigScheme,
+    selectionConfigScheme,
+    tupleConfigScheme,
+    valueConfigScheme,
 } from "./config_scheme";
 import type {
-  ArrayConfig,
-  BoundedSeriesConfig,
-  ObjectConfig,
-  ObjectConfigWithFn,
-  Result,
-  SelectionConfig,
-  TupleConfig,
-  TupleItems,
-  ValueConfig,
+    ArrayConfig,
+    BoundedSeriesConfig,
+    ObjectConfig,
+    ObjectConfigWithFn,
+    Result,
+    SelectionConfig,
+    TupleConfig,
+    TupleItems,
+    ValueConfig,
 } from "./type";
 
 /**
@@ -24,14 +24,14 @@ import type {
  * @return {ValueConfig} The configuration object with the type "value" and the provided generate function.
  */
 export const createValueConfig = <T>(generateFn: () => T): ValueConfig<T> => {
-  const config: ValueConfig<T> = {
-    type: "value",
-    generateFn,
-  };
+    const config: ValueConfig<T> = {
+        type: "value",
+        generateFn,
+    };
 
-  valueConfigScheme.parse(config);
+    valueConfigScheme.parse(config);
 
-  return config;
+    return config;
 };
 
 /**
@@ -40,11 +40,11 @@ export const createValueConfig = <T>(generateFn: () => T): ValueConfig<T> => {
  * @return {SelectionConfig} The configuration object with the type "select" and the provided items.
  */
 export const createSelectionConfig = <T>(items: T[]): SelectionConfig<T> => {
-  const config: SelectionConfig<T> = { type: "select", items };
+    const config: SelectionConfig<T> = { type: "select", items };
 
-  selectionConfigScheme.parse(config);
+    selectionConfigScheme.parse(config);
 
-  return config;
+    return config;
 };
 
 /**
@@ -54,31 +54,31 @@ export const createSelectionConfig = <T>(items: T[]): SelectionConfig<T> => {
  * @return {ObjectConfig}
  */
 export function createObjectConfig<T extends object>(
-  content: T,
+    content: T,
 ): ObjectConfig<T>;
 export function createObjectConfig<T extends object, R>(
-  content: T,
-  transformer: (v: { [K in keyof T]: Result<T[K]> }) => R,
+    content: T,
+    transformer: (v: { [K in keyof T]: Result<T[K]> }) => R,
 ): ObjectConfigWithFn<T, R>;
 export function createObjectConfig<T extends object, R>(
-  content: T,
-  transformer?: (v: { [K in keyof T]: Result<T[K]> }) => R,
+    content: T,
+    transformer?: (v: { [K in keyof T]: Result<T[K]> }) => R,
 ) {
-  if (transformer) {
-    const config: ObjectConfigWithFn<T, R> = {
-      type: "obj",
-      content,
-      transformer,
-    };
+    if (transformer) {
+        const config: ObjectConfigWithFn<T, R> = {
+            type: "obj",
+            content,
+            transformer,
+        };
+        objConfigScheme.parse(config);
+        return config;
+    }
+
+    const config: ObjectConfig<T> = { type: "obj", content };
+
     objConfigScheme.parse(config);
+
     return config;
-  }
-
-  const config: ObjectConfig<T> = { type: "obj", content };
-
-  objConfigScheme.parse(config);
-
-  return config;
 }
 
 /**
@@ -89,15 +89,15 @@ export function createObjectConfig<T extends object, R>(
  * @return {ArrayConfig}
  */
 export const createArrayConfig = <T>(
-  item: T,
-  len: number,
-  next?: (prev: Result<T>, current: Result<T>) => Result<T>,
+    item: T,
+    len: number,
+    next?: (prev: Result<T>, current: Result<T>) => Result<T>,
 ): ArrayConfig<T> => {
-  const config: ArrayConfig<T> = { type: "arr", item, len, next };
+    const config: ArrayConfig<T> = { type: "arr", item, len, next };
 
-  arrayConfigScheme.parse(config);
+    arrayConfigScheme.parse(config);
 
-  return config;
+    return config;
 };
 
 /**
@@ -106,49 +106,49 @@ export const createArrayConfig = <T>(
  * @return {TupleConfig}
  */
 interface CreateTupleConfig {
-  <A, B, C, D, E, F, G, H, I, J>(
-    configItems: [A, B, C, D, E, F, G, H, I, J],
-  ): TupleConfig<A, B, C, D, E, F, G, H, I, J>;
-  <A, B, C, D, E, F, G, H, I>(
-    configItems: [A, B, C, D, E, F, G, H, I],
-  ): TupleConfig<A, B, C, D, E, F, G, H, I>;
-  <A, B, C, D, E, F, G, H>(
-    configItems: [A, B, C, D, E, F, G, H],
-  ): TupleConfig<A, B, C, D, E, F, G, H>;
-  <A, B, C, D, E, F, G>(
-    configItems: [A, B, C, D, E, F, G],
-  ): TupleConfig<A, B, C, D, E, F, G>;
-  <A, B, C, D, E, F>(
-    configItems: [A, B, C, D, E, F],
-  ): TupleConfig<A, B, C, D, E, F>;
-  <A, B, C, D, E>(configItems: [A, B, C, D, E]): TupleConfig<A, B, C, D, E>;
-  <A, B, C, D>(configItems: [A, B, C, D]): TupleConfig<A, B, C, D>;
-  <A, B, C>(configItems: [A, B, C]): TupleConfig<A, B, C>;
-  <A, B>(configItems: [A, B]): TupleConfig<A, B>;
-  <A>(configItems: [A]): TupleConfig<A>;
+    <A, B, C, D, E, F, G, H, I, J>(
+        configItems: [A, B, C, D, E, F, G, H, I, J],
+    ): TupleConfig<A, B, C, D, E, F, G, H, I, J>;
+    <A, B, C, D, E, F, G, H, I>(
+        configItems: [A, B, C, D, E, F, G, H, I],
+    ): TupleConfig<A, B, C, D, E, F, G, H, I>;
+    <A, B, C, D, E, F, G, H>(
+        configItems: [A, B, C, D, E, F, G, H],
+    ): TupleConfig<A, B, C, D, E, F, G, H>;
+    <A, B, C, D, E, F, G>(
+        configItems: [A, B, C, D, E, F, G],
+    ): TupleConfig<A, B, C, D, E, F, G>;
+    <A, B, C, D, E, F>(
+        configItems: [A, B, C, D, E, F],
+    ): TupleConfig<A, B, C, D, E, F>;
+    <A, B, C, D, E>(configItems: [A, B, C, D, E]): TupleConfig<A, B, C, D, E>;
+    <A, B, C, D>(configItems: [A, B, C, D]): TupleConfig<A, B, C, D>;
+    <A, B, C>(configItems: [A, B, C]): TupleConfig<A, B, C>;
+    <A, B>(configItems: [A, B]): TupleConfig<A, B>;
+    <A>(configItems: [A]): TupleConfig<A>;
 }
 export const createTupleConfig: CreateTupleConfig = <
-  A,
-  B,
-  C,
-  D,
-  E,
-  F,
-  G,
-  H,
-  I,
-  J,
+    A,
+    B,
+    C,
+    D,
+    E,
+    F,
+    G,
+    H,
+    I,
+    J,
 >(
-  configItems: TupleItems<A, B, C, D, E, F, G, H, I, J>,
+    configItems: TupleItems<A, B, C, D, E, F, G, H, I, J>,
 ) => {
-  const config: TupleConfig<A, B, C, D, E, F, G, H, I, J> = {
-    type: "tuple",
-    configItems,
-  };
+    const config: TupleConfig<A, B, C, D, E, F, G, H, I, J> = {
+        type: "tuple",
+        configItems,
+    };
 
-  tupleConfigScheme.parse(config);
+    tupleConfigScheme.parse(config);
 
-  return config;
+    return config;
 };
 
 /**
@@ -157,14 +157,14 @@ export const createTupleConfig: CreateTupleConfig = <
  * @return {BoundedSeriesConfig}
  */
 export const createBoundedSeriesConfig = (
-  config: Omit<BoundedSeriesConfig, "type">,
+    config: Omit<BoundedSeriesConfig, "type">,
 ): BoundedSeriesConfig => {
-  const newConfig: BoundedSeriesConfig = {
-    type: "bounded_series",
-    ...config,
-  };
+    const newConfig: BoundedSeriesConfig = {
+        type: "bounded_series",
+        ...config,
+    };
 
-  boundedSeriesScheme.parse(newConfig);
+    boundedSeriesScheme.parse(newConfig);
 
-  return newConfig;
+    return newConfig;
 };

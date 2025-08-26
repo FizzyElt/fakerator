@@ -33,7 +33,7 @@ export const mimeType = makeValueConfigFn(faker.system.mimeType);
 
 /** System [networkInterface](https://fakerjs.dev/api/system.html#networkInterface) */
 export const networkInterface = makeValueConfigFn(
-  faker.system.networkInterface,
+    faker.system.networkInterface,
 );
 
 /** System [semver](https://fakerjs.dev/api/system.html#semver) */

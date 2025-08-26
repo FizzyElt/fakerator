@@ -12,7 +12,7 @@ export const engine = makeValueConfigFn(faker.database.engine);
 
 /** Database [mongodbObjectId](https://fakerjs.dev/api/database.html#mongodbObjectId) */
 export const mongodbObjectId = makeValueConfigFn(
-  faker.database.mongodbObjectId,
+    faker.database.mongodbObjectId,
 );
 
 /** Database [type](https://fakerjs.dev/api/database.html#type) */
