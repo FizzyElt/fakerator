@@ -28,5 +28,8 @@ export const sample = makeValueConfigFn(faker.string.sample);
 /** String [symbol](https://fakerjs.dev/api/string.html#symbol) */
 export const symbol = makeValueConfigFn(faker.string.symbol);
 
+/** String [ulid](https://fakerjs.dev/api/string.html#ulid) */
+export const ulid = makeValueConfigFn(faker.string.ulid);
+
 /** String [uuid](https://fakerjs.dev/api/string.html#uuid) */
 export const uuid = makeValueConfigFn(faker.string.uuid);

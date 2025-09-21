@@ -34,6 +34,9 @@ export const insect = makeValueConfigFn(faker.animal.insect);
 /** Animal [lion](https://fakerjs.dev/api/animal.html#lion) */
 export const lion = makeValueConfigFn(faker.animal.lion);
 
+/** Animal [petName](https://fakerjs.dev/api/animal.html#petName) */
+export const petName = makeValueConfigFn(faker.animal.petName);
+
 /** Animal [rabbit](https://fakerjs.dev/api/animal.html#rabbit) */
 export const rabbit = makeValueConfigFn(faker.animal.rabbit);
 

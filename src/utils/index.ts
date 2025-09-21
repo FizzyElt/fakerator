@@ -1,5 +1,6 @@
 export * as Airline from "./airline";
 export * as Animal from "./animal";
+export * as Book from "./book";
 export * as Color from "./color";
 export * as Commerce from "./commerce";
 export * as Common from "./common";
@@ -23,4 +24,5 @@ export * as Science from "./science";
 export * as String from "./string";
 export * as System from "./system";
 export * as utils from "./utils";
+export { makeValueConfigFn } from "./utils";
 export * as Vehicle from "./vehicle";

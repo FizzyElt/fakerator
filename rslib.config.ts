@@ -20,7 +20,8 @@ export default defineConfig({
     source: {
         entry: {
             index: ["src/*.ts", "!src/*.test.ts"],
-            utils: "src/utils/*.ts",
+            utils: ["src/utils/*.ts"],
         },
+        tsconfigPath: "./tsconfig.json",
     },
 });

@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+import type { ValueConfig } from "../type";
 import { makeValueConfigFn } from "./utils";
 
 /** Location [buildingNumber](https://fakerjs.dev/api/location.html#buildingNumber) */
@@ -12,6 +13,9 @@ export const cardinalDirection = makeValueConfigFn(
 /** Location [city](https://fakerjs.dev/api/location.html#city) */
 export const city = makeValueConfigFn(faker.location.city);
 
+/** Location [continent](https://fakerjs.dev/api/location.html#continent) */
+export const continent = makeValueConfigFn(faker.location.continent);
+
 /** Location [country](https://fakerjs.dev/api/location.html#country) */
 export const country = makeValueConfigFn(faker.location.country);
 
@@ -23,6 +27,12 @@ export const county = makeValueConfigFn(faker.location.county);
 
 /** Location [direction](https://fakerjs.dev/api/location.html#direction) */
 export const direction = makeValueConfigFn(faker.location.direction);
+
+type Language = ReturnType<typeof faker.location.language>;
+/** Location [language](https://fakerjs.dev/api/location.html#language) */
+export const language = makeValueConfigFn(
+    faker.location.language,
+) as () => ValueConfig<Language>;
 
 /** Location [latitude](https://fakerjs.dev/api/location.html#latitude) */
 export const latitude = makeValueConfigFn(faker.location.latitude);
@@ -56,3 +66,6 @@ export const streetAddress = makeValueConfigFn(faker.location.streetAddress);
 
 /** Location [timeZone](https://fakerjs.dev/api/location.html#timeZone) */
 export const timeZone = makeValueConfigFn(faker.location.timeZone);
+
+/** Location [zipCode](https://fakerjs.dev/api/location.html#zipCode) */
+export const zipCode = makeValueConfigFn(faker.location.zipCode);

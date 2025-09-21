@@ -18,3 +18,6 @@ export const int = makeValueConfigFn(faker.number.int);
 
 /** Number [octal](https://fakerjs.dev/api/number.html#octal) */
 export const octal = makeValueConfigFn(faker.number.octal);
+
+/** Number [romanNumeral](https://fakerjs.dev/api/number.html#romanNumeral) */
+export const romanNumeral = makeValueConfigFn(faker.number.romanNumeral);

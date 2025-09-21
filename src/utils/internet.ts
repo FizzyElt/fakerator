@@ -1,9 +1,6 @@
 import { faker } from "@faker-js/faker";
 import { makeValueConfigFn } from "./utils";
 
-/** Internet [color](https://fakerjs.dev/api/internet.html#color) */
-export const color = makeValueConfigFn(faker.internet.color);
-
 /** Internet [displayName](https://fakerjs.dev/api/internet.html#displayName) */
 export const displayName = makeValueConfigFn(faker.internet.displayName);
 
@@ -39,6 +36,12 @@ export const ipv4 = makeValueConfigFn(faker.internet.ipv4);
 
 /** Internet [ipv6](https://fakerjs.dev/api/internet.html#ipv6) */
 export const ipv6 = makeValueConfigFn(faker.internet.ipv6);
+
+/** Internet [jwt](https://fakerjs.dev/api/internet.html#jwt) */
+export const jwt = makeValueConfigFn(faker.internet.jwt);
+
+/** Internet [jwtAlgorithm](https://fakerjs.dev/api/internet.html#jwtAlgorithm) */
+export const jwtAlgorithm = makeValueConfigFn(faker.internet.jwtAlgorithm);
 
 /** Internet [mac](https://fakerjs.dev/api/internet.html#mac) */
 export const mac = makeValueConfigFn(faker.internet.mac);

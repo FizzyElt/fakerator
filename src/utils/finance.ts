@@ -35,6 +35,14 @@ export const currency = makeValueConfigFn(faker.finance.currency);
 /** Finance [currencyCode](https://fakerjs.dev/api/finance.html#currencyCode) */
 export const currencyCode = makeValueConfigFn(faker.finance.currencyCode);
 
+/** Finance [currencyName](https://fakerjs.dev/api/finance.html#currencyName) */
+export const currencyName = makeValueConfigFn(faker.finance.currencyName);
+
+/** Finance [currencyNumericCode](https://fakerjs.dev/api/finance.html#currencyNumericCode) */
+export const currencyNumericCode = makeValueConfigFn(
+    faker.finance.currencyNumericCode,
+);
+
 /** Finance [currencySymbol](https://fakerjs.dev/api/finance.html#currencySymbol) */
 export const currencySymbol = makeValueConfigFn(faker.finance.currencySymbol);
 
@@ -46,9 +54,6 @@ export const iban = makeValueConfigFn(faker.finance.iban);
 
 /** Finance [litecoinAddress](https://fakerjs.dev/api/finance.html#litecoinAddress) */
 export const litecoinAddress = makeValueConfigFn(faker.finance.litecoinAddress);
-
-/** Finance [maskedNumber](https://fakerjs.dev/api/finance.html#maskedNumber) */
-export const maskedNumber = makeValueConfigFn(faker.finance.maskedNumber);
 
 /** Finance [pin](https://fakerjs.dev/api/finance.html#pin) */
 export const pin = makeValueConfigFn(faker.finance.pin);

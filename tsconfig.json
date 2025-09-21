@@ -2,17 +2,13 @@
   "compilerOptions": {
     "module": "ESNext",
     "target": "ESNext",
-    "lib": [
-      "ES2022",
-      "DOM"
-    ],
+    "lib": ["ES2022", "DOM"],
     "declaration": true,
     "outDir": "./dist/lib/es6",
-    "moduleResolution": "node",
+    "moduleResolution": "bundler",
     "skipLibCheck": true,
-    "isolatedModules": true
+    "isolatedModules": true,
+    "declarationDir": "./dist/types"
   },
-  "include": [
-    "src/**/*"
-  ],
+  "include": ["src/**/*.ts"]
 }
