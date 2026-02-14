@@ -1,56 +1,57 @@
 {
-  "name": "struct-fakerator",
-  "version": "3.0.0",
-  "description": "",
-  "main": "dist/index.cjs",
-  "module": "dist/index.js",
-  "types": "dist/types/index.d.ts",
-  "type": "module",
-  "files": [
-    "dist"
-  ],
-  "exports": {
-    ".": {
-      "types": "./dist/types/index.d.ts",
-      "require": "./dist/index.cjs",
-      "import": "./dist/index.js"
+    "name": "struct-fakerator",
+    "version": "3.0.0",
+    "description": "",
+    "keywords": [
+        "fake data",
+        "fakerjs",
+        "generator"
+    ],
+    "homepage": "https://github.com/FizzyElt/fakerator",
+    "license": "MIT",
+    "author": "FizzyElt",
+    "files": [
+        "dist"
+    ],
+    "type": "module",
+    "main": "dist/index.cjs",
+    "module": "dist/index.js",
+    "types": "dist/types/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/types/index.d.ts",
+            "require": "./dist/index.cjs",
+            "import": "./dist/index.js"
+        },
+        "./utils": {
+            "types": "./dist/types/utils/index.d.ts",
+            "require": "./dist/utils/index.cjs",
+            "import": "./dist/utils/index.js"
+        },
+        "./utils/*": {
+            "types": "./dist/types/utils/*.d.ts",
+            "require": "./dist/utils/*.cjs",
+            "import": "./dist/utils/*.js"
+        }
     },
-    "./utils": {
-      "types": "./dist/types/utils/index.d.ts",
-      "require": "./dist/utils/index.cjs",
-      "import": "./dist/utils/index.js"
+    "publishConfig": {
+        "access": "public"
     },
-    "./utils/*": {
-      "types": "./dist/types/utils/*.d.ts",
-      "require": "./dist/utils/*.cjs",
-      "import": "./dist/utils/*.js"
+    "scripts": {
+        "type_check": "tsc --noEmit",
+        "build": "pnpm type_check && rslib build src",
+        "publish": "pnpm build && pnpm publish --access public",
+        "test": "vitest src"
+    },
+    "dependencies": {
+        "@faker-js/faker": "^10.0.0",
+        "zod": "^4.1.11"
+    },
+    "devDependencies": {
+        "@rslib/core": "^0.19.6",
+        "oxfmt": "^0.32.0",
+        "oxlint": "^1.47.0",
+        "typescript": "^5.9.2",
+        "vitest": "^4.0.18"
     }
-  },
-  "scripts": {
-    "type_check": "tsc --noEmit",
-    "build": "pnpm type_check && rslib build src",
-    "publish": "pnpm build && pnpm publish --access public",
-    "test": "vitest src"
-  },
-  "keywords": [
-    "fake data",
-    "generator",
-    "fakerjs"
-  ],
-  "author": "FizzyElt",
-  "homepage": "https://github.com/FizzyElt/fakerator",
-  "license": "MIT",
-  "devDependencies": {
-    "@biomejs/biome": "^2.2.4",
-    "@rslib/core": "^0.13.3",
-    "typescript": "^5.9.2",
-    "vitest": "^3.2.4"
-  },
-  "dependencies": {
-    "@faker-js/faker": "^10.0.0",
-    "zod": "^4.1.11"
-  },
-  "publishConfig": {
-    "access": "public"
-  }
 }

@@ -1,14 +1,14 @@
 {
-  "compilerOptions": {
-    "module": "ESNext",
-    "target": "ESNext",
-    "lib": ["ES2022", "DOM"],
-    "declaration": true,
-    "outDir": "./dist/lib/es6",
-    "moduleResolution": "bundler",
-    "skipLibCheck": true,
-    "isolatedModules": true,
-    "declarationDir": "./dist/types"
-  },
-  "include": ["src/**/*.ts"]
+    "compilerOptions": {
+        "module": "ESNext",
+        "target": "ESNext",
+        "lib": ["ES2022", "DOM"],
+        "declaration": true,
+        "outDir": "./dist/lib/es6",
+        "moduleResolution": "bundler",
+        "skipLibCheck": true,
+        "isolatedModules": true,
+        "declarationDir": "./dist/types"
+    },
+    "include": ["src/**/*.ts"]
 }

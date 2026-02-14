@@ -1,126 +1,131 @@
 # 假資料結構產生器
 
 - [假資料結構產生器](#假資料結構產生器)
-  - [Wrapping fakerjs Functions](#wrapping-fakerjs-functions)
-  - [用途](#用途)
-    - [Value](#value)
-    - [Selection](#selection)
-    - [Object](#object)
-    - [Array](#array)
-    - [Tuple](#tuple)
-    - [BoundedSeries](#boundedseries)
-  - [擴充](#擴充)
+    - [Wrapping fakerjs Functions](#wrapping-fakerjs-functions)
+    - [用途](#用途)
+        - [Value](#value)
+        - [Selection](#selection)
+        - [Object](#object)
+        - [Array](#array)
+        - [Tuple](#tuple)
+        - [BoundedSeries](#boundedseries)
+    - [擴充](#擴充)
 
 ## Wrapping fakerjs Functions
 
-- [X] Airline
-- [X] Animal
-- [X] Color
-- [X] Commerce
-- [X] Company
-- [X] Database
-- [X] Datatype
-- [X] Date(Datetime)
-- [X] Finance
-- [X] Food
-- [X] Git
-- [X] Hacker
-- [X] Image
-- [X] Internet
-- [X] Location
-- [X] Lorem
-- [X] Music
-- [X] Number
-- [X] Person
-- [X] Phone
-- [X] Science
-- [X] String
-- [X] System
-- [X] Vehicle
+- [x] Airline
+- [x] Animal
+- [x] Color
+- [x] Commerce
+- [x] Company
+- [x] Database
+- [x] Datatype
+- [x] Date(Datetime)
+- [x] Finance
+- [x] Food
+- [x] Git
+- [x] Hacker
+- [x] Image
+- [x] Internet
+- [x] Location
+- [x] Lorem
+- [x] Music
+- [x] Number
+- [x] Person
+- [x] Phone
+- [x] Science
+- [x] String
+- [x] System
+- [x] Vehicle
 
 ## 用途
 
 使用 faker js 時是單一純值不能產生結構，需要自己手動組合結構，此專案利用撰寫設定檔的方式來產生一個特定的假資料函數，減少手動組合結構的麻煩。
 
 ```typescript
-import { StructConfig } from 'struct-fakerator'
+import { StructConfig } from "struct-fakerator";
 
 const scheme = StructConfig.object({
-  name: StructConfig.value(() => 'hello'),
-  enum: StructConfig.select([1, 2, 3]),
-  list: StructConfig.array(StructConfig.value(() => 10), 5),
-  tuple: StructConfig.tuple([StructConfig.value(() => 'tuple1'), StructConfig.value(() => '100')])
-})
+    name: StructConfig.value(() => "hello"),
+    enum: StructConfig.select([1, 2, 3]),
+    list: StructConfig.array(
+        StructConfig.value(() => 10),
+        5,
+    ),
+    tuple: StructConfig.tuple([
+        StructConfig.value(() => "tuple1"),
+        StructConfig.value(() => "100"),
+    ]),
+});
 
 // or
 import {
-  createObjectConfig,
-  createArrayConfig,
-  createValueConfig,
-  createTupleConfig,
-  createSelectionConfig
-} from 'struct-fakerator';
-
+    createObjectConfig,
+    createArrayConfig,
+    createValueConfig,
+    createTupleConfig,
+    createSelectionConfig,
+} from "struct-fakerator";
 
 const scheme = createObjectConfig({
-  name: createValueConfig(() => 'hello'),
-  enum: createSelectionConfig([1, 2, 3]),
-  list: createArrayConfig(
-    createValueConfig(() => 10),
-    5
-  ),
-  tuple: createTupleConfig([
-    createValueConfig(() => 'tuple1'),
-    createValueConfig(() => 100),
-    createValueConfig(() => false),
-  ])
+    name: createValueConfig(() => "hello"),
+    enum: createSelectionConfig([1, 2, 3]),
+    list: createArrayConfig(
+        createValueConfig(() => 10),
+        5,
+    ),
+    tuple: createTupleConfig([
+        createValueConfig(() => "tuple1"),
+        createValueConfig(() => 100),
+        createValueConfig(() => false),
+    ]),
 });
 
 // or
 const scheme = {
-  type: 'obj',
-  content: {
-    name: {
-      type: 'value',
-      generateFn: () => 'hello',
-    },
-    enum: {
-      type: 'select',
-      items: [1, 2, 3],
-    },
-    list: {
-      type: 'arr',
-      item: {
-        type: 'value',
-        generateFn: () => 10,
-      },
-      len: 5,
-    },
-    tuple: {
-      type: 'tuple',
-      configItems: [
-        {
-          type: 'value',
-          generateFn: () => 'tuple1',
+    type: "obj",
+    content: {
+        name: {
+            type: "value",
+            generateFn: () => "hello",
         },
-        {
-          type: 'value',
-          generateFn: () => 100,
+        enum: {
+            type: "select",
+            items: [1, 2, 3],
         },
-        {
-          type: 'value',
-          generateFn: () => false,
+        list: {
+            type: "arr",
+            item: {
+                type: "value",
+                generateFn: () => 10,
+            },
+            len: 5,
         },
-      ],
+        tuple: {
+            type: "tuple",
+            configItems: [
+                {
+                    type: "value",
+                    generateFn: () => "tuple1",
+                },
+                {
+                    type: "value",
+                    generateFn: () => 100,
+                },
+                {
+                    type: "value",
+                    generateFn: () => false,
+                },
+            ],
+        },
     },
-  },
 };
 ```
 
 ```typescript
-import { StructGenerator } from 'struct-fakerator';
+import { StructGenerator } from "struct-fakerator";
 
-const result = StructGenerator.genFn(scheme)()
+const result = StructGenerator.genFn(scheme)();
 
 console.log(result);
 // {
@@ -129,9 +134,7 @@ console.log(result);
 //   list: [10, 10, 10, 10, 10],
 //   tuple: ['tuple1', 100, false]
 // }
-
 ```
-
 
 ### Value
 
@@ -145,7 +148,7 @@ console.log(generateFn());
 ### Selection
 
 ```typescript
-const generateFn = StructGenerator.genFn(StructConfig.select([1, 2, 3, 4, 5]))
+const generateFn = StructGenerator.genFn(StructConfig.select([1, 2, 3, 4, 5]));
 
 console.log(generateFn());
 // 1 or 2 or 3 or 4 or 5
@@ -154,10 +157,15 @@ console.log(generateFn());
 ### Object
 
 ```typescript
-const generateFn = StructGenerator.genFn(StructConfig.object({
-  name: StructConfig.value(() => 'hello'),
-  list: StructConfig.array(StructConfig.value(() => 10), 5),
-}));
+const generateFn = StructGenerator.genFn(
+    StructConfig.object({
+        name: StructConfig.value(() => "hello"),
+        list: StructConfig.array(
+            StructConfig.value(() => 10),
+            5,
+        ),
+    }),
+);
 
 console.log(generateFn());
 // {
@@ -167,16 +175,16 @@ console.log(generateFn());
 
 // with transformer function
 const generateFn = StructGenerator.genFn(
-  StructConfig.object(
-    {
-      name: StructConfig.value(() => 'hello'),
-      list: StructConfig.array(
-        StructConfig.value(() => 10),
-        5
-      ),
-    },
-    ({ name, list }) => list.map((item) => `${name} ${item}`)
-  )
+    StructConfig.object(
+        {
+            name: StructConfig.value(() => "hello"),
+            list: StructConfig.array(
+                StructConfig.value(() => 10),
+                5,
+            ),
+        },
+        ({ name, list }) => list.map((item) => `${name} ${item}`),
+    ),
 );
 
 console.log(generateFn());
@@ -187,10 +195,10 @@ console.log(generateFn());
 
 ```typescript
 const generateFn = StructGenerator.genFn(
-  StructConfig.array(
-    StructConfig.value(() => 10),
-    5
-  )
+    StructConfig.array(
+        StructConfig.value(() => 10),
+        5,
+    ),
 );
 
 console.log(generateFn());
@@ -198,11 +206,11 @@ console.log(generateFn());
 
 // with next function
 const generateFn = StructGenerator.genFn(
-  StructConfig.array(
-    StructConfig.value(() => 10),
-    5,
-    (prev, current) => prev + 1 + current
-  )
+    StructConfig.array(
+        StructConfig.value(() => 10),
+        5,
+        (prev, current) => prev + 1 + current,
+    ),
 );
 
 console.log(generateFn());
@@ -213,11 +221,11 @@ console.log(generateFn());
 
 ```typescript
 const generateFn = StructGenerator.genFn(
-  StructConfig.tuple([
-    StructConfig.value(() => 'tuple1'),
-    StructConfig.value(() => 100),
-    StructConfig.value(() => false),
-  ])
+    StructConfig.tuple([
+        StructConfig.value(() => "tuple1"),
+        StructConfig.value(() => 100),
+        StructConfig.value(() => false),
+    ]),
 );
 
 console.log(generateFn());
@@ -228,19 +236,19 @@ console.log(generateFn());
 
 ```typescript
 const generateFn = StructGenerator.genFn(
-  StructConfig.boundedSeries({
-    upperLimit: 1.1,
-    lowerLimit: 0.9,
-    createInitValue: () => 100,
-    count: 20,
-  })
+    StructConfig.boundedSeries({
+        upperLimit: 1.1,
+        lowerLimit: 0.9,
+        createInitValue: () => 100,
+        count: 20,
+    }),
 );
 
 console.log(generateFn());
-// [100 * 0.9 <= num <= 100 * 1.1, 
+// [100 * 0.9 <= num <= 100 * 1.1,
 //  prev * 0.9 <= num <= prev * 1.1,
 //  prev * 0.9 <= num <= prev * 1.1,
-//  ...] 
+//  ...]
 ```
 
 ## 擴充
@@ -259,27 +267,29 @@ flowchart TB
 但並不是所有人情況都能自己手動建立函數，有可能是開放給別人使用的服務，沒辦法在使用方建立函數，這時 `createGeneratorByType` 第二個可以讓製作服務的人帶入自己的擴充，這樣這個函數就能接受更多種型態。
 
 ```typescript
-const createIntValueConfig = (option) => createValueConfig(() => faker.number.int(option));
-const createEmailValueConfig = (option) => createValueConfig(() => faker.internet.email(option));
+const createIntValueConfig = (option) =>
+    createValueConfig(() => faker.number.int(option));
+const createEmailValueConfig = (option) =>
+    createValueConfig(() => faker.internet.email(option));
 
 const customTypeMatch = (config) => {
-  if (config.type === "int") {
-    return createIntValueConfig(config.option);
-  }
-  if (config.type === "email") {
-    return createEmailValueConfig(config.option);
-  }
+    if (config.type === "int") {
+        return createIntValueConfig(config.option);
+    }
+    if (config.type === "email") {
+        return createEmailValueConfig(config.option);
+    }
 
-  throw Error("error");
+    throw Error("error");
 };
 
 const config = {
-  type: "obj",
-  content: {
-    name: { type: "value", generateFn: () => "John" },
-    age: { type: "int" },
-    email: { type: "email" },
-  },
+    type: "obj",
+    content: {
+        name: { type: "value", generateFn: () => "John" },
+        age: { type: "int" },
+        email: { type: "email" },
+    },
 };
 
 const result = createGeneratorByType(config, customTypeMatch)();
@@ -294,4 +304,3 @@ console.log(result);
   }
 */
 ```
-

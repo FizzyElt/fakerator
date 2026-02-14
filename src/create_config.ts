@@ -63,7 +63,7 @@ export function createObjectConfig<T extends object, R>(
 export function createObjectConfig<T extends object, R>(
     content: T,
     transformer?: (v: { [K in keyof T]: Result<T[K]> }) => R,
-) {
+): ObjectConfig<T> | ObjectConfigWithFn<T, R> {
     if (transformer) {
         const config: ObjectConfigWithFn<T, R> = {
             type: "obj",

@@ -70,51 +70,59 @@ export type TupleConfig<
     configItems: TupleItems<A, B, C, D, E, F, G, H, I, J>;
 };
 
-export type Result<T> = T extends ValueConfig<infer U>
-    ? U
-    : T extends SelectionConfig<infer S>
-      ? S
-      : T extends BoundedSeriesConfig
-        ? number[]
-        : T extends ArrayConfig<infer W>
-          ? Array<Result<W>>
-          : T extends ObjectConfigWithFn<infer _, infer R>
-            ? R
-            : T extends ObjectConfig<infer O>
-              ? { [K in keyof O]: Result<O[K]> }
-              : T extends TupleConfig<
-                      infer A,
-                      infer B,
-                      infer C,
-                      infer D,
-                      infer E,
-                      infer F,
-                      infer G,
-                      infer H,
-                      infer I,
-                      infer J
-                  >
-                ? J extends undefined
-                    ? I extends undefined
-                        ? H extends undefined
-                            ? G extends undefined
-                                ? F extends undefined
-                                    ? E extends undefined
-                                        ? D extends undefined
-                                            ? C extends undefined
-                                                ? B extends undefined
-                                                    ? [Result<A>]
-                                                    : [Result<A>, Result<B>]
+export type Result<T> =
+    T extends ValueConfig<infer U>
+        ? U
+        : T extends SelectionConfig<infer S>
+          ? S
+          : T extends BoundedSeriesConfig
+            ? number[]
+            : T extends ArrayConfig<infer W>
+              ? Array<Result<W>>
+              : T extends ObjectConfigWithFn<infer _, infer R>
+                ? R
+                : T extends ObjectConfig<infer O>
+                  ? { [K in keyof O]: Result<O[K]> }
+                  : T extends TupleConfig<
+                          infer A,
+                          infer B,
+                          infer C,
+                          infer D,
+                          infer E,
+                          infer F,
+                          infer G,
+                          infer H,
+                          infer I,
+                          infer J
+                      >
+                    ? J extends undefined
+                        ? I extends undefined
+                            ? H extends undefined
+                                ? G extends undefined
+                                    ? F extends undefined
+                                        ? E extends undefined
+                                            ? D extends undefined
+                                                ? C extends undefined
+                                                    ? B extends undefined
+                                                        ? [Result<A>]
+                                                        : [Result<A>, Result<B>]
+                                                    : [
+                                                          Result<A>,
+                                                          Result<B>,
+                                                          Result<C>,
+                                                      ]
                                                 : [
                                                       Result<A>,
                                                       Result<B>,
                                                       Result<C>,
+                                                      Result<D>,
                                                   ]
                                             : [
                                                   Result<A>,
                                                   Result<B>,
                                                   Result<C>,
                                                   Result<D>,
+                                                  Result<E>,
                                               ]
                                         : [
                                               Result<A>,
@@ -122,6 +130,7 @@ export type Result<T> = T extends ValueConfig<infer U>
                                               Result<C>,
                                               Result<D>,
                                               Result<E>,
+                                              Result<F>,
                                           ]
                                     : [
                                           Result<A>,
@@ -130,6 +139,7 @@ export type Result<T> = T extends ValueConfig<infer U>
                                           Result<D>,
                                           Result<E>,
                                           Result<F>,
+                                          Result<G>,
                                       ]
                                 : [
                                       Result<A>,
@@ -139,6 +149,7 @@ export type Result<T> = T extends ValueConfig<infer U>
                                       Result<E>,
                                       Result<F>,
                                       Result<G>,
+                                      Result<H>,
                                   ]
                             : [
                                   Result<A>,
@@ -149,6 +160,7 @@ export type Result<T> = T extends ValueConfig<infer U>
                                   Result<F>,
                                   Result<G>,
                                   Result<H>,
+                                  Result<I>,
                               ]
                         : [
                               Result<A>,
@@ -160,17 +172,6 @@ export type Result<T> = T extends ValueConfig<infer U>
                               Result<G>,
                               Result<H>,
                               Result<I>,
+                              Result<J>,
                           ]
-                    : [
-                          Result<A>,
-                          Result<B>,
-                          Result<C>,
-                          Result<D>,
-                          Result<E>,
-                          Result<F>,
-                          Result<G>,
-                          Result<H>,
-                          Result<I>,
-                          Result<J>,
-                      ]
-                : never;
+                    : never;
