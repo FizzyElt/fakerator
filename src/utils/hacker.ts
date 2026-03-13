@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Hacker [abbreviation](https://fakerjs.dev/api/hacker.html#abbreviation) */

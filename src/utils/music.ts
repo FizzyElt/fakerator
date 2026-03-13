@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Music [album](https://fakerjs.dev/api/music.html#album) */

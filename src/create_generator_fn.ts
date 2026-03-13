@@ -1,12 +1,5 @@
 import { faker } from "@faker-js/faker";
-import {
-    arrayConfigScheme,
-    boundedSeriesScheme,
-    objConfigScheme,
-    selectionConfigScheme,
-    tupleConfigScheme,
-    valueConfigScheme,
-} from "./config_scheme";
+
 import type {
     ArrayConfig,
     BoundedSeriesConfig,
@@ -17,6 +10,15 @@ import type {
     TupleConfig,
     ValueConfig,
 } from "./type";
+
+import {
+    arrayConfigScheme,
+    boundedSeriesScheme,
+    objConfigScheme,
+    selectionConfigScheme,
+    tupleConfigScheme,
+    valueConfigScheme,
+} from "./config_scheme";
 
 type AllConfig<T> =
     | ValueConfig<T>
@@ -49,9 +51,8 @@ const _createValueGenerator = <R = unknown>(
     return config.generateFn as () => R;
 };
 
-export const createValueGenerator = <R = unknown>(
-    config: ValueConfig<unknown>,
-): (() => R) => _createValueGenerator(config, "*");
+export const createValueGenerator = <R = unknown>(config: ValueConfig<unknown>): (() => R) =>
+    _createValueGenerator(config, "*");
 
 // =================== generator fn ====================
 
@@ -89,15 +90,12 @@ const _createObjectGenerator = <
         throw new Error(`config path: ${path}.obj\n ${err}`);
     }
 
-    const keyWithFns: [string, () => Result<AllConfig<unknown>>][] =
-        Object.entries(config.content as object).map(([key, subConfig]) => [
-            key,
-            _createGeneratorByType(
-                subConfig,
-                `${path}.obj[${key}]`,
-                customTypeMatch,
-            ),
-        ]);
+    const keyWithFns: [string, () => Result<AllConfig<unknown>>][] = Object.entries(
+        config.content as object,
+    ).map(([key, subConfig]) => [
+        key,
+        _createGeneratorByType(subConfig, `${path}.obj[${key}]`, customTypeMatch),
+    ]);
 
     return () => {
         const result: Record<string, unknown> = {};
@@ -105,10 +103,7 @@ const _createObjectGenerator = <
             result[key] = generateFn();
         }
 
-        if (
-            "transformer" in config &&
-            typeof config.transformer === "function"
-        ) {
+        if ("transformer" in config && typeof config.transformer === "function") {
             return config.transformer(result) as Result<T>;
         }
         return result as Result<T>;
@@ -140,12 +135,11 @@ const _createArrayGenerator = <T extends ArrayConfig<unknown>>(
     ) as () => Result<T>;
 
     if (config.next) {
-        const next: (prev: Result<T>, current: Result<T>) => Result<T> =
-            config.next;
+        const next: (prev: Result<T>, current: Result<T>) => Result<T> = config.next;
         return () => {
             let prev = itemGeneratorFn();
             const result = [];
-            for (let i = 0; i < config.len; i++) {
+            for (let i = 0; i < config.len; i += 1) {
                 const nextValue = next(prev, itemGeneratorFn());
                 result.push(nextValue);
                 prev = nextValue;
@@ -155,8 +149,7 @@ const _createArrayGenerator = <T extends ArrayConfig<unknown>>(
         };
     }
 
-    return () =>
-        Array.from({ length: config.len ?? 0 }, itemGeneratorFn) as Result<T>;
+    return () => Array.from({ length: config.len ?? 0 }, itemGeneratorFn) as Result<T>;
 };
 
 export const createArrayGenerator = <T extends ArrayConfig<unknown>>(
@@ -191,16 +184,7 @@ const _createTupleGenerator = <
               unknown,
               unknown
           >
-        | TupleConfig<
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown
-          >
+        | TupleConfig<unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown>
         | TupleConfig<unknown, unknown, unknown, unknown, unknown, unknown>
         | TupleConfig<unknown, unknown, unknown, unknown, unknown>
         | TupleConfig<unknown, unknown, unknown, unknown>
@@ -254,16 +238,7 @@ export const createTupleGenerator = <
               unknown,
               unknown
           >
-        | TupleConfig<
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown
-          >
+        | TupleConfig<unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown>
         | TupleConfig<unknown, unknown, unknown, unknown, unknown, unknown>
         | TupleConfig<unknown, unknown, unknown, unknown, unknown>
         | TupleConfig<unknown, unknown, unknown, unknown>
@@ -294,10 +269,8 @@ const _createBoundedSeriesGenerator = <T extends BoundedSeriesConfig>(
 
         const boundedSeries = [];
 
-        for (let i = 0; i < count; i++) {
-            value =
-                faker.number.float({ max: upperLimit, min: lowerLimit }) *
-                value;
+        for (let i = 0; i < count; i += 1) {
+            value = faker.number.float({ max: upperLimit, min: lowerLimit }) * value;
             boundedSeries.push(value);
         }
 
@@ -318,32 +291,17 @@ const _createGeneratorByType = <T extends AllConfig<unknown>>(
 ): (() => Result<T>) => {
     switch (config.type) {
         case "obj":
-            return _createObjectGenerator(
-                config,
-                path,
-                customTypeMatch,
-            ) as () => Result<T>;
+            return _createObjectGenerator(config, path, customTypeMatch) as () => Result<T>;
         case "arr":
-            return _createArrayGenerator(
-                config,
-                path,
-                customTypeMatch,
-            ) as () => Result<T>;
+            return _createArrayGenerator(config, path, customTypeMatch) as () => Result<T>;
         case "tuple":
-            return _createTupleGenerator(
-                config,
-                path,
-                customTypeMatch,
-            ) as () => Result<T>;
+            return _createTupleGenerator(config, path, customTypeMatch) as () => Result<T>;
         case "select":
             return _createSelectionGenerator(config, path) as () => Result<T>;
         case "value":
             return _createValueGenerator(config, path);
         case "bounded_series":
-            return _createBoundedSeriesGenerator(
-                config,
-                path,
-            ) as () => Result<T>;
+            return _createBoundedSeriesGenerator(config, path) as () => Result<T>;
         default: {
             if (customTypeMatch) {
                 return createValueGenerator(customTypeMatch(config, path));

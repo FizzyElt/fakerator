@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Company [buzzAdjective](https://fakerjs.dev/api/company.html#buzzAdjective) */
@@ -17,14 +18,10 @@ export const buzzVerb = makeValueConfigFn(faker.company.buzzVerb);
 export const catchPhrase = makeValueConfigFn(faker.company.catchPhrase);
 
 /** Company [catchPhraseAdjective](https://fakerjs.dev/api/company.html#catchPhraseAdjective) */
-export const catchPhraseAdjective = makeValueConfigFn(
-    faker.company.catchPhraseAdjective,
-);
+export const catchPhraseAdjective = makeValueConfigFn(faker.company.catchPhraseAdjective);
 
 /** Company [catchPhraseDescriptor](https://fakerjs.dev/api/company.html#catchPhraseDescriptor) */
-export const catchPhraseDescriptor = makeValueConfigFn(
-    faker.company.catchPhraseDescriptor,
-);
+export const catchPhraseDescriptor = makeValueConfigFn(faker.company.catchPhraseDescriptor);
 
 /** Company [catchPhraseNoun](https://fakerjs.dev/api/company.html#catchPhraseNoun) */
 export const catchPhraseNoun = makeValueConfigFn(faker.company.catchPhraseNoun);

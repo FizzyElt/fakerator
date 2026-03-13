@@ -1,4 +1,5 @@
 import { defineConfig } from "@rslib/core";
+import * as path from "node:path";
 
 export default defineConfig({
     lib: [
@@ -17,6 +18,11 @@ export default defineConfig({
             outBase: "./src",
         },
     ],
+    resolve: {
+        alias: {
+            "@": path.resolve(import.meta.dirname, "./src"),
+        },
+    },
     source: {
         entry: {
             index: ["src/*.ts", "!src/*.test.ts"],

@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Vehicle [bicycle](https://fakerjs.dev/api/vehicle.html#bicycle) */

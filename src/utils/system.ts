@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** System [commonFileExt](https://fakerjs.dev/api/system.html#commonFileExt) */
@@ -32,9 +33,7 @@ export const fileType = makeValueConfigFn(faker.system.fileType);
 export const mimeType = makeValueConfigFn(faker.system.mimeType);
 
 /** System [networkInterface](https://fakerjs.dev/api/system.html#networkInterface) */
-export const networkInterface = makeValueConfigFn(
-    faker.system.networkInterface,
-);
+export const networkInterface = makeValueConfigFn(faker.system.networkInterface);
 
 /** System [semver](https://fakerjs.dev/api/system.html#semver) */
 export const semver = makeValueConfigFn(faker.system.semver);

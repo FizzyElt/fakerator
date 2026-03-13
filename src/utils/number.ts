@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Number [bigInt](https://fakerjs.dev/api/number.html#bigInt) */

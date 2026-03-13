@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Image [avatar](https://fakerjs.dev/api/image.html#avatar) */

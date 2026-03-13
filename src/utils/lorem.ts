@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Lorem [lines](https://fakerjs.dev/api/lorem.html#lines) */

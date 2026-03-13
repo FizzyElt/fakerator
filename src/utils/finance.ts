@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Finance [accountName](https://fakerjs.dev/api/finance.html#accountName) */
@@ -20,14 +21,10 @@ export const bitcoinAddress = makeValueConfigFn(faker.finance.bitcoinAddress);
 export const creditCardCVV = makeValueConfigFn(faker.finance.creditCardCVV);
 
 /** Finance [creditCardIssuer](https://fakerjs.dev/api/finance.html#creditCardIssuer) */
-export const creditCardIssuer = makeValueConfigFn(
-    faker.finance.creditCardIssuer,
-);
+export const creditCardIssuer = makeValueConfigFn(faker.finance.creditCardIssuer);
 
 /** Finance [creditCardNumber](https://fakerjs.dev/api/finance.html#creditCardNumber) */
-export const creditCardNumber = makeValueConfigFn(
-    faker.finance.creditCardNumber,
-);
+export const creditCardNumber = makeValueConfigFn(faker.finance.creditCardNumber);
 
 /** Finance [currency](https://fakerjs.dev/api/finance.html#currency) */
 export const currency = makeValueConfigFn(faker.finance.currency);
@@ -39,9 +36,7 @@ export const currencyCode = makeValueConfigFn(faker.finance.currencyCode);
 export const currencyName = makeValueConfigFn(faker.finance.currencyName);
 
 /** Finance [currencyNumericCode](https://fakerjs.dev/api/finance.html#currencyNumericCode) */
-export const currencyNumericCode = makeValueConfigFn(
-    faker.finance.currencyNumericCode,
-);
+export const currencyNumericCode = makeValueConfigFn(faker.finance.currencyNumericCode);
 
 /** Finance [currencySymbol](https://fakerjs.dev/api/finance.html#currencySymbol) */
 export const currencySymbol = makeValueConfigFn(faker.finance.currencySymbol);
@@ -62,9 +57,7 @@ export const pin = makeValueConfigFn(faker.finance.pin);
 export const routingNumber = makeValueConfigFn(faker.finance.routingNumber);
 
 /** Finance [transactionDescription](https://fakerjs.dev/api/finance.html#transactionDescription) */
-export const transactionDescription = makeValueConfigFn(
-    faker.finance.transactionDescription,
-);
+export const transactionDescription = makeValueConfigFn(faker.finance.transactionDescription);
 
 /** Finance [transactionType](https://fakerjs.dev/api/finance.html#transactionType) */
 export const transactionType = makeValueConfigFn(faker.finance.transactionType);

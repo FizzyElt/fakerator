@@ -106,17 +106,8 @@ export type Result<T> =
                                                     ? B extends undefined
                                                         ? [Result<A>]
                                                         : [Result<A>, Result<B>]
-                                                    : [
-                                                          Result<A>,
-                                                          Result<B>,
-                                                          Result<C>,
-                                                      ]
-                                                : [
-                                                      Result<A>,
-                                                      Result<B>,
-                                                      Result<C>,
-                                                      Result<D>,
-                                                  ]
+                                                    : [Result<A>, Result<B>, Result<C>]
+                                                : [Result<A>, Result<B>, Result<C>, Result<D>]
                                             : [
                                                   Result<A>,
                                                   Result<B>,

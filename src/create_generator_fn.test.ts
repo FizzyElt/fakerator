@@ -1,4 +1,7 @@
 import { describe, expect, test } from "vitest";
+
+import type { ObjectConfig } from "./type";
+
 import {
     createArrayConfig,
     createObjectConfig,
@@ -14,7 +17,6 @@ import {
     createTupleGenerator,
     createValueGenerator,
 } from "./create_generator_fn";
-import type { ObjectConfig } from "./type";
 
 describe("createValueGenerator", () => {
     test("normal", () => {
@@ -60,13 +62,7 @@ describe("createArrayGenerator", () => {
             item: { type: "value", generateFn: () => ({ age: 42 }) },
         })();
 
-        expect(list).toEqual([
-            { age: 42 },
-            { age: 42 },
-            { age: 42 },
-            { age: 42 },
-            { age: 42 },
-        ]);
+        expect(list).toEqual([{ age: 42 }, { age: 42 }, { age: 42 }, { age: 42 }, { age: 42 }]);
     });
     test("with next function", () => {
         const list = createArrayGenerator(
@@ -142,20 +138,10 @@ describe("createBoundedSeriesGenerator", () => {
             count,
         })();
 
-        for (let i = 0; i < count; i++) {
+        for (let i = 0; i < count; i += 1) {
             const value = list[i];
-            if (i === 0) {
-                const ratio = value / initValue;
-
-                expect(ratio).toBeLessThanOrEqual(upperLimit);
-                expect(ratio).toBeGreaterThanOrEqual(lowerLimit);
-
-                continue;
-            }
-
             const prevValue = list[i - 1];
-
-            const ratio = value / prevValue;
+            const ratio = i === 0 ? value / initValue : value / prevValue;
 
             expect(ratio).toBeLessThanOrEqual(upperLimit);
             expect(ratio).toBeGreaterThanOrEqual(lowerLimit);
@@ -182,7 +168,7 @@ describe("createGeneratorByType", () => {
         });
     });
 
-    test("test error config", () => {
+    test("error config", () => {
         const config = {
             type: "obj",
             content: {
@@ -193,13 +179,12 @@ describe("createGeneratorByType", () => {
             },
         } as ObjectConfig<unknown>;
 
-        expect(() => createGeneratorByType(config)).toThrowError();
+        expect(() => createGeneratorByType(config)).toThrowError("createGeneratorByType");
     });
 
     test("with custom type match", () => {
         const createIntValueConfig = (_option) => createValueConfig(() => 50);
-        const createEmailValueConfig = (_option) =>
-            createValueConfig(() => "xxx@example.com");
+        const createEmailValueConfig = (_option) => createValueConfig(() => "xxx@example.com");
 
         const customTypeMatch = (config) => {
             if (config.type === "int") {

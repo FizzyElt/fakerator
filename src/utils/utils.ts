@@ -1,5 +1,6 @@
-import { createValueConfig } from "../create_config";
-import type { ValueConfig } from "../type";
+import type { ValueConfig } from "@/type";
+
+import { createValueConfig } from "@/create_config";
 
 export function makeValueConfigFn<Args extends Array<unknown>, R>(
     fn: (...options: Args) => R,

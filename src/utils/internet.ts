@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Internet [displayName](https://fakerjs.dev/api/internet.html#displayName) */

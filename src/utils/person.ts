@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Person [bio](https://fakerjs.dev/api/person.html#bio) */

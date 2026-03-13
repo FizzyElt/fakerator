@@ -1,10 +1,20 @@
 {
     "$schema": "./node_modules/oxlint/configuration_schema.json",
-    "plugins": null,
+    "plugins": ["oxc", "typescript", "unicorn", "vitest", "promise", "eslint", "import"],
     "categories": {
-        "correctness": "error"
+        "correctness": "error",
+        "restriction": "warn"
     },
-    "rules": {},
+    "rules": {
+        "import/no-default-export": "allow",
+        "oxc/no-async-await": "off",
+        "oxc/no-barrel-file": "off",
+        "oxc/no-optional-chaining": "off",
+        "oxc/no-rest-spread-properties": "off",
+        "typescript/explicit-function-return-type": "off",
+        "eslint/no-undefined": "off"
+    },
+
     "settings": {
         "jsx-a11y": {
             "polymorphicPropName": null,

@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Git [branch](https://fakerjs.dev/api/git.html#branch) */

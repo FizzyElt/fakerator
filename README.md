@@ -267,10 +267,8 @@ flowchart TB
 但並不是所有人情況都能自己手動建立函數，有可能是開放給別人使用的服務，沒辦法在使用方建立函數，這時 `createGeneratorByType` 第二個可以讓製作服務的人帶入自己的擴充，這樣這個函數就能接受更多種型態。
 
 ```typescript
-const createIntValueConfig = (option) =>
-    createValueConfig(() => faker.number.int(option));
-const createEmailValueConfig = (option) =>
-    createValueConfig(() => faker.internet.email(option));
+const createIntValueConfig = (option) => createValueConfig(() => faker.number.int(option));
+const createEmailValueConfig = (option) => createValueConfig(() => faker.internet.email(option));
 
 const customTypeMatch = (config) => {
     if (config.type === "int") {

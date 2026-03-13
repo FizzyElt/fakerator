@@ -49,8 +49,9 @@
     },
     "devDependencies": {
         "@rslib/core": "^0.19.6",
-        "oxfmt": "^0.32.0",
-        "oxlint": "^1.47.0",
+        "@types/node": "^25.5.0",
+        "oxfmt": "^0.40.0",
+        "oxlint": "^1.55.0",
         "typescript": "^5.9.2",
         "vitest": "^4.0.18"
     }

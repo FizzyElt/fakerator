@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Food [adjective](https://fakerjs.dev/api/food.html#adjective) */

@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Word [adjective](https://fakerjs.dev/word.html#adjective) */

@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Science [chemicalElement](https://fakerjs.dev/api/science.html#chemicalElement) */

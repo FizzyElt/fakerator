@@ -1,11 +1,3 @@
-import {
-    arrayConfigScheme,
-    boundedSeriesScheme,
-    objConfigScheme,
-    selectionConfigScheme,
-    tupleConfigScheme,
-    valueConfigScheme,
-} from "./config_scheme";
 import type {
     ArrayConfig,
     BoundedSeriesConfig,
@@ -17,6 +9,15 @@ import type {
     TupleItems,
     ValueConfig,
 } from "./type";
+
+import {
+    arrayConfigScheme,
+    boundedSeriesScheme,
+    objConfigScheme,
+    selectionConfigScheme,
+    tupleConfigScheme,
+    valueConfigScheme,
+} from "./config_scheme";
 
 /**
  * value
@@ -53,9 +54,7 @@ export const createSelectionConfig = <T>(items: T[]): SelectionConfig<T> => {
  * @param {function} transformer
  * @return {ObjectConfig}
  */
-export function createObjectConfig<T extends object>(
-    content: T,
-): ObjectConfig<T>;
+export function createObjectConfig<T extends object>(content: T): ObjectConfig<T>;
 export function createObjectConfig<T extends object, R>(
     content: T,
     transformer: (v: { [K in keyof T]: Result<T[K]> }) => R,
@@ -115,30 +114,15 @@ interface CreateTupleConfig {
     <A, B, C, D, E, F, G, H>(
         configItems: [A, B, C, D, E, F, G, H],
     ): TupleConfig<A, B, C, D, E, F, G, H>;
-    <A, B, C, D, E, F, G>(
-        configItems: [A, B, C, D, E, F, G],
-    ): TupleConfig<A, B, C, D, E, F, G>;
-    <A, B, C, D, E, F>(
-        configItems: [A, B, C, D, E, F],
-    ): TupleConfig<A, B, C, D, E, F>;
+    <A, B, C, D, E, F, G>(configItems: [A, B, C, D, E, F, G]): TupleConfig<A, B, C, D, E, F, G>;
+    <A, B, C, D, E, F>(configItems: [A, B, C, D, E, F]): TupleConfig<A, B, C, D, E, F>;
     <A, B, C, D, E>(configItems: [A, B, C, D, E]): TupleConfig<A, B, C, D, E>;
     <A, B, C, D>(configItems: [A, B, C, D]): TupleConfig<A, B, C, D>;
     <A, B, C>(configItems: [A, B, C]): TupleConfig<A, B, C>;
     <A, B>(configItems: [A, B]): TupleConfig<A, B>;
     <A>(configItems: [A]): TupleConfig<A>;
 }
-export const createTupleConfig: CreateTupleConfig = <
-    A,
-    B,
-    C,
-    D,
-    E,
-    F,
-    G,
-    H,
-    I,
-    J,
->(
+export const createTupleConfig: CreateTupleConfig = <A, B, C, D, E, F, G, H, I, J>(
     configItems: TupleItems<A, B, C, D, E, F, G, H, I, J>,
 ) => {
     const config: TupleConfig<A, B, C, D, E, F, G, H, I, J> = {

@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "baseUrl": "./",
         "module": "ESNext",
         "target": "ESNext",
         "lib": ["ES2022", "DOM"],
@@ -8,7 +9,11 @@
         "moduleResolution": "bundler",
         "skipLibCheck": true,
         "isolatedModules": true,
-        "declarationDir": "./dist/types"
+        "declarationDir": "./dist/types",
+        "paths": {
+            "@/*": ["src"],
+        },
     },
-    "include": ["src/**/*.ts"]
+
+    "include": ["src/**/*.ts"],
 }

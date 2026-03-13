@@ -28,9 +28,7 @@ export const objConfigScheme = z.object({
 
 export const boundedSeriesScheme = z
     .object({
-        type: z
-            .string()
-            .regex(/^bounded_series$/, { message: "invalid type string" }),
+        type: z.string().regex(/^bounded_series$/, { message: "invalid type string" }),
         upperLimit: z.number().nonnegative(),
         lowerLimit: z.number().nonnegative(),
         createInitValue: z.any(),

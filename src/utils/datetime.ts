@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Datetime [anytime](https://fakerjs.dev/api/date.html#anytime) */

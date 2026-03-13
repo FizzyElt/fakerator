@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Animal [bear](https://fakerjs.dev/api/animal.html#bear) */

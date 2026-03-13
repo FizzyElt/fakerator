@@ -1,14 +1,14 @@
 import { faker } from "@faker-js/faker";
-import type { ValueConfig } from "../type";
+
+import type { ValueConfig } from "@/type";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Location [buildingNumber](https://fakerjs.dev/api/location.html#buildingNumber) */
 export const buildingNumber = makeValueConfigFn(faker.location.buildingNumber);
 
 /** Location [cardinalDirection](https://fakerjs.dev/api/location.html#cardinalDirection) */
-export const cardinalDirection = makeValueConfigFn(
-    faker.location.cardinalDirection,
-);
+export const cardinalDirection = makeValueConfigFn(faker.location.cardinalDirection);
 
 /** Location [city](https://fakerjs.dev/api/location.html#city) */
 export const city = makeValueConfigFn(faker.location.city);
@@ -30,9 +30,7 @@ export const direction = makeValueConfigFn(faker.location.direction);
 
 type Language = ReturnType<typeof faker.location.language>;
 /** Location [language](https://fakerjs.dev/api/location.html#language) */
-export const language = makeValueConfigFn(
-    faker.location.language,
-) as () => ValueConfig<Language>;
+export const language = makeValueConfigFn(faker.location.language) as () => ValueConfig<Language>;
 
 /** Location [latitude](https://fakerjs.dev/api/location.html#latitude) */
 export const latitude = makeValueConfigFn(faker.location.latitude);
@@ -41,19 +39,13 @@ export const latitude = makeValueConfigFn(faker.location.latitude);
 export const longitude = makeValueConfigFn(faker.location.longitude);
 
 /** Location [nearbyGPSCoordinate](https://fakerjs.dev/api/location.html#nearbyGPSCoordinate) */
-export const nearbyGPSCoordinate = makeValueConfigFn(
-    faker.location.nearbyGPSCoordinate,
-);
+export const nearbyGPSCoordinate = makeValueConfigFn(faker.location.nearbyGPSCoordinate);
 
 /** Location [ordinalDirection](https://fakerjs.dev/api/location.html#ordinalDirection) */
-export const ordinalDirection = makeValueConfigFn(
-    faker.location.ordinalDirection,
-);
+export const ordinalDirection = makeValueConfigFn(faker.location.ordinalDirection);
 
 /** Location [secondaryAddress](https://fakerjs.dev/api/location.html#secondaryAddress) */
-export const secondaryAddress = makeValueConfigFn(
-    faker.location.secondaryAddress,
-);
+export const secondaryAddress = makeValueConfigFn(faker.location.secondaryAddress);
 
 /** Location [state](https://fakerjs.dev/api/location.html#state) */
 export const state = makeValueConfigFn(faker.location.state);

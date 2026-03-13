@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** String [alpha](https://fakerjs.dev/api/string.html#alpha) */

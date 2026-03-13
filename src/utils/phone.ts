@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+
 import { makeValueConfigFn } from "./utils";
 
 /** Phone [imei](https://fakerjs.dev/api/phone.html#imei) */
