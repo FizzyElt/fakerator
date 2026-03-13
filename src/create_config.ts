@@ -1,3 +1,5 @@
+import * as v from "valibot";
+
 import type {
     ArrayConfig,
     BoundedSeriesConfig,
@@ -30,7 +32,7 @@ export const createValueConfig = <T>(generateFn: () => T): ValueConfig<T> => {
         generateFn,
     };
 
-    valueConfigScheme.parse(config);
+    v.assert(valueConfigScheme, config);
 
     return config;
 };
@@ -43,7 +45,7 @@ export const createValueConfig = <T>(generateFn: () => T): ValueConfig<T> => {
 export const createSelectionConfig = <T>(items: T[]): SelectionConfig<T> => {
     const config: SelectionConfig<T> = { type: "select", items };
 
-    selectionConfigScheme.parse(config);
+    v.assert(selectionConfigScheme, config);
 
     return config;
 };
@@ -69,13 +71,15 @@ export function createObjectConfig<T extends object, R>(
             content,
             transformer,
         };
-        objConfigScheme.parse(config);
+
+        v.assert(objConfigScheme, config);
+
         return config;
     }
 
     const config: ObjectConfig<T> = { type: "obj", content };
 
-    objConfigScheme.parse(config);
+    v.assert(objConfigScheme, config);
 
     return config;
 }
@@ -94,7 +98,7 @@ export const createArrayConfig = <T>(
 ): ArrayConfig<T> => {
     const config: ArrayConfig<T> = { type: "arr", item, len, next };
 
-    arrayConfigScheme.parse(config);
+    v.assert(arrayConfigScheme, config);
 
     return config;
 };
@@ -130,7 +134,7 @@ export const createTupleConfig: CreateTupleConfig = <A, B, C, D, E, F, G, H, I, 
         configItems,
     };
 
-    tupleConfigScheme.parse(config);
+    v.assert(tupleConfigScheme, config);
 
     return config;
 };
@@ -148,7 +152,7 @@ export const createBoundedSeriesConfig = (
         ...config,
     };
 
-    boundedSeriesScheme.parse(newConfig);
+    v.assert(boundedSeriesScheme, newConfig);
 
     return newConfig;
 };

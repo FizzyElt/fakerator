@@ -44,15 +44,15 @@
         "test": "vitest src"
     },
     "dependencies": {
-        "@faker-js/faker": "^10.0.0",
-        "zod": "^4.1.11"
+        "@faker-js/faker": "^10.3.0",
+        "valibot": "^1.2.0"
     },
     "devDependencies": {
         "@rslib/core": "^0.19.6",
         "@types/node": "^25.5.0",
         "oxfmt": "^0.40.0",
         "oxlint": "^1.55.0",
-        "typescript": "^5.9.2",
-        "vitest": "^4.0.18"
+        "typescript": "^5.9.3",
+        "vitest": "^4.1.0"
     }
 }

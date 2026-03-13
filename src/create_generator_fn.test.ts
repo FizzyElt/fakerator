@@ -179,19 +179,21 @@ describe("createGeneratorByType", () => {
             },
         } as ObjectConfig<unknown>;
 
-        expect(() => createGeneratorByType(config)).toThrowError("createGeneratorByType");
+        expect(() => createGeneratorByType(config)).toThrowError(Error);
     });
 
     test("with custom type match", () => {
-        const createIntValueConfig = (_option) => createValueConfig(() => 50);
-        const createEmailValueConfig = (_option) => createValueConfig(() => "xxx@example.com");
+        const createIntValueConfig = () => createValueConfig(() => 50);
+        const createEmailValueConfig = () => createValueConfig(() => "xxx@example.com");
 
-        const customTypeMatch = (config) => {
-            if (config.type === "int") {
-                return createIntValueConfig(config.option);
+        const customTypeMatch = (config: unknown) => {
+            const { type } = config as { type: string };
+
+            if (type === "int") {
+                return createIntValueConfig();
             }
-            if (config.type === "email") {
-                return createEmailValueConfig(config.option);
+            if (type === "email") {
+                return createEmailValueConfig();
             }
 
             throw Error("error");

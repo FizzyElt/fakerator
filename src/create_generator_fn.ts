@@ -1,4 +1,5 @@
 import { faker } from "@faker-js/faker";
+import * as v from "valibot";
 
 import type {
     ArrayConfig,
@@ -43,7 +44,7 @@ const _createValueGenerator = <R = unknown>(
     path: string,
 ): (() => R) => {
     try {
-        valueConfigScheme.parse(config);
+        v.assert(valueConfigScheme, config);
     } catch (err) {
         throw new Error(`config path: ${path}.value\n${err}`);
     }
@@ -61,7 +62,7 @@ const _createSelectionGenerator = <T extends SelectionConfig<unknown>>(
     path: string,
 ): (() => Result<T>) => {
     try {
-        selectionConfigScheme.parse(config);
+        v.assert(selectionConfigScheme, config);
     } catch (err) {
         throw new Error(`config path: ${path}.select\n${err}`);
     }
@@ -82,10 +83,10 @@ const _createObjectGenerator = <
 >(
     config: T,
     path: string,
-    customTypeMatch?: (config: unknown, path: string) => ValueConfig<unknown>,
+    customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => {
     try {
-        objConfigScheme.parse(config);
+        v.assert(objConfigScheme, config);
     } catch (err) {
         throw new Error(`config path: ${path}.obj\n ${err}`);
     }
@@ -120,10 +121,10 @@ export const createObjectGenerator = <T extends ObjectConfig<unknown>>(
 const _createArrayGenerator = <T extends ArrayConfig<unknown>>(
     config: T,
     path: string,
-    customTypeMatch?: (config: unknown, path: string) => ValueConfig<unknown>,
+    customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => {
     try {
-        arrayConfigScheme.parse(config);
+        v.assert(arrayConfigScheme, config);
     } catch (err) {
         throw new Error(`config path: ${path}.arr\n ${err}`);
     }
@@ -135,7 +136,8 @@ const _createArrayGenerator = <T extends ArrayConfig<unknown>>(
     ) as () => Result<T>;
 
     if (config.next) {
-        const next: (prev: Result<T>, current: Result<T>) => Result<T> = config.next;
+        const next = config.next as unknown as (prev: Result<T>, current: Result<T>) => Result<T>;
+
         return () => {
             let prev = itemGeneratorFn();
             const result = [];
@@ -197,7 +199,7 @@ const _createTupleGenerator = <
     customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => {
     try {
-        tupleConfigScheme.parse(config);
+        v.assert(tupleConfigScheme, config);
     } catch (err) {
         throw new Error(`config path: ${path}.tuple\n ${err}`);
     }
@@ -247,7 +249,7 @@ export const createTupleGenerator = <
         | TupleConfig<unknown>,
 >(
     config: T,
-    customTypeMatch?: (config: unknown, path: string) => ValueConfig<unknown>,
+    customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => _createTupleGenerator(config, "*", customTypeMatch);
 
 // =================== generator fn ====================
@@ -257,7 +259,7 @@ const _createBoundedSeriesGenerator = <T extends BoundedSeriesConfig>(
     path: string,
 ): (() => Result<T>) => {
     try {
-        boundedSeriesScheme.parse(config);
+        v.assert(boundedSeriesScheme, config);
     } catch (err) {
         throw new Error(`config path: ${path}.boundedSeries\n ${err}`);
     }
@@ -287,7 +289,7 @@ export const createBoundedSeriesGenerator = <T extends BoundedSeriesConfig>(
 const _createGeneratorByType = <T extends AllConfig<unknown>>(
     config: T,
     path: string,
-    customTypeMatch?: (config: unknown, path: string) => ValueConfig<unknown>,
+    customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => {
     switch (config.type) {
         case "obj":
@@ -313,5 +315,5 @@ const _createGeneratorByType = <T extends AllConfig<unknown>>(
 
 export const createGeneratorByType = <T extends AllConfig<unknown>>(
     config: T,
-    customTypeMatch?: (config: unknown, path: string) => ValueConfig<unknown>,
+    customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => _createGeneratorByType(config, "*", customTypeMatch);

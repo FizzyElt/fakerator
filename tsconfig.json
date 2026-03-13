@@ -1,5 +1,6 @@
 {
     "compilerOptions": {
+        "strict": true,
         "baseUrl": "./",
         "module": "ESNext",
         "target": "ESNext",
@@ -11,9 +12,9 @@
         "isolatedModules": true,
         "declarationDir": "./dist/types",
         "paths": {
-            "@/*": ["src"],
-        },
+            "@/*": ["src"]
+        }
     },
 
-    "include": ["src/**/*.ts"],
+    "include": ["src/**/*.ts"]
 }

@@ -1,3 +1,4 @@
+import { ValiError } from "valibot";
 import { expect, test } from "vitest";
 
 import {
@@ -31,6 +32,8 @@ test("createArrayConfig", () => {
     expect(arrConfig.type).toBe("arr");
     expect(arrConfig.len).toBe(20);
     expect(arrConfig.item).toEqual(valueConfig);
+
+    expect(() => createArrayConfig(valueConfig, -1)).toThrowError(ValiError);
 });
 
 test("createTupleConfig", () => {
