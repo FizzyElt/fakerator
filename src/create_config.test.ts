@@ -33,7 +33,7 @@ test("createArrayConfig", () => {
     expect(arrConfig.len).toBe(20);
     expect(arrConfig.item).toEqual(valueConfig);
 
-    expect(() => createArrayConfig(valueConfig, -1)).toThrowError(ValiError);
+    expect(() => createArrayConfig(valueConfig, -1)).toThrow(ValiError);
 });
 
 test("createTupleConfig", () => {

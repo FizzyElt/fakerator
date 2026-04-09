@@ -21,22 +21,13 @@ import {
     valueConfigScheme,
 } from "./config_scheme";
 
-type AllConfig<T> =
-    | ValueConfig<T>
-    | SelectionConfig<T>
-    | ArrayConfig<T>
-    | ObjectConfig<T>
-    | ObjectConfigWithFn<T, unknown>
-    | TupleConfig<T>
-    | TupleConfig<T, T>
-    | TupleConfig<T, T, T>
-    | TupleConfig<T, T, T, T>
-    | TupleConfig<T, T, T, T, T>
-    | TupleConfig<T, T, T, T, T, T>
-    | TupleConfig<T, T, T, T, T, T, T>
-    | TupleConfig<T, T, T, T, T, T, T, T>
-    | TupleConfig<T, T, T, T, T, T, T, T, T>
-    | TupleConfig<T, T, T, T, T, T, T, T, T, T>
+type AllConfig =
+    | ValueConfig<unknown>
+    | SelectionConfig<unknown>
+    | ArrayConfig<unknown>
+    | ObjectConfig<unknown>
+    | ObjectConfigWithFn<unknown, unknown>
+    | TupleConfig<readonly unknown[]>
     | BoundedSeriesConfig;
 
 const _createValueGenerator = <R = unknown>(
@@ -91,7 +82,7 @@ const _createObjectGenerator = <
         throw new Error(`config path: ${path}.obj\n ${err}`);
     }
 
-    const keyWithFns: [string, () => Result<AllConfig<unknown>>][] = Object.entries(
+    const keyWithFns: [string, () => Result<AllConfig>][] = Object.entries(
         config.content as object,
     ).map(([key, subConfig]) => [
         key,
@@ -130,7 +121,7 @@ const _createArrayGenerator = <T extends ArrayConfig<unknown>>(
     }
 
     const itemGeneratorFn = _createGeneratorByType(
-        config.item as AllConfig<unknown>,
+        config.item as AllConfig,
         `${path}.arr`,
         customTypeMatch,
     ) as () => Result<T>;
@@ -161,39 +152,7 @@ export const createArrayGenerator = <T extends ArrayConfig<unknown>>(
 
 // =================== generator fn ====================
 
-const _createTupleGenerator = <
-    T extends
-        | TupleConfig<
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown
-          >
-        | TupleConfig<
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown
-          >
-        | TupleConfig<unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown>
-        | TupleConfig<unknown, unknown, unknown, unknown, unknown, unknown>
-        | TupleConfig<unknown, unknown, unknown, unknown, unknown>
-        | TupleConfig<unknown, unknown, unknown, unknown>
-        | TupleConfig<unknown, unknown, unknown>
-        | TupleConfig<unknown, unknown>
-        | TupleConfig<unknown>,
->(
+const _createTupleGenerator = <T extends TupleConfig<readonly unknown[]>>(
     config: T,
     path: string,
     customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
@@ -205,49 +164,13 @@ const _createTupleGenerator = <
     }
 
     const itemsFns = config.configItems.map((configItem, index) =>
-        _createGeneratorByType(
-            configItem as AllConfig<unknown>,
-            `${path}.tuple[${index}]`,
-            customTypeMatch,
-        ),
+        _createGeneratorByType(configItem as AllConfig, `${path}.tuple[${index}]`, customTypeMatch),
     );
 
     return () => itemsFns.map((generateFn) => generateFn()) as Result<T>;
 };
 
-export const createTupleGenerator = <
-    T extends
-        | TupleConfig<
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown
-          >
-        | TupleConfig<
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown,
-              unknown
-          >
-        | TupleConfig<unknown, unknown, unknown, unknown, unknown, unknown, unknown, unknown>
-        | TupleConfig<unknown, unknown, unknown, unknown, unknown, unknown>
-        | TupleConfig<unknown, unknown, unknown, unknown, unknown>
-        | TupleConfig<unknown, unknown, unknown, unknown>
-        | TupleConfig<unknown, unknown, unknown>
-        | TupleConfig<unknown, unknown>
-        | TupleConfig<unknown>,
->(
+export const createTupleGenerator = <T extends TupleConfig<readonly unknown[]>>(
     config: T,
     customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => _createTupleGenerator(config, "*", customTypeMatch);
@@ -286,7 +209,7 @@ export const createBoundedSeriesGenerator = <T extends BoundedSeriesConfig>(
 
 // =================== generator fn ====================
 
-const _createGeneratorByType = <T extends AllConfig<unknown>>(
+const _createGeneratorByType = <T extends AllConfig>(
     config: T,
     path: string,
     customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
@@ -313,7 +236,7 @@ const _createGeneratorByType = <T extends AllConfig<unknown>>(
     }
 };
 
-export const createGeneratorByType = <T extends AllConfig<unknown>>(
+export const createGeneratorByType = <T extends AllConfig>(
     config: T,
     customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
 ): (() => Result<T>) => _createGeneratorByType(config, "*", customTypeMatch);

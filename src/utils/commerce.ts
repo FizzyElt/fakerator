@@ -25,3 +25,6 @@ export const productMaterial = makeValueConfigFn(faker.commerce.productMaterial)
 
 /** Commerce [productName](https://fakerjs.dev/api/commerce.html#productName) */
 export const productName = makeValueConfigFn(faker.commerce.productName);
+
+/** Commerce [upc](https://fakerjs.dev/api/commerce.html#upc) */
+export const upc = makeValueConfigFn(faker.commerce.upc);

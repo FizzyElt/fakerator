@@ -98,9 +98,9 @@ describe("createObjectGenerator", () => {
         const obj = createObjectGenerator({
             type: "obj",
             content: {
-                name: { type: "value", generateFn: () => "John" },
-                age: { type: "value", generateFn: () => 50 },
-                location: { type: "value", generateFn: () => "Taiwan" },
+                name: createValueConfig(() => "John"),
+                age: createValueConfig(() => 50),
+                location: createValueConfig(() => "Taiwan"),
             },
         })();
 
@@ -179,7 +179,7 @@ describe("createGeneratorByType", () => {
             },
         } as ObjectConfig<unknown>;
 
-        expect(() => createGeneratorByType(config)).toThrowError(Error);
+        expect(() => createGeneratorByType(config)).toThrow(Error);
     });
 
     test("with custom type match", () => {

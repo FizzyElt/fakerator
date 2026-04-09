@@ -20,6 +20,9 @@ export const hexadecimal = makeValueConfigFn(faker.string.hexadecimal);
 /** String [nanoid](https://fakerjs.dev/api/string.html#nanoid) */
 export const nanoid = makeValueConfigFn(faker.string.nanoid);
 
+/** String [numeric](https://fakerjs.dev/api/string.html#numeric) */
+export const numeric = makeValueConfigFn(faker.string.numeric);
+
 /** String [octal](https://fakerjs.dev/api/string.html#octal) */
 export const octal = makeValueConfigFn(faker.string.octal);
 

@@ -11,6 +11,9 @@ export const avatarGitHub = makeValueConfigFn(faker.image.avatarGitHub);
 /** Image [dataUri](https://fakerjs.dev/api/image.html#dataUri) */
 export const dataUri = makeValueConfigFn(faker.image.dataUri);
 
+/** Image [personPortrait](https://fakerjs.dev/api/image.html#personPortrait) */
+export const personPortrait = makeValueConfigFn(faker.image.personPortrait);
+
 /** Image [url](https://fakerjs.dev/api/image.html#url) */
 export const url = makeValueConfigFn(faker.image.url);
 

@@ -23,6 +23,9 @@ export * as Phone from "./phone";
 export * as Science from "./science";
 export * as String from "./string";
 export * as System from "./system";
-export * as utils from "./utils";
-export { makeValueConfigFn } from "./utils";
+export * as Word from "./word";
 export * as Vehicle from "./vehicle";
+
+export * as utils from "./utils";
+
+export { makeValueConfigFn } from "./utils";
