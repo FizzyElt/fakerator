@@ -1,20 +1,20 @@
 {
     "compilerOptions": {
         "strict": true,
-        "baseUrl": "./",
+        "rootDir": "./",
         "module": "ESNext",
         "target": "ESNext",
         "lib": ["ES2022", "DOM"],
         "declaration": true,
-        "outDir": "./dist/lib/es6",
+        "outDir": "dist/lib/es6",
         "moduleResolution": "bundler",
         "skipLibCheck": true,
         "isolatedModules": true,
         "declarationDir": "./dist/types",
         "paths": {
-            "@/*": ["src"]
-        }
+            "@/*": ["./src/*"],
+        },
     },
 
-    "include": ["src/**/*.ts"]
+    "include": ["src/**/*.ts"],
 }
