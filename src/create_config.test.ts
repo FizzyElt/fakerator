@@ -1,5 +1,5 @@
 import { ValiError } from "valibot";
-import { expect, test } from "vitest";
+import { expect, test, vi } from "vitest";
 
 import {
     createArrayConfig,
@@ -9,6 +9,8 @@ import {
     createTupleConfig,
     createValueConfig,
 } from "./create_config";
+
+vi.setConfig({ testTimeout: 1000 });
 
 test("createValueConfig", () => {
     const valueConfig = createValueConfig(() => 44);

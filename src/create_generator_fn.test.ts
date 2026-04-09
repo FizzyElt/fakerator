@@ -1,4 +1,4 @@
-import { describe, expect, test } from "vitest";
+import { describe, expect, test, vi } from "vitest";
 
 import type { ObjectConfig } from "./type";
 
@@ -17,6 +17,8 @@ import {
     createTupleGenerator,
     createValueGenerator,
 } from "./create_generator_fn";
+
+vi.setConfig({ testTimeout: 1000 });
 
 describe("createValueGenerator", () => {
     test("normal", () => {
