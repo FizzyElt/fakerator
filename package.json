@@ -40,7 +40,6 @@
     "scripts": {
         "type_check": "tsc --noEmit",
         "build": "pnpm type_check && rslib build src",
-        "publish": "pnpm build && pnpm publish --access public",
         "test": "vitest src"
     },
     "dependencies": {
