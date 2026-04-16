@@ -1,0 +1,218 @@
+import { describe, expect, test, vi } from "vitest";
+
+import type { ObjectConfig } from "./type";
+
+import {
+    createArrayConfig,
+    createObjectConfig,
+    createTupleConfig,
+    createValueConfig,
+} from "./create_config";
+import {
+    createArrayGeneratorAsync,
+    createBoundedSeriesGeneratorAsync,
+    createGeneratorByTypeAsync,
+    createObjectGeneratorAsync,
+    createSelectionGeneratorAsync,
+    createTupleGeneratorAsync,
+    createValueGeneratorAsync,
+} from "./create_generator_fn_async";
+
+vi.setConfig({ testTimeout: 1000 });
+
+describe("createValueGenerator", () => {
+    test("normal", async () => {
+        const value = await createValueGeneratorAsync({
+            type: "value",
+            generateFn: () => 50,
+        })();
+
+        expect(value).toBe(50);
+
+        const value2 = await createValueGeneratorAsync({
+            type: "value",
+            generateFn: () => ({ age: 100, name: "hello" }),
+        })();
+
+        expect(value2).toEqual({ age: 100, name: "hello" });
+    });
+});
+
+describe("createSelectionGenerator", () => {
+    test("normal", async () => {
+        const value = await createSelectionGeneratorAsync({
+            type: "select",
+            items: [1],
+        })();
+
+        expect(value).toBe(1);
+
+        const value2 = await createSelectionGeneratorAsync({
+            type: "select",
+            items: [30, 30, 30, 30],
+        })();
+
+        expect(value2).toBe(30);
+    });
+});
+
+describe("createArrayGenerator", () => {
+    test("normal", async () => {
+        const list = await createArrayGeneratorAsync({
+            type: "arr",
+            len: 5,
+            item: { type: "value", generateFn: () => ({ age: 42 }) },
+        })();
+
+        expect(list).toEqual([{ age: 42 }, { age: 42 }, { age: 42 }, { age: 42 }, { age: 42 }]);
+    });
+    test("with next function", async () => {
+        const list = await createArrayGeneratorAsync(
+            createArrayConfig(
+                createValueConfig(() => 100),
+                5,
+                (prev) => prev + 1,
+            ),
+        )();
+
+        expect(list).toEqual([101, 102, 103, 104, 105]);
+    });
+});
+
+describe("createTupleGenerator", () => {
+    test("normal", async () => {
+        const tuple = await createTupleGeneratorAsync(
+            createTupleConfig([
+                createValueConfig(() => 225),
+                createValueConfig(() => "hello world"),
+            ]),
+        )();
+
+        expect(tuple.length).toBe(2);
+        const [num, str] = tuple;
+        expect(num).toBe(225);
+        expect(str).toBe("hello world");
+    });
+});
+
+describe("createObjectGenerator", () => {
+    test("normal", async () => {
+        const obj = await createObjectGeneratorAsync({
+            type: "obj",
+            content: {
+                name: createValueConfig(() => "John"),
+                age: createValueConfig(() => 50),
+                location: createValueConfig(() => "Taiwan"),
+            },
+        })();
+
+        expect(obj).toEqual({ name: "John", age: 50, location: "Taiwan" });
+    });
+
+    test("transformer function", async () => {
+        const obj = await createObjectGeneratorAsync(
+            createObjectConfig(
+                {
+                    name: createValueConfig(() => "John"),
+                    age: createValueConfig(() => 50),
+                    location: createValueConfig(() => "Taiwan"),
+                },
+                ({ age }) => age + 50,
+            ),
+        )();
+
+        expect(obj).toEqual(100);
+    });
+});
+
+describe("createBoundedSeriesGenerator", () => {
+    test("normal", async () => {
+        const upperLimit = 1.1;
+        const lowerLimit = 0.9;
+        const initValue = 100;
+        const count = 100;
+
+        const list = await createBoundedSeriesGeneratorAsync({
+            type: "bounded_series",
+            upperLimit,
+            lowerLimit,
+            createInitValue: () => initValue,
+            count,
+        })();
+
+        for (let i = 0; i < count; i += 1) {
+            const value = list[i];
+            const prevValue = list[i - 1];
+            const ratio = i === 0 ? value / initValue : value / prevValue;
+
+            expect(ratio).toBeLessThanOrEqual(upperLimit);
+            expect(ratio).toBeGreaterThanOrEqual(lowerLimit);
+        }
+    });
+});
+
+describe("createGeneratorByType", () => {
+    test("normal", async () => {
+        const config = createObjectConfig({
+            name: createValueConfig(() => "John"),
+            age: createValueConfig(() => 50),
+            locations: createArrayConfig(
+                createValueConfig(() => "Taiwan"),
+                5,
+            ),
+        });
+        const result = await createGeneratorByTypeAsync(config)();
+
+        expect(result).toEqual({
+            name: "John",
+            age: 50,
+            locations: ["Taiwan", "Taiwan", "Taiwan", "Taiwan", "Taiwan"],
+        });
+    });
+
+    test("error config", () => {
+        const config = {
+            type: "obj",
+            content: {
+                name: {
+                    type: "123",
+                    generateFn: "John",
+                },
+            },
+        } as ObjectConfig<unknown>;
+
+        expect(() => createGeneratorByTypeAsync(config)).toThrow(Error);
+    });
+
+    test("with custom type match", async () => {
+        const createIntValueConfig = () => createValueConfig(() => 50);
+        const createEmailValueConfig = () => createValueConfig(() => "xxx@example.com");
+
+        const customTypeMatch = (config: unknown) => {
+            const { type } = config as { type: string };
+
+            if (type === "int") {
+                return createIntValueConfig();
+            }
+            if (type === "email") {
+                return createEmailValueConfig();
+            }
+
+            throw Error("error");
+        };
+
+        const config = createObjectConfig({
+            name: { type: "value", generateFn: () => "John" },
+            age: { type: "int" },
+            email: { type: "email" },
+        });
+
+        const result = await createGeneratorByTypeAsync(config, customTypeMatch)();
+
+        expect(result).toEqual({
+            name: "John",
+            age: 50,
+            email: "xxx@example.com",
+        });
+    });
+});

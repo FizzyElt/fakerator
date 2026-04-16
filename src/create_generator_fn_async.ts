@@ -40,7 +40,7 @@ const _createValueGeneratorAsync = <R = unknown>(
         throw new Error(`config path: ${path}.value\n${err}`);
     }
 
-    return (() => Promise.resolve(config.generateFn())) as () => Promise<R>;
+    return (() => Promise.resolve().then(() => config.generateFn())) as () => Promise<R>;
 };
 
 export const createValueGeneratorAsync = <R = unknown>(
@@ -110,7 +110,7 @@ const _createObjectGeneratorAsync = <
     };
 };
 
-export const createObjectGenerator = <T extends ObjectConfig<unknown>>(
+export const createObjectGeneratorAsync = <T extends ObjectConfig<unknown>>(
     config: T,
     customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
 ): (() => Promise<Result<T>>) => _createObjectGeneratorAsync(config, "*", customTypeMatch);
@@ -132,16 +132,16 @@ const _createArrayGeneratorAsync = <T extends ArrayConfig<unknown>>(
         config.item as AllConfig,
         `${path}.arr`,
         customTypeMatch,
-    ) as () => Result<T>;
+    ) as () => Promise<Result<T>>;
 
     if (config.next) {
         const next = config.next as unknown as (prev: Result<T>, current: Result<T>) => Result<T>;
 
         return async () => {
-            let prev = itemGeneratorFn();
+            let prev = await itemGeneratorFn();
             const result = [];
             for (let i = 0; i < config.len; i += 1) {
-                const nextValue = next(prev, itemGeneratorFn());
+                const nextValue = next(prev, await itemGeneratorFn());
                 result.push(nextValue);
                 prev = nextValue;
             }
@@ -252,3 +252,8 @@ const _createGeneratorByTypeAsync = <T extends AllConfig>(
         }
     }
 };
+
+export const createGeneratorByTypeAsync = <T extends AllConfig>(
+    config: T,
+    customTypeMatch?: (config: unknown, path?: string) => ValueConfig<unknown>,
+): (() => Promise<Result<T>>) => _createGeneratorByTypeAsync(config, "*", customTypeMatch);
