@@ -31,7 +31,9 @@ describe("createValueGenerator", () => {
 
         const value2 = await createValueGeneratorAsync({
             type: "value",
-            generateFn: () => ({ age: 100, name: "hello" }),
+            generateFn: () => {
+                return { age: 100, name: "hello" };
+            },
         })();
 
         expect(value2).toEqual({ age: 100, name: "hello" });
@@ -61,7 +63,12 @@ describe("createArrayGenerator", () => {
         const list = await createArrayGeneratorAsync({
             type: "arr",
             len: 5,
-            item: { type: "value", generateFn: () => ({ age: 42 }) },
+            item: {
+                type: "value",
+                generateFn: () => {
+                    return { age: 42 };
+                },
+            },
         })();
 
         expect(list).toEqual([{ age: 42 }, { age: 42 }, { age: 42 }, { age: 42 }, { age: 42 }]);

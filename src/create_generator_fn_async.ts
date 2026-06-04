@@ -1,3 +1,4 @@
+// oxlint-disable no-use-before-define
 import { faker } from "@faker-js/faker";
 import * as v from "valibot";
 

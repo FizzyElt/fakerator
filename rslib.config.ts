@@ -1,5 +1,5 @@
 import { defineConfig } from "@rslib/core";
-import * as path from "node:path";
+import path from "node:path";
 
 export default defineConfig({
     lib: [
